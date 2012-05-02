@@ -42,20 +42,6 @@ The colours in the image above are from the [IR_BLACK](http://blog.toddwerth.com
 - ═ — Git non-merged.
 - ◼ — Git untracked.
 
-## Authentication
-
-Some programs require that authentication information is stored in their respective dot files. Instead of managing two separate dot file repositories, one for actual use and another sanitised for sharing, I store authentication information in the Mac OS X Keychain. In this case, the dot files will be generated from files of the same name that end in the **.rrc** extension, which are Ruby ERB templates.
-
-The **.rrc** extension, which stands for raw dot file, is used instead of **.erb** to not conflict with non dot file ERB templates.
-
-The .rrc syntax is `<%= Keychain['Entry Name'].account %>` and `<%= Keychain['Entry Name'].password %>` respectively. For example, this is the GitHub API Token snippet from _gitconfig.rrc_.
-
-    [github]
-        user = <%= Keychain['GitHub API'].account %>
-        token = <%= Keychain['GitHub API'].password %>
-
-The disadvantage of this method is that the dot files cannot be installed via SSH because Mac OS X disallows Keychain access.
-
 ## Installation
 
 Clone this repository into _~/.dotfiles_, change directory into _~/.dotfiles_, and execute the `rake` install task.
