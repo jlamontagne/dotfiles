@@ -4,13 +4,13 @@ These configuration files set up my command line interface.
 
 ## Environment
 
-Be aware that I use Mac OS X; changes will be necessary for Linux users.
+Be aware that I use Linux; changes might be necessary for Mac OS X users.
 
 To switch to [Zsh](http://www.zsh.org), execute:
 
     chsh -s /bin/zsh
 
-I store [scripts](https://github.com/sorin-ionescu/scripts) in _~/.tilde/bin_. `PATH` and `MANPATH` must be modified in _oh-my-zsh/environment.zsh_ to match your configuration.
+Sorin stores [scripts](https://github.com/sorin-ionescu/tilde) in _~/.tilde/bin_. `PATH` and `MANPATH` must be modified in _oh-my-zsh/environment.zsh_ to match your configuration.
 
 Some scripts and programs may have different names or extensions depending on the operating system or package manager. Check aliases in _oh-my-zsh/alias.zsh_ to fix them, if necessary.
 
@@ -46,7 +46,7 @@ The colours in the image above are from the [IR_BLACK](http://blog.toddwerth.com
 
 Clone this repository into _~/.dotfiles_, change directory into _~/.dotfiles_, and execute the `rake` install task.
 
-    git clone git://github.com/sorin-ionescu/dotfiles.git ~/.dotfiles
+    git clone git://github.com/jlamontagne/dotfiles.git ~/.dotfiles
     cd ~/.dotfiles
     rake install
 
@@ -54,11 +54,4 @@ Rake will **never** replace existing files but back them up into *~/.dotfiles_ba
 
 ## Vim Text Editor
 
-I use [MacVim](http://code.google.com/p/macvim/) with [Vundle](https://github.com/gmarik/vundle), which allows for Vim plugins to be installed self-contained under their own directory in _vim/bundle_ making them easy to install and remove. The _Rakefile_ has tasks for managing Vim bundles. Read the Vundle documentation for further information.
-
-## Terminals
-
-[iTerm2.app](http://www.iterm2.com) has mouse support. If you favour in continuing to use [Terminal.app](http://en.wikipedia.org/wiki/Apple_Terminal), which does not have mouse support under Mac OS X 10.7 Lion, there are hacks available to improve it. Install [SIMBL](http://www.culater.net/software/SIMBL/SIMBL.php) then install under _~/Library/Application Support/SIMBL/Plugins_ the following plugins.
-
-- [MouseTerm.bundle](http://bitheap.org/mouseterm/) to enable mouse.
-- [BounceTerm.bundle](http://bitheap.org/bounceterm/) to bounce the Dock when the terminal beeps.
+I use Vim with [Vundle](https://github.com/gmarik/vundle), which allows for Vim plugins to be installed self-contained under their own directory in _vim/bundle_ making them easy to install and remove. The _Rakefile_ has tasks for managing Vim bundles. Read the Vundle documentation for further information.
