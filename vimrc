@@ -378,7 +378,8 @@ let &showbreak=nr2char(8618).' '
 set ttyfast
 
 " Do not draw while executing macros.
-set lazyredraw
+" Note: Enabling this will lag startup display if Powerline is enabled.
+" set lazyredraw
 
 " Set keys move cursor to next/previous line.
 set ww+=<,>,[,]
