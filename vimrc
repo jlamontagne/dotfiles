@@ -1425,8 +1425,8 @@ noremap j gj
 noremap k gk
 
 " Faster ESC.
-inoremap jk <ESC>
-inoremap kj <ESC>
+" inoremap jk <ESC>
+" inoremap kj <ESC>
 
 " Format Paragraph.
 nnoremap <Leader>q gwap
