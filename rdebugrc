@@ -1,5 +1,0 @@
-set autolist
-set autoeval
-set autoreload
-set forcestep
-eval require 'ruby-debug/completion'

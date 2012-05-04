@@ -1,2 +1,0 @@
-pkgfind [<package>];
-package = !pkgutil --pkgs;

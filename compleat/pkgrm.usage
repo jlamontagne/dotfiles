@@ -1,2 +1,0 @@
-pkgrm [<package>];
-package = !pkgutil --pkgs;
