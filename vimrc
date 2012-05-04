@@ -1428,6 +1428,12 @@ noremap k gk
 " inoremap jk <ESC>
 " inoremap kj <ESC>
 
+" Make Ctrl-C trigger InsertLeave autocmds
+"
+" This is very heavy-handed, but Ctrl-C is what I'm accustomed to using to
+" leave insert mode.
+inoremap <C-C> <ESC>
+
 " Format Paragraph.
 nnoremap <Leader>q gwap
 
