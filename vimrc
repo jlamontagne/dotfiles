@@ -311,10 +311,10 @@ set autoread
 set autowrite
 
 " Set spell check language.
-set spelllang=en_au
+set spelllang=en_ca
 
 " Save battery by letting OS flush to disk.
-set nofsync
+" set nofsync
 
 " Set the default shell.
 " set shell=bash
