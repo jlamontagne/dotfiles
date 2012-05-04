@@ -1119,7 +1119,7 @@ let g:PreviewBrowsers='open'
 " Powerline -------------------------------------------------------------- {{{
 
 " Use fancy UTF-9 symbols (requires a patched font, see documentation).
-let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'fancy'
 
 " Use short path.
 let g:Powerline_stl_path_style = 'filename'
