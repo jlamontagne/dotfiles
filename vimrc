@@ -657,10 +657,10 @@ set autoindent
 set wrap
 
 " Maximum line width before wrapping.
-set textwidth=85
+set textwidth=80
 
 " Describes how auto formatting is to be done.
-set formatoptions=qrn1
+set formatoptions=tcqrn1
 
 " Allow virtual editing in visual block mode.
 set virtualedit+=block
