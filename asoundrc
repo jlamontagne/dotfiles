@@ -1,0 +1,30 @@
+# I used this at some point to boost the signal for something. I think it was
+# voip from an xbox.
+#
+#pcm.boost {
+#	type	softvol
+#	slave.pcm	"default"
+#	control.name	"Softmaster"
+#	control.card	0
+#	max_dB	48.0
+#}
+
+# Equalizer
+#
+ctl.equal {
+  type equal;
+}
+
+pcm.plugequal {
+  type equal;
+  slave.pcm "plughw:0,0"
+}
+
+#pcm.equal {
+  # Or if you want the equalizer to be your
+  # default soundcard uncomment the following
+  # line and comment the above line.
+pcm.!default {
+  type plug;
+  slave.pcm plugequal;
+}
