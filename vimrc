@@ -632,23 +632,23 @@ nnoremap <silent> <Leader>? :execute "Ack! '" .
 " Do not select the end of line.
 set selection=old
 
-" Expand tabs into spaces.
-set expandtab
+" Don't expand tabs into spaces.
+set noexpandtab
 
-" Set tab to equal 4 spaces.
-set tabstop=4
+" Set tab to equal 8 spaces.
+set tabstop=8
 
 " Set soft tabs equal to 4 spaces.
-set softtabstop=4
+" set softtabstop=4
 
 " Set auto indent spacing.
-set shiftwidth=4
+set shiftwidth=8
 
 " Shift to the next round tab stop.
 set shiftround
 
 " Insert spaces in front of lines.
-set smarttab
+" set smarttab
 
 " Copy indent from the current line.
 set autoindent
@@ -820,7 +820,7 @@ aug end
 aug ft_bash
     au!
     au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
-    setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    " setlocal tabstop=2 softtabstop=2 shiftwidth=2
 aug end
 
 " }}}
@@ -997,7 +997,7 @@ aug end
 aug ft_zsh
     au!
     au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
-    setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    " setlocal tabstop=2 softtabstop=2 shiftwidth=2
 aug end
 
 " }}}
