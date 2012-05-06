@@ -1,13 +1,11 @@
--- Author: Vic Fryzel
--- modified by: Josh Lamontagne
--- with ideas from:
---      http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Arossato.html#arossatoConfig
---      http://www.haskell.org/haskellwiki/Xmonad/Config_archive/adamvo's_xmonad.hs
---      http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-TopicSpace.html
+-- Heavily modified version of Vic Fryzel's xmonad.hs with ideas from:
+--
 -- http://github.com/vicfryzel/xmonad-config
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Arossato.html#arossatoConfig
+-- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/adamvo's_xmonad.hs
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-TopicSpace.html
 
 import System.IO
-import System.Exit
 import XMonad
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
@@ -21,7 +19,6 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
-import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
