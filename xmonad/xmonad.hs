@@ -29,11 +29,9 @@ main = xmonad =<< myConfig
 
 myConfig = do
     checkTopicConfig myTopics myTopicConfig
-    xmobar <- spawnPipe "xmobar"
-    return $ defaultConfig
+    return =<< statusBar "xmobar" myPrettyPrinter toggleStrutsKey defaultConfig
         { workspaces = myTopics
-        , logHook = myDynLog xmobar
-        , manageHook = manageDocks <+> myManageHook
+        , manageHook = myManageHook
         , layoutHook = smartBorders $ myLayout
         , handleEventHook = docksEventHook
         , startupHook = setWMName "LG3D"
@@ -104,12 +102,18 @@ myConfig = do
         promptedShift = workspacePrompt myXPConfig $ windows . W.shift
 
         -- xmobar
-        myDynLog h = dynamicLogWithPP defaultPP
-                        { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                        , ppTitle   = xmobarColor "green"  "" . shorten 40
-                        , ppVisible = wrap "(" ")"
-                        , ppOutput  = hPutStrLn h
-                        }
+        --
+        -- Helper function which provides ToggleStruts keybinding. This is copied from
+        -- XMonad.Hooks.DynamicLog and probably needs to be exported with statusBar.
+        --
+        toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
+        toggleStrutsKey XConfig{modMask = modm} = (modm, xK_b )
+
+        myPrettyPrinter = xmobarPP
+                            { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
+                            , ppTitle   = xmobarColor "green"  "" . shorten 40
+                            , ppVisible = wrap "(" ")"
+                            }
 
         ------------------------------------------------------------------------
         -- To find the property name associated with a program, use
@@ -127,7 +131,7 @@ myConfig = do
             , className =? "VirtualBox"     --> doShift "4:vm"
             , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
 
-        myLayout = avoidStruts (
+        myLayout = (
             Tall 1 (3/100) (1/2) |||
             Mirror (Tall 1 (3/100) (1/2)) |||
             tabbed shrinkText defaultTheme |||
@@ -181,11 +185,6 @@ myConfig = do
             , ((modMask, xK_comma), sendMessage (IncMasterN 1))
             -- Decrement the number of windows in the master area.
             , ((modMask, xK_period), sendMessage (IncMasterN (-1)))
-            -- Toggle the status bar gap.
-            -- Use this binding with avoidStruts from Hooks.ManageDocks.
-            -- See also the statusBar function from Hooks.DynamicLog.
-            --
-            , ((modMask, xK_b), sendMessage ToggleStruts)
             -- Quit xmonad.
             , ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess))
             -- Restart xmonad.
