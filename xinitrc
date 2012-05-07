@@ -12,4 +12,9 @@ xinput set-prop "pointer:Razer Razer Naga Epic" "Device Accel Constant Decelerat
 # Cache keys
 eval `keychain --eval -q id_dsa`
 
+setxkbmap -option terminate:ctrl_alt_bksp
+
+# Sync PRIMARY with clipboard
+autocutsel -s PRIMARY -buttonup -fork &
+
 exec xmonad
