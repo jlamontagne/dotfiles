@@ -56,3 +56,5 @@ source "$OMZ/init.zsh"
 
 # Customize to your needs...
 
+# Enable keychain/ssh-agent to ask for passwords in X
+export SSH_ASKPASS="/usr/bin/x11-ssh-askpass"
