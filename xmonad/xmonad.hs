@@ -1,5 +1,6 @@
--- Heavily modified version of Vic Fryzel's xmonad.hs with ideas from:
+-- Heavily modified version of Vic Fryzel's xmonad.hs with various pieces from:
 --
+-- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/Brent_Yorgey's_darcs_xmonad.hs
 -- http://github.com/vicfryzel/xmonad-config
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Arossato.html#arossatoConfig
 -- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/adamvo's_xmonad.hs
@@ -20,15 +21,16 @@ import XMonad.Layout.Tabbed
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Util.EZConfig
+import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 main = do
-    checkTopicConfig myTopics myTopicConfig
+    checkTopicConfig myTopicNames myTopicConfig
     xmonad =<< statusBar "xmobar" myPrettyPrinter toggleStrutsKey myConfig
 
 myConfig = defaultConfig
-        { workspaces = myTopics
+        { workspaces = myTopicNames
         , manageHook = myManageHook
         , layoutHook = smartBorders $ myLayout
         , handleEventHook = docksEventHook
@@ -66,36 +68,49 @@ myLayout = (
 
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
 
--- The order is important, new topics must be inserted at the end of the
--- list if you want hot-restarting to work.
-myTopics = [ "dotfiles", "admin", "conf", "web", "tv", "music" ]
+-- Nice refactorization of TopicSpace config from Brent Yorgey's xmonad.hs
+--
+data TopicItem = TI { topicName   :: Topic
+                    , topicDir    :: Dir
+                    , topicAction :: X ()
+                    }
 
-myTopicConfig = defaultTopicConfig {
-    topicDirs = M.fromList $
-        [ ("dotfiles", ".dotfiles")
-        , ("tv", "/mnt/percy/torrent/seeding")
-        ]
-    , topicActions = M.fromList $
-        [ ("dotfiles",   spawnShell)
-        -- , ("darcs",      spawnShell >*> 3)
-        -- , ("haskell",    spawnShell >*> 2 >>
-        --                  spawnShellIn "wd/dev-haskell/ghc")
-        -- , ("xmonad",     spawnShellIn "wd/x11-wm/xmonad" >>
-        --                  spawnShellIn ".xmonad")
-        -- , ("mail",       mailAction)
-        -- , ("dashboard",  spawnShell)
-        -- , ("web",        spawn browserCmd)
-        -- , ("documents",  spawnShell >*> 2 >>
-        --                  spawnShellIn "Documents" >*> 2)
-        ]
-    , defaultTopicAction = const $ spawnShell >*> 3
-    , defaultTopic = "dotfiles"
-}
+myTopics =
+    [ TI "web" "" (spawn "firefox-bin")
+    , TI "mail" "" (runInTerm "" "ssh 10.8.0.1 -t mutt")
+    , ti "src" "src"
+    ]
+    where
+        ti t d = TI t d spawnShell
+--
+-- , ("documents",  spawnShell >*> 2 >>
+--                  spawnShellIn "Documents" >*> 2)
 
+myTopicNames :: [Topic]
+myTopicNames = map topicName myTopics
+
+myTopicConfig :: TopicConfig
+myTopicConfig = defaultTopicConfig
+    { topicDirs = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
+    , defaultTopicAction = const (return ())
+    , defaultTopic = "web"
+    , maxTopicHistory = 10
+    , topicActions = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
+    }
+
+goto :: Topic -> X ()
 goto = switchTopic myTopicConfig
+
+promptedGoto :: X ()
 promptedGoto = workspacePrompt myXPConfig goto
+
+promptedShift :: X ()
 promptedShift = workspacePrompt myXPConfig $ windows . W.shift
+
+spawnShell :: X ()
 spawnShell = currentTopicDir myTopicConfig >>= spawnShellIn
+
+spawnShellIn :: Dir -> X ()
 spawnShellIn dir = do
     t <- asks (terminal . config)
     spawnHere $ "cd " ++ dir ++ " && " ++ t
