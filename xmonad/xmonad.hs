@@ -5,6 +5,16 @@
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Arossato.html#arossatoConfig
 -- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/adamvo's_xmonad.hs
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-TopicSpace.html
+--
+-- TODO
+--
+-- urgency hooks
+-- dynamic workspaces for code\d (See byorgey's config)
+-- topic space for auto remote desktop into {mom,dad}'s computer
+-- fix M-[1..9] to do something with historical topic spaces?
+-- per-workspace layouts (maybe not necessary with fullscreen managehook for
+--     xine, etc)
+-- search
 
 import System.IO
 import XMonad
@@ -31,7 +41,7 @@ main = do
 
 myConfig = defaultConfig
         { workspaces = myTopicNames
-        , manageHook = myManageHook
+        , manageHook = manageSpawn <+> myManageHook
         , layoutHook = smartBorders $ myLayout
         , handleEventHook = docksEventHook
         , startupHook = composeAll
@@ -76,15 +86,25 @@ data TopicItem = TI { topicName   :: Topic
                     }
 
 myTopics =
-    [ TI "web" "" (spawn "firefox-bin")
-    , TI "mail" "" (runInTerm "" "ssh 10.8.0.1 -t mutt")
-    , ti "src" "src"
+      {- Name           Directory           Default Action -}
+    [ TI "web"          ""                  (spawn "firefox-bin")
+    , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
+    , TI "src"          "src"               (spawnShell >*> 3)
+    , TI "dotfiles"     ".dotfiles"         (vim "")
+    , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
+    , TI "music"        "music"             (runInTerm "" "alsamixer"
+                                            >> runInTerm "" "ncmpcpp")
     ]
     where
+        -- Helper for topics that just need a shell
         ti t d = TI t d spawnShell
---
--- , ("documents",  spawnShell >*> 2 >>
---                  spawnShellIn "Documents" >*> 2)
+
+-- Open file in vim, relative to topic's directory
+vim :: String -> X ()
+vim file = do
+    dir <- currentTopicDir myTopicConfig
+    let opts = "-name vim -cd $HOME/" ++ dir
+    runInTerm opts $ "vim " ++ file
 
 myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
@@ -127,13 +147,11 @@ myPrettyPrinter = xmobarPP
 
 -- $ xprop | grep WM_CLASS
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "2:web"
-    , resource  =? "desktop_window" --> doIgnore
-    , className =? "Galculator"     --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "Google-chrome"  --> doShift "2:web"
+    [ className =? "Gimp"           --> doFloat
     , className =? "MPlayer"        --> doFloat
     , resource  =? "skype"          --> doFloat
-    , className =? "VirtualBox"     --> doShift "4:vm"
+    -- , className =? "Chromium"       --> doShift "2:web"
+    -- , className =? "Google-chrome"  --> doShift "2:web"
+    -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
