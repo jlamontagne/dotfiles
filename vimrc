@@ -96,6 +96,18 @@ Bundle 'kien/ctrlp.vim'
 " Bundle 'kien/tabman.vim'
 
 " }}}
+" Haskell ---------------------------------------------------------------- {{{
+
+" Better Haskell syntax highlighting. Also, solarized ties into this script.
+Bundle 'syntaxhaskell.vim'
+
+" Better autoindent for Haskell.
+Bundle 'indenthaskell.vim'
+
+" Various nice things.
+Bundle 'lukerandall/haskellmode-vim'
+
+" }}}
 " Programming ------------------------------------------------------------ {{{
 
 " A better paste.
@@ -900,6 +912,7 @@ aug end
 
 aug ft_haskell
     au!
+    au FileType haskell compiler ghc
     au FileType haskell
         \ setlocal sw=4 et sts=4 ts=8 tw=79 cc=80
         "          |    |  |     \_ Respect files with actual tabs in them,
@@ -1088,6 +1101,12 @@ let g:golden_ratio_autocommand = 0
 
 nnoremap <Leader>U :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
+
+" }}}
+" Haskellmode ------------------------------------------------------------ {{{
+
+let g:haddock_browser = "firefox-bin"
+let g:ghc = "ghc"
 
 " }}}
 " HTML5 ------------------------------------------------------------------ {{{
