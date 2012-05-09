@@ -4,13 +4,13 @@
 ! Cursor theme
 Xcursor.theme: Oxygen_Black
 
-URxvt.saveLines: 16384
-
 !URxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
 URxvt.font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
 URxvt.boldFont: -xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1
 
-URxvt.scrollBar: False
+URxvt.saveLines: 16384
+URxvt.scrollBar: false
+URxvt.urgentOnBell: true
 
 ! Display bold and underlined text in color, rather than using the terminal
 ! attributes. This makes reading man pages a little easier.

@@ -8,7 +8,6 @@
 --
 -- TODO
 --
--- urgency hooks
 -- dynamic workspaces for code\d (See byorgey's config)
 -- topic space for auto remote desktop into {mom,dad}'s computer
 -- fix M-[1..9] to do something with historical topic spaces?
@@ -24,6 +23,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spiral
@@ -39,7 +39,7 @@ main = do
     checkTopicConfig myTopicNames myTopicConfig
     xmonad =<< statusBar "xmobar" myPrettyPrinter toggleStrutsKey myConfig
 
-myConfig = defaultConfig
+myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     { workspaces         = myTopicNames
     , manageHook         = manageSpawn <+> myManageHook
     , layoutHook         = smartBorders $ myLayout
@@ -61,6 +61,8 @@ myKeys =
     , ("M-S-a"       , currentTopicAction myTopicConfig)
     , ("M-s"         , promptedGoto)
     , ("M-S-s"       , promptedShift)
+    , ("M-<Page_Up>"    , focusUrgent)
+    , ("M-S-<Page_Up>"  , clearUrgents)
     ]
     ++
     [ ("M-"++m++[k], a i)
@@ -144,6 +146,7 @@ myPrettyPrinter = xmobarPP
                     { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
                     , ppTitle   = xmobarColor "green"  "" . shorten 40
                     , ppVisible = wrap "(" ")"
+                    , ppUrgent  = xmobarColor "red" "" . xmobarStrip
                     }
 
 -- $ xprop | grep WM_CLASS
