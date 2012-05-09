@@ -97,6 +97,7 @@ myTopics =
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
     , TI "music"        "music"             (runInTerm "" "alsamixer"
                                             >> runInTerm "" "ncmpcpp")
+    , TI "torrent"      ""                  (spawn "wine ~/bin/uTorrent.exe")
     ]
     where
         -- Helper for topics that just need a shell
