@@ -40,31 +40,33 @@ main = do
     xmonad =<< statusBar "xmobar" myPrettyPrinter toggleStrutsKey myConfig
 
 myConfig = defaultConfig
-        { workspaces = myTopicNames
-        , manageHook = manageSpawn <+> myManageHook
-        , layoutHook = smartBorders $ myLayout
-        , handleEventHook = docksEventHook
-        , startupHook = composeAll
-            [ setWMName "LG3Dverify"
-            , return () >> checkKeymap myConfig myKeys -- as prescribed by docs
-            ]
-        , terminal = "urxvt"
-        , normalBorderColor = "white"
-        , focusedBorderColor = "black"
-        , focusFollowsMouse = True
-        , modMask = mod4Mask
-        } `additionalKeysP` myKeys
+    { workspaces         = myTopicNames
+    , manageHook         = manageSpawn <+> myManageHook
+    , layoutHook         = smartBorders $ myLayout
+    , handleEventHook    = docksEventHook
+    , terminal           = "urxvt"
+    , normalBorderColor  = "white"
+    , focusedBorderColor = "black"
+    , focusFollowsMouse  = True
+    , modMask            = mod4Mask
+    , startupHook        = composeAll
+        [ setWMName "LG3Dverify"
+        , return () >> checkKeymap myConfig myKeys -- as prescribed by docs
+        ]
+    } `additionalKeysP` myKeys
 
 myKeys =
     [ ("M-S-<Return>", spawnShell)
-    , ("M-p", shellPromptHere myXPConfig)
-    , ("M-S-a", currentTopicAction myTopicConfig)
-    , ("M-s", promptedGoto)
-    , ("M-S-s", promptedShift)
+    , ("M-p"         , shellPromptHere myXPConfig)
+    , ("M-S-a"       , currentTopicAction myTopicConfig)
+    , ("M-s"         , promptedGoto)
+    , ("M-S-s"       , promptedShift)
     ]
     ++
     [ ("M-"++m++[k], a i)
-        | (a, m) <- [(switchNthLastFocused myTopicConfig,""),(shiftNthLastFocused, "S-")]
+        | (a, m) <- [ (switchNthLastFocused myTopicConfig,"")
+                    , (shiftNthLastFocused, "S-")
+                    ]
         , (i, k) <- zip [1..] "123456789"
     ]
 
@@ -79,14 +81,13 @@ myLayout = (
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
 
 -- Nice refactorization of TopicSpace config from Brent Yorgey's xmonad.hs
---
 data TopicItem = TI { topicName   :: Topic
                     , topicDir    :: Dir
                     , topicAction :: X ()
                     }
 
 myTopics =
-      {- Name           Directory           Default Action -}
+    --   Name           Directory           Default Action
     [ TI "web"          ""                  (spawn "firefox-bin")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 3)
@@ -111,11 +112,11 @@ myTopicNames = map topicName myTopics
 
 myTopicConfig :: TopicConfig
 myTopicConfig = defaultTopicConfig
-    { topicDirs = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
+    { topicDirs          = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
-    , defaultTopic = "web"
-    , maxTopicHistory = 10
-    , topicActions = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
+    , defaultTopic       = "web"
+    , maxTopicHistory    = 10
+    , topicActions       = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
     }
 
 goto :: Topic -> X ()
@@ -137,7 +138,7 @@ spawnShellIn dir = do
 
 -- Copied from XMonad.Hooks.DynamicLog
 toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
-toggleStrutsKey XConfig{modMask = modm} = (modm, xK_b)
+toggleStrutsKey XConfig {modMask = modm} = (modm, xK_b)
 
 myPrettyPrinter = xmobarPP
                     { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
