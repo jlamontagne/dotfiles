@@ -896,6 +896,20 @@ aug ft_html
 aug end
 
 " }}}
+" Haskell ---------------------------------------------------------------- {{{
+
+aug ft_haskell
+    au!
+    au FileType haskell
+        \ setlocal sw=4 et sts=4 ts=8 tw=79 cc=80
+        "          |    |  |     \_ Respect files with actual tabs in them,
+        "          |    |  \_______ but our 'tabs' are 4 positions...
+        "          |    \__________ and are not really tabs, but spaces.
+        "          |
+        "          \_______________ Indent in steps of 4 spaces.
+aug end
+
+" }}}
 " Mail-------------------------------------------------------------------- {{{
 
 aug ft_mail
