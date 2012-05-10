@@ -34,6 +34,9 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import Data.Ord
+import Data.List
+import Data.Maybe
 
 main = do
     checkTopicConfig myTopicNames myTopicConfig
@@ -66,7 +69,7 @@ myKeys =
     ]
     ++
     [ ("M-"++m++[k], a i)
-        | (a, m) <- [ (switchNthLastFocused myTopicConfig,"")
+        | (a, m) <- [ (gotoNthLastFocused,"")
                     , (shiftNthLastFocused, "S-")
                     ]
         , (i, k) <- zip [1..] "123456789"
@@ -122,8 +125,22 @@ myTopicConfig = defaultTopicConfig
     , topicActions       = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
     }
 
+gotoNthLastFocused :: Int -> X()
+gotoNthLastFocused depth = do
+    lastWs <- getLastFocusedTopics
+    goto $ (lastWs ++ repeat (defaultTopic myTopicConfig)) !! depth
+
 goto :: Topic -> X ()
-goto = switchTopic myTopicConfig
+goto topic = do
+    winset <- gets windowset
+    let empty_workspaces = map W.tag $ filter (isNothing . W.stack) $ W.workspaces winset
+        currentTopic = (W.tag . W.workspace . W.current $ winset)
+
+    -- Push current, then topic to get: [topic, currentTopic, ...]
+    --                                          ^- goto(N=1)thLastFocused
+    setLastFocusedTopic currentTopic (`notElem` empty_workspaces)
+    setLastFocusedTopic topic (`notElem` empty_workspaces)
+    switchTopic myTopicConfig topic
 
 promptedGoto :: X ()
 promptedGoto = workspacePrompt myXPConfig goto
@@ -148,6 +165,7 @@ myPrettyPrinter = xmobarPP
                     , ppTitle   = xmobarColor "green"  "" . shorten 40
                     , ppVisible = wrap "(" ")"
                     , ppUrgent  = xmobarColor "red" "" . xmobarStrip
+                    , ppSort    = ppSortTS
                     }
 
 -- $ xprop | grep WM_CLASS
@@ -160,3 +178,11 @@ myManageHook = composeAll
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
+
+-- Adapted from XMonad.Actions.TopicSpace.pprWindowSet
+ppSortTS :: X ([WindowSpace] -> [WindowSpace])
+ppSortTS = do
+    lastWs <- getLastFocusedTopics
+    let depth topic = fromJust $ elemIndex topic (lastWs ++ [topic])
+        maxDepth = maxTopicHistory myTopicConfig
+    return $ take maxDepth . sortBy (comparing $ depth . W.tag)
