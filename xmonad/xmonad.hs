@@ -9,12 +9,13 @@
 -- TODO
 --
 -- dynamic workspaces for code\d (See byorgey's config)
--- topic space for auto remote desktop into {mom,dad}'s computer
--- fix M-[1..9] to do something with historical topic spaces?
 -- per-workspace layouts (maybe not necessary with fullscreen managehook for
 --     xine, etc)
 -- search
 
+import Data.List
+import Data.Maybe
+import Data.Ord
 import System.IO
 import XMonad
 import XMonad.Actions.SpawnOn
@@ -34,9 +35,6 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-import Data.Ord
-import Data.List
-import Data.Maybe
 
 main = do
     checkTopicConfig myTopicNames myTopicConfig
@@ -48,8 +46,8 @@ myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     , layoutHook         = smartBorders $ myLayout
     , handleEventHook    = docksEventHook
     , terminal           = "urxvt"
-    , normalBorderColor  = "white"
-    , focusedBorderColor = "black"
+    , normalBorderColor  = "#586e75"
+    , focusedBorderColor = "#859900"
     , focusFollowsMouse  = True
     , modMask            = mod4Mask
     , startupHook        = composeAll
@@ -59,13 +57,13 @@ myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     } `additionalKeysP` myKeys
 
 myKeys =
-    [ ("M-S-<Return>", spawnShell)
-    , ("M-p"         , shellPromptHere myXPConfig)
-    , ("M-S-a"       , currentTopicAction myTopicConfig)
-    , ("M-s"         , promptedGoto)
-    , ("M-S-s"       , promptedShift)
-    , ("M-<Page_Up>"    , focusUrgent)
-    , ("M-S-<Page_Up>"  , clearUrgents)
+    [ ("M-S-<Return>" , spawnShell)
+    , ("M-p"          , shellPromptHere myXPConfig)
+    , ("M-S-a"        , currentTopicAction myTopicConfig)
+    , ("M-s"          , promptedGoto)
+    , ("M-S-s"        , promptedShift)
+    , ("M-<Page_Up>"  , focusUrgent)
+    , ("M-S-<Page_Up>", clearUrgents)
     ]
     ++
     [ ("M-"++m++[k], a i)
@@ -125,41 +123,6 @@ myTopicConfig = defaultTopicConfig
     , topicActions       = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
     }
 
-gotoNthLastFocused :: Int -> X()
-gotoNthLastFocused depth = do
-    lastWs <- getLastFocusedTopics
-    goto $ (lastWs ++ repeat (defaultTopic myTopicConfig)) !! depth
-
-goto :: Topic -> X ()
-goto topic = do
-    winset <- gets windowset
-    let empty_workspaces = map W.tag $ filter (isNothing . W.stack) $ W.workspaces winset
-        currentTopic = (W.tag . W.workspace . W.current $ winset)
-
-    -- Push current, then topic to get: [topic, currentTopic, ...]
-    --                                          ^- goto(N=1)thLastFocused
-    setLastFocusedTopic currentTopic (`notElem` empty_workspaces)
-    setLastFocusedTopic topic (`notElem` empty_workspaces)
-    switchTopic myTopicConfig topic
-
-promptedGoto :: X ()
-promptedGoto = workspacePrompt myXPConfig goto
-
-promptedShift :: X ()
-promptedShift = workspacePrompt myXPConfig $ windows . W.shift
-
-spawnShell :: X ()
-spawnShell = currentTopicDir myTopicConfig >>= spawnShellIn
-
-spawnShellIn :: Dir -> X ()
-spawnShellIn dir = do
-    t <- asks (terminal . config)
-    spawnHere $ "cd " ++ dir ++ " && " ++ t
-
--- Copied from XMonad.Hooks.DynamicLog
-toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
-toggleStrutsKey XConfig {modMask = modm} = (modm, xK_b)
-
 myPrettyPrinter = xmobarPP
                     { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
                     , ppTitle   = xmobarColor "green"  "" . shorten 40
@@ -178,6 +141,42 @@ myManageHook = composeAll
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
+
+goto :: Topic -> X ()
+goto topic = do
+    winset <- gets windowset
+    let empty_workspaces = map W.tag $ filter (isNothing . W.stack) $ W.workspaces winset
+        currentTopic = (W.tag . W.workspace . W.current $ winset)
+
+    -- Push current, then topic to get: [topic, currentTopic, ...]
+    --                                          ^- goto(N=1)thLastFocused
+    setLastFocusedTopic currentTopic (`notElem` empty_workspaces)
+    setLastFocusedTopic topic (`notElem` empty_workspaces)
+    switchTopic myTopicConfig topic
+
+-- Adapted from XMonad.Actions.TopicSpace.switchNthLastFocused
+gotoNthLastFocused :: Int -> X()
+gotoNthLastFocused depth = do
+    lastWs <- getLastFocusedTopics
+    goto $ (lastWs ++ repeat (defaultTopic myTopicConfig)) !! depth
+
+promptedGoto :: X ()
+promptedGoto = workspacePrompt myXPConfig goto
+
+promptedShift :: X ()
+promptedShift = workspacePrompt myXPConfig $ windows . W.shift
+
+spawnShell :: X ()
+spawnShell = currentTopicDir myTopicConfig >>= spawnShellIn
+
+spawnShellIn :: Dir -> X ()
+spawnShellIn dir = do
+    t <- asks (terminal . config)
+    spawnHere $ "cd " ++ dir ++ " && " ++ t
+
+-- Copied from XMonad.Hooks.DynamicLog
+toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
+toggleStrutsKey XConfig {modMask = modm} = (modm, xK_b)
 
 -- Adapted from XMonad.Actions.TopicSpace.pprWindowSet
 ppSortTS :: X ([WindowSpace] -> [WindowSpace])
