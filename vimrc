@@ -1151,6 +1151,10 @@ let g:PreviewBrowsers='open'
 " }}}
 " Powerline -------------------------------------------------------------- {{{
 
+" Use skwp's solarized colorscheme and his theme.
+let g:Powerline_theme="skwp"
+let g:Powerline_colorscheme="skwp"
+
 " Use fancy UTF-9 symbols (requires a patched font, see documentation).
 " let g:Powerline_symbols = 'fancy'
 
