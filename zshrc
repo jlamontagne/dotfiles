@@ -58,3 +58,6 @@ source "$OMZ/init.zsh"
 
 # Enable keychain/ssh-agent to ask for passwords in X
 export SSH_ASKPASS="/usr/bin/x11-ssh-askpass"
+
+export PATH="${HOME}/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}"
+export MANPATH="${HOME}/bin/share/man:${MANPATH}"

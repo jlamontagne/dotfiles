@@ -8,23 +8,63 @@
 #	control.card	0
 #	max_dB	48.0
 #}
-
-# Equalizer
 #
+
+# https://jira.skype.com/browse/SCL-810
+# http://wiki.cyberleo.net/wiki/KnowledgeBase/AlsaEqual
+
+defaults.pcm.!card 1
+defaults.ctl.!card 1
+defaults.pcm.!device 0
+defaults.ctl.!device 0
+
 ctl.equal {
   type equal;
 }
 
-pcm.plugequal {
-  type equal;
-  slave.pcm "plughw:0,0"
+# We parameterize this as well since Skype tries everything in this file and
+# will attempt to load the 64-bit caps library via the alsaequal plugin. In
+# reality, this device is only used with type "equal", but we need this hack to
+# fix Skype.
+pcm.equal {
+  @args [ TYPE ]
+  @args.TYPE {
+    type string
+    default {
+      @func getenv
+      vars [ ALSA_PCM ]
+      default "equal"
+    }
+  }
+  type $TYPE;
+  slave.pcm "plug:dmix"
 }
 
-#pcm.equal {
-  # Or if you want the equalizer to be your
-  # default soundcard uncomment the following
-  # line and comment the above line.
+# The alsaequal plugin is not compatible with 32-bit programs on amd64, so it
+# will crash them with the following message:
+#
+#   Failed to load plugin "/usr/lib/ladspa/caps.so": /usr/lib/ladspa/caps.so: wrong ELF class: ELFCLASS64
+#
+# To get around this, the asymed definition takes two parameters: PLAY and
+# CAPT, to direct the slave PCMs. These are controlled either by arguments
+# in the slave definition (i.e. slave.pcm "asymed:dmix,dsnoop" ), or by
+# environment variables (ALSA_ASYM_PLAY=dmix ALSA_ASYM_CAPT=dsnoop aplay ...)
+pcm.asymed {
+  @args [ TYPE ]
+  @args.TYPE {
+    type string
+    default {
+      @func getenv
+      vars [ ALSA_PCM ]
+      default "equal"
+    }
+  }
+  type asym;
+  playback.pcm $TYPE;
+  capture.pcm "dsnoop";
+}
+
 pcm.!default {
   type plug;
-  slave.pcm plugequal;
+  slave.pcm asymed;
 }

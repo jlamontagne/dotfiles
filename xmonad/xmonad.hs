@@ -94,11 +94,14 @@ myTopics =
     [ TI "web"          ""                  (spawn "firefox-bin")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 3)
+    , TI "src0"          "src"               (spawnShell >*> 2)
     , TI "dotfiles"     ".dotfiles"         (vim "")
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
-    , TI "music"        "music"             (runInTerm "" "alsamixer"
-                                            >> runInTerm "" "ncmpcpp")
+    , TI "music"        "music"             (runInTerm "" "ncmpcpp")
     , TI "torrent"      ""                  (spawn "wine ~/bin/uTorrent.exe")
+    , TI "pyfa"         ""                  (spawn "pyfa")
+    , TI "skype"        ""                  (spawn "ALSA_PCM=\"dmix\" skype")
+    , TI "eve"          ""                  (spawn "eve-demji")
     ]
     where
         -- Helper for topics that just need a shell

@@ -138,10 +138,10 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-surround'
 
 " Automatically closes quotes, parenthesis, brackets, etc.
-Bundle 'Raimondi/delimitMate'
+" Bundle 'Raimondi/delimitMate'
 
 " Automatically closes functions, blocks, etc.
-Bundle 'tpope/vim-endwise'
+" Bundle 'tpope/vim-endwise'
 
 " Allows for writing user-defined text objects.
 Bundle 'kana/vim-textobj-user'
@@ -198,7 +198,7 @@ Bundle 'sorin-ionescu/vim-htmlvalidator'
 Bundle 'https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git'
 
 " LESS (dynamic CSS) language.
-" Bundle 'groenewege/vim-less'
+Bundle 'groenewege/vim-less'
 
 " JavaScript language.
 Bundle 'pangloss/vim-javascript'
@@ -672,7 +672,7 @@ set wrap
 set textwidth=80
 
 " Describes how auto formatting is to be done.
-set formatoptions=tcqrn1
+set formatoptions=cqrn1
 
 " Allow virtual editing in visual block mode.
 set virtualedit+=block
@@ -695,6 +695,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Enable folding.
 set foldenable
+" set nofoldenable
 
 " Syntax dictates folding.
 set foldmethod=syntax
@@ -899,6 +900,16 @@ aug ft_git
 aug end
 
 " }}}
+" Handlebars ------------------------------------------------------------- {{{
+
+aug ft_handlebars
+    au!
+    au FileType handlebars compiler html
+    au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
+    inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<CR>a
+aug end
+
+" }}}
 " HTML ------------------------------------------------------------------- {{{
 
 aug ft_html
@@ -998,7 +1009,7 @@ aug end
 aug ft_text
     au!
     " Enable soft-wrapping for text files
-    au FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
+    au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
 aug end
 
 " }}}
@@ -1150,13 +1161,42 @@ let g:PreviewBrowsers='open'
 
 " }}}
 " Powerline -------------------------------------------------------------- {{{
+"
+" Note: Remember to clear your cache with |:PowerlineClearCache| after changing
+"your statusline!
+"
+"Example: >
+"
+"    " Insert the charcode segment after the filetype segment
+"    call Pl#Theme#InsertSegment('charcode', 'after', 'filetype')
+"
+"    " Replace the scrollpercent segment with the charcode segment
+"    call Pl#Theme#ReplaceSegment('scrollpercent', 'fileinfo')
+"<
+"                                                      *Pl#Theme#InsertSegment*
+"Pl#Theme#InsertSegment({newsegment}, {location}, {targetsegment})
+"
+"This function inserts {newsegment} before or after {targetsegment}. The
+"{location} parameter specifies the location of the new segment, valid values
+"are "before" and "after". You can see all the available segments in
+"autoload/Powerline/Segments.vim and the files specified in
+"|Powerline-cust-segments|.
+"
+"Pl#Theme#RemoveSegment({targetsegment})               *Pl#Theme#RemoveSegment*
+"
+"This function removes the {targetsegment} segment entirely.
+"
+"Pl#Theme#ReplaceSegment({oldsegment}, {newsegment})  *Pl#Theme#ReplaceSegment*
+"
+"This function replaces {oldsegment} with {newsegment}.
 
 " Use skwp's solarized colorscheme and his theme.
-let g:Powerline_theme="skwp"
-let g:Powerline_colorscheme="skwp"
+" let g:Powerline_theme="skwp"
+let g:Powerline_colorscheme="solarized"
 
 " Use fancy UTF-9 symbols (requires a patched font, see documentation).
 " let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'unicode'
 
 " Use short path.
 let g:Powerline_stl_path_style = 'filename'
@@ -1463,8 +1503,9 @@ noremap j gj
 noremap k gk
 
 " Faster ESC.
-" inoremap jk <ESC>
-" inoremap kj <ESC>
+inoremap jk <ESC>
+inoremap kj <ESC>
+inoremap jj <ESC>
 
 " Make Ctrl-C trigger InsertLeave autocmds
 "
