@@ -71,7 +71,13 @@ Bundle 'vim-scripts/ShowMarks7'
 Bundle 'Lokaltog/vim-easymotion'
 
 " History of yanks, changes, and deletes.
-Bundle 'vim-scripts/YankRing.vim'
+" Bundle 'vim-scripts/YankRing.vim'
+
+" NERDTree
+Bundle 'scrooloose/nerdtree'
+
+" YouCompleteMe
+Bundle 'Valloric/YouCompleteMe'
 
 " }}}
 " Color Scheme ----------------------------------------------------------- {{{
@@ -129,7 +135,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
 
 " Insert-completion via the tab key.
-Bundle 'ervandew/supertab'
+" Bundle 'ervandew/supertab'
 
 " Colors parenthesis.
 Bundle 'kien/rainbow_parentheses.vim'
@@ -139,6 +145,7 @@ Bundle 'tpope/vim-surround'
 
 " Automatically closes quotes, parenthesis, brackets, etc.
 " Bundle 'Raimondi/delimitMate'
+Bundle 'seletskiy/vim-autoclose'
 
 " Automatically closes functions, blocks, etc.
 " Bundle 'tpope/vim-endwise'
@@ -1413,6 +1420,22 @@ let g:threesome_wrap = "nowrap"
 let g:yankring_history_file = '.yankring-history'
 
 " }}}
+" NERDTree --------------------------------------------------------------- {{{
+let g:NERDShutUp = 1
+map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+map <leader>e :NERDTreeFind<CR>
+nmap <leader>nt :NERDTreeFind<CR>
+
+let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=1
+let NERDTreeMouseMode=2
+let NERDTreeShowHidden=1
+let NERDTreeKeepTreeInNewTab=1
+let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
+
 
 " }}}
 " Key Remapping ---------------------------------------------------------- {{{
@@ -1553,7 +1576,7 @@ nnoremap <Leader>S :%s//<left>
 nnoremap <Leader>v V`]
 
 " Toggle paste.
-set pastetoggle=<F8>
+set pastetoggle=<F12>
 
 " Replaste.
 nnoremap <D-p> "_ddPV`]
@@ -1563,16 +1586,6 @@ nnoremap <silent><Leader>do :diffoff!<CR>
 nnoremap <silent><Leader>dg :diffget<CR>:diffupdate<CR>
 nnoremap <silent><Leader>dp :diffput<CR>:diffupdate<CR>
 nnoremap <silent><Leader>du :diffupdate<CR>
-
-" Better completion.
-set completeopt=longest,menuone,preview
-" inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-p> pumvisible() ?
-    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-        \ "\<lt>up>" : ""<CR>'
-inoremap <expr> <C-n> pumvisible() ?
-    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-    \ "\<lt>Down>" : ""<CR>'
 
 " }}}
 
