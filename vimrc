@@ -26,13 +26,13 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" General ---------------------------------------------------------------- {{{
+" General {{{
 
 " Manages Vim bundles.
 Bundle 'gmarik/vundle'
 
 " A better status bar.
-Bundle 'Lokaltog/vim-powerline'
+" Bundle 'Lokaltog/vim-powerline'
 
 " Identifies file indentation.
 Bundle 'Raimondi/YAIFA'
@@ -59,7 +59,7 @@ Bundle 'vim-scripts/bufkill.vim'
 Bundle 'vim-scripts/scratch'
 
 " Escape ANSI codes.
-Bundle 'vim-scripts/AnsiEsc.vim'
+" Bundle 'vim-scripts/AnsiEsc.vim'
 
 " Resizes the current buffer to accommodate its content.
 Bundle 'roman/golden-ratio'
@@ -76,8 +76,14 @@ Bundle 'Lokaltog/vim-easymotion'
 " NERDTree
 Bundle 'scrooloose/nerdtree'
 
-" YouCompleteMe
-Bundle 'Valloric/YouCompleteMe'
+" Easily search for, substitute, and abbreviate multiple variants of a word.
+Bundle 'tpope/vim-abolish'
+
+" Automatically restore one file's cursor position and folding information
+" after restart vim.
+" Bundle 'vim-scripts/restore_view.vim'
+
+Bundle 'coderifous/textobj-word-column.vim'
 
 " }}}
 " Color Scheme {{{
@@ -135,7 +141,14 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
 
 " Insert-completion via the tab key.
-" Bundle 'ervandew/supertab'
+Bundle 'ervandew/supertab'
+" YCM doesn't work so well with ultisnips since it auto-opens the completion
+" window and hijacks <Tab>
+"
+" Bundle 'Valloric/YouCompleteMe'
+
+" Javascript tab completion
+Bundle 'marijnh/tern_for_vim'
 
 " Colors parenthesis.
 Bundle 'kien/rainbow_parentheses.vim'
@@ -144,8 +157,13 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-surround'
 
 " Automatically closes quotes, parenthesis, brackets, etc.
-" Bundle 'Raimondi/delimitMate'
-Bundle 'seletskiy/vim-autoclose'
+"
+" these auto-closers are just annoying and don't save many or any keystrokes
+" since you still have to navigate around them.
+"
+Bundle 'Raimondi/delimitMate'
+" Reportedly causes some problems with YCM installed
+" Bundle 'seletskiy/vim-autoclose'
 
 " Automatically closes functions, blocks, etc.
 " Bundle 'tpope/vim-endwise'
@@ -163,10 +181,11 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'vim-scripts/matchit.zip'
 
 " TextMate-like snippets.
-" Bundle 'msanders/snipmate.vim'
+Bundle 'SirVer/ultisnips'
 
 " Snippets for snipMate.
-" Bundle 'scrooloose/snipmate-snippets'
+" TODO convert to ultisnips?
+Bundle 'honza/snipmate-snippets'
 
 " }}}
 " Version Control {{{
@@ -187,16 +206,19 @@ Bundle 'mattn/gist-vim'
 Bundle 'sjl/threesome.vim'
 
 " }}}
-" Web Development -------------------------------------------------------- {{{
+" Web Development {{{
 
 " Expands condensed HTML.
-Bundle 'mattn/zencoding-vim'
+Bundle 'rstacruz/sparkup'
 
 " Translates markdown into HTML for previewing.
 Bundle 'nelstrom/vim-markdown-preview'
 
 " HTML langauge.
 Bundle 'othree/html5.vim'
+
+" Automatically close HTML tags
+Bundle 'amirh/HTML-AutoCloseTag'
 
 " Validate HTML files.
 Bundle 'sorin-ionescu/vim-htmlvalidator'
@@ -295,6 +317,9 @@ set encoding=utf8
 
 " Share the clipboard.
 " set clipboard+=unnamed
+
+" Colour column 80
+set colorcolumn=80
 
 " Fix backspace.
 set backspace=indent,eol,start
@@ -407,7 +432,7 @@ set ww+=<,>,[,]
 set ruler
 
 " Show how far a line is from current line.
-" set relativenumber
+set relativenumber
 
 " Allow hidden buffers.
 set hidden
@@ -698,11 +723,11 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " }}}
 
 " }}}
-" Folding ---------------------------------------------------------------- {{{
+" Folding {{{
 
 " Enable folding.
-set foldenable
-" set nofoldenable
+" set foldenable
+set nofoldenable
 
 " Syntax dictates folding.
 set foldmethod=syntax
@@ -757,10 +782,13 @@ set wildmode=list:longest,list:full
 " Keyword completion for when Ctrl-P and Ctrl-N are pressed.
 set complete=.,t
 
-" Completion Ignored Files ----------------------------------------------- {{{
+" Completion Ignored Files {{{
 
 " VCS directories.
 set wildignore+=.hg,.git,.svn
+
+" NPM directories.
+set wildignore+=node_modules
 
 " LaTeX intermediate files.
 set wildignore+=*.aux,*.out,*.toc
@@ -796,7 +824,7 @@ set wildignore+=*.DS_Store
 " au FocusLost * :wa
 
 " Remember folds."
-set viewoptions=folds
+set viewoptions=cursor,folds
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
 
@@ -1047,9 +1075,26 @@ aug end
 " }}}
 
 " }}}
-" Plugin Settings -------------------------------------------------------- {{{
+" Plugin Settings {{{
 
-" Ack -------------------------------------------------------------------- {{{
+" Not compatible with delimitMate
+let g:SuperTabCrMapping = 0
+
+" Don't override delimitMate's <s-tab> to escape expansions
+let g:SuperTabMappingBackward = '<s-nul>'
+
+" Prefer omnifunc if available
+autocmd FileType *
+    \ if &omnifunc != '' |
+    \   call SuperTabChain(&omnifunc, "<c-p>") |
+    \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+    \ endif
+
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_jump_expansion = 1
+
+" Ack {{{
 
 map <Leader>a :Ack!
 
@@ -1075,7 +1120,7 @@ let g:extradite_showhash = 1
 " CtrlP {{{
 
 " Go up the file system until '.git', or similar, is found.
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_working_path_mode = 'raw'
 
 " Set the maximum height of the match window.
 let g:ctrlp_max_height = 10
@@ -1092,13 +1137,14 @@ let g:ctrlp_lazy_update = 1
 " Enable help tag, exuberant ctags, quickfix, and directory search.
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir']
 
-if exists('g:loaded_ctrlp')
-    " Map buffer search.
-    nnoremap <Leader>b :CtrlPBuffer<CR>
+" Use more restrictive/faster VCS file listing
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
-    " Map most recently used file search.
-    nnoremap <Leader>m :CtrlPMRU<CR>
-endif
+" Map buffer search.
+nnoremap <Leader>b :CtrlPBuffer<CR>
+
+" Map most recently used file search.
+nnoremap <Leader>m :CtrlPMRU<CR>
 
 " }}}
 " Gist {{{
@@ -1356,6 +1402,9 @@ let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
+" Key Remapping {{{
+nnoremap <Leader>s :w<CR>
+nnoremap <Leader>q :wq<CR>
 
 " Tab Navigation {{{
 
@@ -1429,7 +1478,7 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " Re hard wrap paragraph.
-nnoremap <Leader>q gqip
+" nnoremap <Leader>q gqip
 
 " Reselect pasted text.
 nnoremap <Leader>v V`]
@@ -1446,6 +1495,7 @@ noremap k gk
 inoremap jk <ESC>
 inoremap kj <ESC>
 inoremap jj <ESC>
+inoremap kk <ESC>
 
 " Make Ctrl-C trigger InsertLeave autocmds
 "
@@ -1454,7 +1504,7 @@ inoremap jj <ESC>
 inoremap <C-C> <ESC>
 
 " Format Paragraph.
-nnoremap <Leader>q gwap
+" nnoremap <Leader>q gwap
 
 " Formatting, TextMate-style.
 nnoremap Q gqip
@@ -1467,7 +1517,7 @@ inoremap <C-u> <ESC>gUiwea
 cnoremap w!! w !sudo tee % >/dev/null
 
 " Toggle spell checking.
-nnoremap <silent><Leader>s :set spell!<CR>
+" nnoremap <silent><Leader>s :set spell!<CR>
 
 " Shift+P replace selection without overwriting default register in vmode.
 vnoremap P p :call setreg('"', getreg('0'))<CR>
