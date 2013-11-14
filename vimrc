@@ -31,9 +31,6 @@ call vundle#rc()
 " Manages Vim bundles.
 Bundle 'gmarik/vundle'
 
-" A better status bar.
-" Bundle 'Lokaltog/vim-powerline'
-
 " Identifies file indentation.
 Bundle 'Raimondi/YAIFA'
 
@@ -54,12 +51,6 @@ Bundle 'vim-scripts/Rename2'
 
 " Kills a  buffer without closing the split.
 Bundle 'vim-scripts/bufkill.vim'
-
-" Emacs-style scratch buffer.
-Bundle 'vim-scripts/scratch'
-
-" Escape ANSI codes.
-" Bundle 'vim-scripts/AnsiEsc.vim'
 
 " Resizes the current buffer to accommodate its content.
 Bundle 'roman/golden-ratio'
@@ -198,17 +189,11 @@ Bundle 'int3/vim-extradite'
 " Gist paste.
 Bundle 'mattn/gist-vim'
 
-" Merge conflict resolution.
-Bundle 'sjl/threesome.vim'
-
 " }}}
 " Web Development {{{
 
 " Expands condensed HTML.
 Bundle 'rstacruz/sparkup'
-
-" Translates markdown into HTML for previewing.
-Bundle 'nelstrom/vim-markdown-preview'
 
 " HTML langauge.
 Bundle 'othree/html5.vim'
@@ -722,8 +707,8 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Folding {{{
 
 " Enable folding.
-" set foldenable
-set nofoldenable
+set foldenable
+" set nofoldenable
 
 " Syntax dictates folding.
 set foldmethod=syntax
@@ -770,7 +755,7 @@ set wildmenu
 set wildchar=<Tab>
 
 " Insert mode completion.
-set completeopt=longest,menu,preview
+set completeopt=longest,menuone,preview
 
 " Wildcard expansion completion.
 set wildmode=list:longest,list:full
@@ -868,20 +853,6 @@ aug ft_bash
 aug end
 
 " }}}
-" CoffeeScript {{{
-
-aug ft_coffee
-    au!
-    au FileType coffee
-        \ setlocal
-            \ tabstop=4
-            \ softtabstop=4
-            \ shiftwidth=4
-            \ textwidth=79
-            \ colorcolumn=80
-aug end
-
-" }}}
 " CSS {{{
 
 aug ft_css
@@ -907,7 +878,7 @@ aug end
 
 aug ft_git
     au!
-    au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable
+    au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable textwidth=72
 
 " Fugitive {{{
 
@@ -1101,12 +1072,6 @@ map <Leader>a :Ack!
 let g:AutoComplPop_BehaviorKeywordLength = 4
 
 " }}}
-" Command-T {{{
-
-" Set the maximum height of the match window.
-let g:CommandTMaxHeight = 10
-
-" }}}
 " Extradite {{{
 
 " Show the commit hash.
@@ -1141,6 +1106,9 @@ nnoremap <Leader>b :CtrlPBuffer<CR>
 
 " Map most recently used file search.
 nnoremap <Leader>m :CtrlPMRU<CR>
+
+" Map clear cache.
+nnoremap <Leader>c :CtrlPClearCache<CR>
 
 " }}}
 " Gist {{{
@@ -1188,12 +1156,6 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 1
 
 " }}}
-" Markdown Preview  {{{
-
-" Map Leader + P to preview.
-nmap <Leader>P :Mm<CR>
-
-" }}}
 " Org-Mode {{{
 
 let g:org_todo_keywords = ['TODO', '|', 'DONE']
@@ -1206,48 +1168,6 @@ let g:org_plugins = [
 " Preview {{{
 
 let g:PreviewBrowsers='open'
-
-" }}}
-" Powerline {{{
-"
-" Note: Remember to clear your cache with |:PowerlineClearCache| after changing
-"your statusline!
-"
-"Example: >
-"
-"    " Insert the charcode segment after the filetype segment
-"    call Pl#Theme#InsertSegment('charcode', 'after', 'filetype')
-"
-"    " Replace the scrollpercent segment with the charcode segment
-"    call Pl#Theme#ReplaceSegment('scrollpercent', 'fileinfo')
-"<
-"                                                      *Pl#Theme#InsertSegment*
-"Pl#Theme#InsertSegment({newsegment}, {location}, {targetsegment})
-"
-"This function inserts {newsegment} before or after {targetsegment}. The
-"{location} parameter specifies the location of the new segment, valid values
-"are "before" and "after". You can see all the available segments in
-"autoload/Powerline/Segments.vim and the files specified in
-"|Powerline-cust-segments|.
-"
-"Pl#Theme#RemoveSegment({targetsegment})               *Pl#Theme#RemoveSegment*
-"
-"This function removes the {targetsegment} segment entirely.
-"
-"Pl#Theme#ReplaceSegment({oldsegment}, {newsegment})  *Pl#Theme#ReplaceSegment*
-"
-"This function replaces {oldsegment} with {newsegment}.
-
-" Use skwp's solarized colorscheme and his theme.
-" let g:Powerline_theme="skwp"
-let g:Powerline_colorscheme="solarized"
-
-" Use fancy UTF-9 symbols (requires a patched font, see documentation).
-" let g:Powerline_symbols = 'fancy'
-let g:Powerline_symbols = 'unicode'
-
-" Use short path.
-let g:Powerline_stl_path_style = 'filename'
 
 " }}}
 " Python by Dmitry Vasiliev {{{
@@ -1353,28 +1273,6 @@ map <Leader>T <Plug>TaskList
 if exists('loaded_tcomment')
     nmap <silent> gcp <c-_>p
 endif
-
-" }}}
-" Threesome {{{
-
-let g:threesome_initial_mode = "grid"
-
-let g:threesome_initial_layout_grid = 1
-let g:threesome_initial_layout_loupe = 0
-let g:threesome_initial_layout_compare = 0
-let g:threesome_initial_layout_path = 0
-
-let g:threesome_initial_diff_grid = 1
-let g:threesome_initial_diff_loupe = 0
-let g:threesome_initial_diff_compare = 0
-let g:threesome_initial_diff_path = 0
-
-let g:threesome_initial_scrollbind_grid = 0
-let g:threesome_initial_scrollbind_loupe = 0
-let g:threesome_initial_scrollbind_compare = 0
-let g:threesome_initial_scrollbind_path = 0
-
-let g:threesome_wrap = "nowrap"
 
 " }}}
 " Yankring {{{
@@ -1550,6 +1448,15 @@ nnoremap <silent><Leader>dg :diffget<CR>:diffupdate<CR>
 nnoremap <silent><Leader>dp :diffput<CR>:diffupdate<CR>
 nnoremap <silent><Leader>du :diffupdate<CR>
 
+" Better completion.
+" inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-p> pumvisible() ?
+    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
+        \ "\<lt>up>" : ""<CR>'
+inoremap <expr> <C-n> pumvisible() ?
+    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
+    \ "\<lt>Down>" : ""<CR>'
+
 " }}}
 
 " }}}
@@ -1678,16 +1585,15 @@ cabbr lcdf lcd %:p:h<CR>
 " Open URL {{{
 
 command! -bar -nargs=1 OpenURL :!open <args>
-function! OpenURL()
-    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
-    echo s:uri
-    if s:uri != ""
-        exec "!open \"" . s:uri . "\""
+function! OpenURLUnderCursor()
+    let l:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+    if l:uri != ""
+        exec '!open "' . l:uri . '"'
     else
-        echo "No URI found in line"
+        echo 'No URL found in line'
     endif
 endfunction
-map <Leader>w :call OpenURL()<CR>
+nmap <silent> <Leader>w :call OpenURLUnderCursor()<CR>
 
 " }}}
 " Error Toggle {{{
