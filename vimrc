@@ -157,10 +157,6 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-surround'
 
 " Automatically closes quotes, parenthesis, brackets, etc.
-"
-" these auto-closers are just annoying and don't save many or any keystrokes
-" since you still have to navigate around them.
-"
 Bundle 'Raimondi/delimitMate'
 " Reportedly causes some problems with YCM installed
 " Bundle 'seletskiy/vim-autoclose'
