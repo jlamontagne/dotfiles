@@ -132,7 +132,10 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
 
 " Insert-completion via the tab key.
-Bundle 'ervandew/supertab'
+" Bundle 'ervandew/supertab'
+Bundle 'Shougo/neocomplete.vim.git'
+Bundle 'Shougo/neosnippet'
+
 " YCM doesn't work so well with ultisnips since it auto-opens the completion
 " window and hijacks <Tab>
 "
@@ -168,11 +171,11 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'vim-scripts/matchit.zip'
 
 " TextMate-like snippets.
-Bundle 'SirVer/ultisnips'
+" Bundle 'SirVer/ultisnips'
 
 " Snippets for snipMate.
 " TODO convert to ultisnips?
-Bundle 'honza/snipmate-snippets'
+Bundle 'honza/vim-snippets'
 
 " }}}
 " Version Control {{{
@@ -361,7 +364,7 @@ let maplocalleader = ';'
 set winminheight=1
 
 " Show short messages, no intro.
-set shortmess=aIoO
+set shortmess=aIoOtT
 
 " Show the current mode.
 set showmode
@@ -751,14 +754,11 @@ set foldtext=SJLFoldText()
 " Show a list entries.
 set wildmenu
 
-" Enable completion on tab.
-set wildchar=<Tab>
-
 " Insert mode completion.
-set completeopt=longest,menuone,preview
+set completeopt=menu,preview,longest
 
 " Wildcard expansion completion.
-set wildmode=list:longest,list:full
+set wildmode=list:longest,full
 
 " Keyword completion for when Ctrl-P and Ctrl-N are pressed.
 set complete=.,t
@@ -1044,19 +1044,6 @@ aug end
 " }}}
 " Plugin Settings {{{
 
-" Not compatible with delimitMate
-let g:SuperTabCrMapping = 0
-
-" Don't override delimitMate's <s-tab> to escape expansions
-let g:SuperTabMappingBackward = '<s-nul>'
-
-" Prefer omnifunc if available
-autocmd FileType *
-    \ if &omnifunc != '' |
-    \   call SuperTabChain(&omnifunc, "<c-p>") |
-    \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-    \ endif
-
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_jump_expansion = 1
@@ -1154,6 +1141,128 @@ let g:indent_guides_guide_size = 1
 
 " Indent from level 2.
 let g:indent_guides_start_level = 1
+
+" }}}
+" OmniComplete {{{
+
+" Adapted from spf13-vim
+
+hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
+hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+
+" Some convenient mappings
+inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+" inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+" inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+" inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+" inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+" inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+
+" Automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+" }}}
+" neocomplete {{{
+
+" Adapted from spf13-vim
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#max_list = 15
+let g:neocomplete#force_overwrite_completefunc = 1
+
+imap <expr> <TAB> pumvisible() ?
+    \ "\<C-n>"
+    \: (
+        \ neosnippet#expandable_or_jumpable() ?
+        \ "\<Plug>(neosnippet_expand_or_jump)"
+        \: "\<TAB>")
+
+smap <expr> <TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \: "\<TAB>"
+
+" For snippet_complete marker.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=i
+" endif
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
+
+" <TAB>: completion.
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+imap <expr> <CR> pumvisible() ?
+    \ (neosnippet#expandable() ?
+        \ "\<Plug>(neosnippet_expand)"
+        \: neocomplete#close_popup())
+    \: "\<CR>"
+inoremap <expr><CR> neocomplete#complete_common_string()
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplete#close_popup()
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+" Haskell post write lint and check with ghcmod
+" $ `cabal install ghcmod` if missing and ensure
+" ~/.cabal/bin is in your $PATH.
+if !executable("ghcmod")
+    autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+endif
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+
+" Use honza's snippets.
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" Enable neosnippet snipmate compatibility mode
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" For snippet_complete marker.
+" if has('conceal')
+"     set conceallevel=2 concealcursor=i
+" endif
+
+" Disable the neosnippet preview candidate window
+" When enabled, there can be too much visual noise
+" especially when splits are used.
+set completeopt-=preview
 
 " }}}
 " Org-Mode {{{
@@ -1450,12 +1559,12 @@ nnoremap <silent><Leader>du :diffupdate<CR>
 
 " Better completion.
 " inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-p> pumvisible() ?
-    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-        \ "\<lt>up>" : ""<CR>'
-inoremap <expr> <C-n> pumvisible() ?
-    \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-    \ "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <C-p> pumvisible() ?
+"     \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
+"         \ "\<lt>up>" : ""<CR>'
+" inoremap <expr> <C-n> pumvisible() ?
+"     \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
+"     \ "\<lt>Down>" : ""<CR>'
 
 " }}}
 
@@ -1578,6 +1687,7 @@ onoremap <silent> al" :<C-U>normal! F"va"<CR>
 
 cabbr cdf cd %:p:h<CR>
 cabbr lcdf lcd %:p:h<CR>
+cabbr cwd lcd %:p:h
 
 " }}}
 " Functions {{{
