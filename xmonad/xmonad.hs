@@ -20,15 +20,19 @@ import System.IO
 import XMonad
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
+import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
+-- import XMonad.Hooks.Place
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
+import XMonad.Layout.ThreeColumns
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Util.EZConfig
@@ -47,23 +51,38 @@ myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     , handleEventHook    = docksEventHook
     , terminal           = "urxvt"
     , normalBorderColor  = "#586e75"
-    , focusedBorderColor = "#859900"
+    -- , focusedBorderColor = "#859900"
+    , focusedBorderColor = "#ffffff"
     , focusFollowsMouse  = True
     , modMask            = mod4Mask
-    , startupHook        = composeAll
-        [ setWMName "LG3Dverify"
-        , return () >> checkKeymap myConfig myKeys -- as prescribed by docs
-        ]
+    , startupHook        = return () >> checkKeymap myConfig myKeys -- as prescribed by docs
+    -- , startupHook        = composeAll
+        -- [ setWMName "LG3Dverify"
+        -- , return () >> checkKeymap myConfig myKeys -- as prescribed by docs
+        -- ]
     } `additionalKeysP` myKeys
+    -- } `additionalKeysP` myKeys `removeKeys` myRemoveKeys
+
+-- myRemoveKeys = [ (mod1Mask, xK_Tab) ]
+-- , (button8        , (\w -> focus w >> mouseResizeWindow w))
 
 myKeys =
-    [ ("M-S-<Return>" , spawnShell)
+    [ ("M-S-<Delete>" , spawnShell)
+    , ("M-<Delete>"   , windows W.swapMaster)
+    , ("M-<Backspace>", sendMessage NextLayout)
     , ("M-p"          , shellPromptHere myXPConfig)
     , ("M-S-a"        , currentTopicAction myTopicConfig)
     , ("M-s"          , promptedGoto)
     , ("M-S-s"        , promptedShift)
     , ("M-<Page_Up>"  , focusUrgent)
     , ("M-S-<Page_Up>", clearUrgents)
+    , ("M-a"          , sendMessage MirrorShrink)
+    , ("M-z"          , sendMessage MirrorExpand)
+
+    -- Used to switch between floating EVE clients
+    -- focus the next window (which should be floating), then swap it to master
+    -- to pop it to the top of the view
+    , ("C-t"          , (windows W.focusDown) >> (windows W.swapMaster))
     ]
     ++
     [ ("M-"++m++[k], a i)
@@ -76,10 +95,12 @@ myKeys =
 myLayout = (
     Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
-    tabbed shrinkText defaultTheme |||
-    Full |||
-    spiral (6/7)) |||
-    noBorders (fullscreenFull Full)
+    -- tabbed shrinkText defaultTheme |||
+    -- Full |||
+    -- spiral (6/7)) |||
+    ResizableTall 1 (3/100) (1/2) [] |||
+    noBorders (fullscreenFull Full) |||
+    ThreeColMid 1 (3/100) (1/2))
 
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
 
@@ -91,7 +112,8 @@ data TopicItem = TI { topicName   :: Topic
 
 myTopics =
     --   Name           Directory           Default Action
-    [ TI "web"          ""                  (spawn "firefox-bin")
+    [ TI "ff"           ""                  (spawn "firefox-bin")
+    , TI "chrome"       ""                  (spawn "google-chrome")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 3)
     , TI "src0"          "src"               (spawnShell >*> 2)
@@ -99,9 +121,7 @@ myTopics =
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
     , TI "music"        "music"             (runInTerm "" "ncmpcpp")
     , TI "torrent"      ""                  (spawn "wine ~/bin/uTorrent.exe")
-    , TI "pyfa"         ""                  (spawn "pyfa")
     , TI "skype"        ""                  (spawn "ALSA_PCM=\"dmix\" skype")
-    , TI "eve"          ""                  (spawn "eve-demji")
     ]
     where
         -- Helper for topics that just need a shell
@@ -121,7 +141,7 @@ myTopicConfig :: TopicConfig
 myTopicConfig = defaultTopicConfig
     { topicDirs          = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
-    , defaultTopic       = "web"
+    , defaultTopic       = "src"
     , maxTopicHistory    = 10
     , topicActions       = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
     }
@@ -144,6 +164,7 @@ myManageHook = composeAll
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
+    where name = stringProperty "WM_NAME"
 
 goto :: Topic -> X ()
 goto topic = do

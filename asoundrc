@@ -37,7 +37,14 @@ pcm.equal {
     }
   }
   type $TYPE;
+  # ipc_key 1025
   slave.pcm "plug:dmix"
+}
+
+pcm.dsnooped {
+  type dsnoop
+  ipc_key 1027
+  slave.pcm "hw:3,0"
 }
 
 # The alsaequal plugin is not compatible with 32-bit programs on amd64, so it
@@ -61,7 +68,7 @@ pcm.asymed {
   }
   type asym;
   playback.pcm $TYPE;
-  capture.pcm "dsnoop";
+  capture.pcm "dsnooped";
 }
 
 pcm.!default {

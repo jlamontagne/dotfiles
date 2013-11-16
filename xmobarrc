@@ -7,7 +7,7 @@ Config { font = "-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15"
        , position = Top
        , lowerOnStart = True
        , commands = [ Run Weather "CYXU" ["-t","<tempC>C, <skyCondition>","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Network "eth1" ["-t","<rx> KB, <tx> KB","-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "enp0s18" ["-t","<rx> KB, <tx> KB","-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
     		    , Run Date "%a %b %_d, %Y %I:%M %p" "date" 10
@@ -17,5 +17,5 @@ Config { font = "-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %topmem% | %cpu% | %memory% | %eth1% | <fc=#ee9a00>%date%</fc> | %CYXU% | %default:Master%"
+       , template = "%StdinReader% }{ %topmem% | %cpu% | %memory% | %enp0s18% | <fc=#ee9a00>%date%</fc> | %CYXU% | %default:Master%"
        }

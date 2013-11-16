@@ -37,6 +37,7 @@
 #define S_green         #859900
 
 *background:            S_base03
+!!*background:            #000000
 *foreground:            S_base00
 *fading:                0
 *fadeColor:             S_base03
