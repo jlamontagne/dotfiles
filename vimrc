@@ -161,7 +161,7 @@ Bundle 'vim-scripts/matchit.zip'
 Bundle 'SirVer/ultisnips'
 
 " Snippets for snipMate.
-" Bundle 'honza/vim-snippets'
+Bundle 'honza/vim-snippets'
 
 " }}}
 " Version Control {{{
@@ -1250,8 +1250,13 @@ endif
 " }}}
 " UltiSnips {{{
 
-let g:UltiSnipsExpandTrigger="<Nul>"
-let g:UltiSnipsJumpForwardTrigger="<Nul>"
+" Only use honza/vim-snippets
+let g:UltiSnipsSnippetDirectories = ["../vim-snippets/UltiSnips"]
+
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+
+let g:UltiSnipsExpandTrigger = "<Nul>"
+let g:UltiSnipsJumpForwardTrigger = "<Nul>"
 
 let g:ulti_expand_res = 0
 function! UltiSnips_MaybeExpandSnippet()
