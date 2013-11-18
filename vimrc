@@ -128,17 +128,10 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
 
 " Insert-completion via the tab key.
-" Bundle 'ervandew/supertab'
-Bundle 'Shougo/neocomplete.vim.git'
-Bundle 'Shougo/neosnippet'
-
-" YCM doesn't work so well with ultisnips since it auto-opens the completion
-" window and hijacks <Tab>
-"
-" Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 
 " Javascript tab completion
-Bundle 'marijnh/tern_for_vim'
+" Bundle 'marijnh/tern_for_vim'
 
 " Colors parenthesis.
 Bundle 'kien/rainbow_parentheses.vim'
@@ -148,8 +141,6 @@ Bundle 'tpope/vim-surround'
 
 " Automatically closes quotes, parenthesis, brackets, etc.
 Bundle 'Raimondi/delimitMate'
-" Reportedly causes some problems with YCM installed
-" Bundle 'seletskiy/vim-autoclose'
 
 " Automatically closes functions, blocks, etc.
 " Bundle 'tpope/vim-endwise'
@@ -167,11 +158,10 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'vim-scripts/matchit.zip'
 
 " TextMate-like snippets.
-" Bundle 'SirVer/ultisnips'
+Bundle 'SirVer/ultisnips'
 
 " Snippets for snipMate.
-" TODO convert to ultisnips?
-Bundle 'honza/vim-snippets'
+" Bundle 'honza/vim-snippets'
 
 " }}}
 " Version Control {{{
@@ -654,7 +644,10 @@ nnoremap <silent> <Leader>? :execute "Ack! '" .
 " Whitespace {{{
 
 " Do not select the end of line.
-set selection=old
+" XXX: Using 'old' breaks UltiSnips by selecting one character past the
+" placeholder.
+"
+" set selection=old
 
 " Don't expand tabs into spaces.
 set noexpandtab
@@ -751,13 +744,10 @@ set foldtext=SJLFoldText()
 set wildmenu
 
 " Insert mode completion.
-set completeopt=menu,preview,longest
+set completeopt=menuone,preview
 
 " Wildcard expansion completion.
 set wildmode=list:longest,full
-
-" Keyword completion for when Ctrl-P and Ctrl-N are pressed.
-set complete=.,t
 
 " Completion Ignored Files {{{
 
@@ -1139,128 +1129,6 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 1
 
 " }}}
-" OmniComplete {{{
-
-" Adapted from spf13-vim
-
-hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
-hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-
-" Some convenient mappings
-inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-" inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-" inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-" inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-" inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-" inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
-
-" Automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-
-" }}}
-" neocomplete {{{
-
-" Adapted from spf13-vim
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#max_list = 15
-let g:neocomplete#force_overwrite_completefunc = 1
-
-imap <expr> <TAB> pumvisible() ?
-    \ "\<C-n>"
-    \: (
-        \ neosnippet#expandable_or_jumpable() ?
-        \ "\<Plug>(neosnippet_expand_or_jump)"
-        \: "\<TAB>")
-
-smap <expr> <TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
-
-" For snippet_complete marker.
-" if has('conceal')
-"   set conceallevel=2 concealcursor=i
-" endif
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
-
-" <TAB>: completion.
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
-imap <expr> <CR> pumvisible() ?
-    \ (neosnippet#expandable() ?
-        \ "\<Plug>(neosnippet_expand)"
-        \: neocomplete#close_popup())
-    \: "\<CR>"
-inoremap <expr><CR> neocomplete#complete_common_string()
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplete#close_popup()
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-" Haskell post write lint and check with ghcmod
-" $ `cabal install ghcmod` if missing and ensure
-" ~/.cabal/bin is in your $PATH.
-if !executable("ghcmod")
-    autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-endif
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-
-" Use honza's snippets.
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" Enable neosnippet snipmate compatibility mode
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" For snippet_complete marker.
-" if has('conceal')
-"     set conceallevel=2 concealcursor=i
-" endif
-
-" Disable the neosnippet preview candidate window
-" When enabled, there can be too much visual noise
-" especially when splits are used.
-set completeopt-=preview
-
-" }}}
 " Org-Mode {{{
 
 let g:org_todo_keywords = ['TODO', '|', 'DONE']
@@ -1380,10 +1248,109 @@ if exists('loaded_tcomment')
 endif
 
 " }}}
+" UltiSnips {{{
+
+let g:UltiSnipsExpandTrigger="<Nul>"
+let g:UltiSnipsJumpForwardTrigger="<Nul>"
+
+let g:ulti_expand_res = 0
+function! UltiSnips_MaybeExpandSnippet()
+    call UltiSnips_ExpandSnippet()
+    return g:ulti_expand_res
+endfunction
+
+let g:ulti_jump_forwards_res = 0
+function! UltiSnips_MaybeJumpForwards()
+    call UltiSnips_JumpForwards()
+    return g:ulti_jump_forwards_res
+endfunction
+
+let g:ulti_jump_backwards_res = 0
+function! UltiSnips_MaybeJumpBackwards()
+    call UltiSnips_JumpBackwards()
+    return g:ulti_jump_backwards_res
+endfunction
+
+function! g:Wolfjourn_HandleCR()
+    if !pumvisible()
+        return "\<CR>"
+    elseif UltiSnips_MaybeExpandSnippet()
+        return ""
+    else
+        " Close completion menu
+        " Use feedkeys since we need mappings
+        call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
+        return ""
+    endif
+endfunction
+
+function! g:Wolfjourn_HandleTab()
+    if pumvisible()
+        return "\<C-n>"
+    elseif UltiSnips_MaybeJumpForwards()
+        return ""
+    else
+        return "\<Tab>"
+    endif
+endfunction
+
+function! g:Wolfjourn_HandleShiftTab()
+    if pumvisible()
+        return "\<C-p>"
+    elseif UltiSnips_MaybeJumpBackwards()
+        return ""
+    else
+        return "\<S-Tab>"
+    endif
+endfunction
+
+inoremap <CR> <C-R>=g:Wolfjourn_HandleCR()<CR>
+inoremap <Tab> <C-R>=g:Wolfjourn_HandleTab()<CR>
+inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
+
+snoremap <Tab> <Esc>:call UltiSnips_JumpForwards()<CR>
+snoremap <S-Tab> <Esc>:call UltiSnips_JumpBackwards()<CR>
+
 " Yankring {{{
 
 " Hide the history file.
 let g:yankring_history_file = '.yankring-history'
+
+" }}}
+" YouCompleteMe {{{
+let g:ycm_min_num_of_chars_for_completion = 1
+
+" YCM will hose <Tab> bindings after .vimrc unless we redefine this list
+let g:ycm_key_list_select_completion = ['<Down>']
+" Same for <S-Tab>
+let g:ycm_key_list_previous_completion = ['<Up>']
+
+function! g:Wolfjourn_ToggleYCM()
+    if &completefunc != ''
+        let g:tmp_completefunc = &completefunc
+        let &completefunc = ''
+    else
+        let &completefunc = g:tmp_completefunc
+    endif
+
+    return ""
+endfunction
+
+inoremap <expr> <Plug>ToggleYCM g:Wolfjourn_ToggleYCM()
+
+function! g:FixCtrlY()
+    if pumvisible()
+        call feedkeys("\<Plug>ToggleYCM")
+        call feedkeys("\<C-y>", 'n')
+        call feedkeys("\<Plug>ToggleYCM")
+    else
+        call feedkeys("\<C-y>", 'n')
+    endif
+
+    return ''
+endfunction
+
+inoremap <expr> <C-y> g:FixCtrlY()
 
 " }}}
 " NERDTree {{{
@@ -1471,10 +1438,10 @@ nnoremap <Leader><space> :noh<CR>
 vnoremap D y'>p
 
 " Tab to indent in visual mode.
-vnoremap <Tab> >gv
+" vnoremap <Tab> >gv
 
 " Shift+Tab to unindent in visual mode.
-vnoremap <S-Tab> <gv
+" vnoremap <S-Tab> <gv
 
 " Re hard wrap paragraph.
 " nnoremap <Leader>q gqip
