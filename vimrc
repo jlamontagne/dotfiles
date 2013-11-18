@@ -46,14 +46,13 @@ Bundle 'tpope/vim-repeat'
 " Provides pairs of bracket mappings for buffer, file navigation and editing.
 Bundle 'tpope/vim-unimpaired'
 
+Bundle 'tpope/vim-scriptease'
+
 " Renames the file in the current buffer.
 Bundle 'vim-scripts/Rename2'
 
 " Kills a  buffer without closing the split.
 Bundle 'vim-scripts/bufkill.vim'
-
-" Resizes the current buffer to accommodate its content.
-Bundle 'roman/golden-ratio'
 
 " Show marks in a gutter.
 Bundle 'vim-scripts/ShowMarks7'
@@ -118,9 +117,6 @@ Bundle 'sickill/vim-pasta'
 
 " A better grep.
 Bundle 'mileszs/ack.vim'
-
-" Searches a file for todo, fixme.
-Bundle 'vim-scripts/TaskList.vim'
 
 " Browse tags of source code files.
 Bundle 'majutsushi/tagbar'
@@ -229,16 +225,16 @@ Bundle 'kchmck/vim-coffee-script'
 " Ruby/Rails {{{
 
 " Ruby langauge.
-Bundle 'vim-ruby/vim-ruby'
+" Bundle 'vim-ruby/vim-ruby'
 
 " Ruby refactoring tool (dependency: matchit).
 " Bundle 'ecomba/vim-ruby-refactoring'
 
 " Text object for selecting ruby blocks (dependency: matchit).
-Bundle 'nelstrom/vim-textobj-rubyblock'
+" Bundle 'nelstrom/vim-textobj-rubyblock'
 
 " Quickly converts Ruby blocks between {} and begin/end.
-Bundle 'sorin-ionescu/vim-ruby-block-conv'
+" Bundle 'sorin-ionescu/vim-ruby-block-conv'
 
 " Debug Ruby scripts and applications.
 " Bundle 'astashov/vim-ruby-debugger'
