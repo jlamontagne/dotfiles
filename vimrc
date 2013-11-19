@@ -10,8 +10,10 @@ if v:version < 703
     finish
 endif
 
-" Bundles {{{
+" Bundles ----------------------------------------------------------------- {{{
+
     " Vundle {{{
+
         " Turn off vi compatibility.
         set nocompatible
         " Turning filetype off is necessary to load ftdetect files.
@@ -20,9 +22,10 @@ endif
         "     git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
         set rtp+=~/.vim/bundle/vundle/
         call vundle#rc()
-    " }}}
 
+    " }}}
     " General {{{
+
         Bundle 'gmarik/vundle'
         " Identifies file indentation.
         Bundle 'Raimondi/YAIFA'
@@ -50,19 +53,22 @@ endif
         " Bundle 'vim-scripts/restore_view.vim'
         Bundle 'coderifous/textobj-word-column.vim'
         Bundle 'altercation/vim-colors-solarized'
-    " }}}
 
+    " }}}
     " Syntax {{{
-        Bundle 'tpope/vim-markdown'
-    " }}}
 
+        Bundle 'tpope/vim-markdown'
+
+    " }}}
     " Haskell {{{
+
         Bundle 'syntaxhaskell.vim'
         Bundle 'indenthaskell.vim'
         Bundle 'lukerandall/haskellmode-vim'
-    " }}}
 
+    " }}}
     " Programming {{{
+
         " A better paste.
         Bundle 'sickill/vim-pasta'
         Bundle 'mileszs/ack.vim'
@@ -83,26 +89,30 @@ endif
         Bundle 'vim-scripts/matchit.zip'
         Bundle 'SirVer/ultisnips'
         Bundle 'honza/vim-snippets'
-    " }}}
 
+    " }}}
     " Git {{{
+
         Bundle 'tpope/vim-git'
         Bundle 'tpope/vim-fugitive'
         Bundle 'int3/vim-extradite'
         Bundle 'mattn/gist-vim'
-    " }}}
 
+    " }}}
     " Web Development {{{
+
         Bundle 'rstacruz/sparkup'
         Bundle 'othree/html5.vim'
         Bundle 'amirh/HTML-AutoCloseTag'
         Bundle 'https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git'
         Bundle 'groenewege/vim-less'
         Bundle 'pangloss/vim-javascript'
-    " }}}
-" }}}
 
-" General Settings {{{
+    " }}}
+
+" }}}
+" General Settings -------------------------------------------------------- {{{
+
     set modelines=0
     set undolevels=1000
     set history=50
@@ -177,9 +187,10 @@ endif
     filetype plugin indent on
     set background=dark
     colorscheme solarized
-" }}}
 
-" Window Title {{{
+" }}}
+" Window Title ------------------------------------------------------------ {{{
+
     if has('title') && (has('gui_running') || &title)
         " Set the title.
         set titlestring=
@@ -192,9 +203,10 @@ endif
         " Working directory.
         set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
     endif
-" }}}
 
-" Terminal Interface {{{
+" }}}
+" Terminal Interface ------------------------------------------------------ {{{
+
     if &term =~ 'xterm'
         if &termencoding == ''
             set termencoding=utf-8
@@ -228,16 +240,18 @@ endif
             let &t_EI = "\<Esc>]50;CursorShape=0\x7"
         endif
     endif
-" }}}
 
-" Status Line {{{
+" }}}
+" Status Line ------------------------------------------------------------- {{{
+
     " Always show status.
     set laststatus=2
     " Disable status line fill chars.
     set fillchars+=stl:\ ,stlnc:\ " Space.
-" }}}
 
-" Search and Replace {{{
+" }}}
+" Search and Replace ------------------------------------------------------ {{{
+
     " Show partial matches as search is entered.
     set incsearch
     set hlsearch
@@ -277,9 +291,10 @@ endif
                 \ "\\\\>", "\\\\b", ""),
             \ "\\\\v", "", "") .
         \ "'"<CR>
-" }}}
 
-" Whitespace {{{
+" }}}
+" Whitespace -------------------------------------------------------------- {{{
+
     " Do not select the end of line.
     " XXX: Using 'old' breaks UltiSnips by selecting one character past the
     " placeholder.
@@ -307,9 +322,10 @@ endif
     set listchars=tab:▸\ ,eol:¬,trail:⌴,extends:❯,precedes:❮
     " Highlight VCS conflict markers.
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-" }}}
 
-" Folding {{{
+" }}}
+" Folding ----------------------------------------------------------------- {{{
+
     set foldenable
     set foldmethod=syntax
     set foldnestmax=2
@@ -344,9 +360,10 @@ endif
         return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
     endfunction " }}}
     set foldtext=MyFoldText()
-" }}}
 
-" File Name Auto Completion {{{
+" }}}
+" File Name Auto Completion ----------------------------------------------- {{{
+
     " Show a list entries.
     set wildmenu
 
@@ -363,9 +380,10 @@ endif
     set wildignore+=*.spl
     set wildignore+=*~,#*#,*.sw?,%*,*=
     set wildignore+=*.DS_Store
-" }}}
 
-" Auto Commands {{{
+" }}}
+" Auto Commands ----------------------------------------------------------- {{{
+
     " Auto save on lost focus. DISABLED: Closes help file when focus is lost.
     " au FocusLost * silent bufdo if !empty(bufname('%')) && !&ro | update | endif
     " au FocusLost * :wa
@@ -386,6 +404,7 @@ endif
         \ call StripTrailingWhitespace()
 
     " Cursorline {{{
+
         " Highlight the current line in the current window.
         aug cursorline
             au!
@@ -394,27 +413,32 @@ endif
             au InsertEnter * set nocursorline
             au InsertLeave * set cursorline
         aug end
-    " }}}
 
+    " }}}
     " Trailing Whitespace {{{
+
         aug trailing
             au!
             au InsertEnter * :set listchars-=trail:⌴
             au InsertLeave * :set listchars+=trail:⌴
         aug end
-    " }}}
-" }}}
 
-" File Settings {{{
+    " }}}
+
+" }}}
+" File Settings ----------------------------------------------------------- {{{
+
     " BASH {{{
+
         aug ft_bash
             au!
             au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
             " setlocal tabstop=2 softtabstop=2 shiftwidth=2
         aug end
-    " }}}
 
+    " }}}
     " CSS {{{
+
         aug ft_css
             au!
             au BufNewFile,BufRead *.less setlocal filetype=less
@@ -432,14 +456,16 @@ endif
             au BufNewFile,BufRead *.css,*.less
                 \ inoremap <buffer> {<CR> {}<left><CR>.<CR><esc>kA<bs><tab>
         aug end
-    " }}}
 
+    " }}}
     " Git {{{
+
         aug ft_git
             au!
             au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable textwidth=72
 
         " Fugitive {{{
+
             " Jump to the last known position when reopening a file.
             au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -454,28 +480,32 @@ endif
 
             " Auto-clean fugitive buffers.
             au BufReadPost fugitive://* set bufhidden=delete
+
         " }}}
 
         aug end
-    " }}}
 
+    " }}}
     " Handlebars {{{
+
         aug ft_handlebars
             au!
             au FileType handlebars compiler html
             au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
         aug end
-    " }}}
 
+    " }}}
     " HTML {{{
+
         aug ft_html
             au!
             au FileType html compiler html
             au FileType html ru ftplugin/html_autoclosetag.vim
         aug end
-    " }}}
 
+    " }}}
     " Haskell {{{
+
         aug ft_haskell
             au!
             au FileType haskell compiler ghc
@@ -487,30 +517,34 @@ endif
                 "          |
                 "          \_______________ Indent in steps of 4 spaces.
         aug end
-    " }}}
 
+    " }}}
     " Mail {{{
+
         aug ft_mail
             au!
             au Filetype mail setlocal spell
         aug end
-    " }}}
 
+    " }}}
     " Markdown {{{
+
         aug ft_markdown
             au!
             au BufNewFile,BufRead *.m*down setlocal filetype=markdown
         aug end
-    " }}}
 
+    " }}}
     " Mercurial {{{
+
         aug ft_mercurial
             au!
             au BufNewFile,BufRead .hgrc,hgrc,Mercurial.ini setlocal filetype=dosini
         aug end
-    " }}}
 
+    " }}}
     " Python {{{
+
         aug ft_python
             au!
             au FileType python
@@ -529,9 +563,10 @@ endif
                 au FileType python noremap <buffer> <
                 au FileType python noremap <buffer> <LocalLeader>ds :call ShowPyDoc('<C-R><C-W>', 1)<CR>
         aug end
-    " }}}
 
+    " }}}
     " Python (Django) {{{
+
         aug ft_django
             au!
             au BufNewFile,BufRead dashboard.py normal! zR
@@ -544,67 +579,78 @@ endif
             au BufNewFile,BufRead common_settings.py
                 \ setlocal filetype=python.django foldmethod=marker
         aug end
-    " }}}
 
+    " }}}
     " QuickFix {{{
+
         aug ft_quickfix
             au!
             au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
         aug end
-    " }}}
 
+    " }}}
     " Text {{{
+
         aug ft_text
             au!
             " Enable soft-wrapping for text files
             au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
         aug end
-    " }}}
 
+    " }}}
     " Vagrant {{{
+
         aug ft_vagrant
             au!
             au BufRead,BufNewFile Vagrantfile set filetype=ruby
         aug end
-    " }}}
 
+    " }}}
     " Vim {{{
+
         aug ft_vim
             au!
             au FileType vim,help setlocal textwidth=78
             au FileType vim setlocal foldmethod=marker colorcolumn=79
         aug end
-    " }}}
 
+    " }}}
     " Zsh {{{
+
         aug ft_zsh
             au!
             au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
             " setlocal tabstop=2 softtabstop=2 shiftwidth=2
         aug end
-    " }}}
-" }}}
 
-" Plugin Settings {{{
+    " }}}
+
+" }}}
+" Plugin Settings --------------------------------------------------------- {{{
+
     let g:delimitMate_expand_cr = 1
     let g:delimitMate_expand_space = 1
     let g:delimitMate_jump_expansion = 1
 
     " Ack {{{
-        map <Leader>a :Ack!
-    " }}}
 
+        map <Leader>a :Ack!
+
+    " }}}
     " Auto Complete Pop {{{
+
         " Set length of characters before keyword completion.
         let g:AutoComplPop_BehaviorKeywordLength = 4
-    " }}}
 
+    " }}}
     " Extradite {{{
+
         " Show the commit hash.
         let g:extradite_showhash = 1
-    " }}}
 
+    " }}}
     " CtrlP {{{
+
         " Go up the file system until '.git', or similar, is found.
         let g:ctrlp_working_path_mode = 'raw'
 
@@ -634,37 +680,43 @@ endif
 
         " Map clear cache.
         nnoremap <Leader>c :CtrlPClearCache<CR>
-    " }}}
 
+    " }}}
     " Gist {{{
+
         let g:gist_clip_command = 'pbcopy'
         let g:gist_detect_filetype = 1
         let g:gist_open_browser_after_post = 1
-    " }}}
 
+    " }}}
     " Golden Ratio {{{
+
         nnoremap <Leader>G <Plug>(golden_ratio_resize)
         let g:golden_ratio_autocommand = 0
-    " }}}
 
+    " }}}
     " Gundo {{{
+
         nnoremap <Leader>U :GundoToggle<CR>
         let g:gundo_preview_bottom = 1
-    " }}}
 
+    " }}}
     " Haskellmode {{{
+
         let g:haddock_browser = "firefox-bin"
         let g:ghc = "ghc"
-    " }}}
 
+    " }}}
     " HTML5 {{{
+
         let g:event_handler_attributes_complete = 0
         let g:rdfa_attributes_complete = 0
         let g:microdata_attributes_complete = 0
         let g:atia_attributes_complete = 0
-    " }}}
 
+    " }}}
     " Indent Guides {{{
+
         " Auto calculate guide colors.
         let g:indent_guides_auto_colors = 1
 
@@ -673,45 +725,52 @@ endif
 
         " Indent from level 2.
         let g:indent_guides_start_level = 1
-    " }}}
 
+    " }}}
     " Org-Mode {{{
+
         let g:org_todo_keywords = ['TODO', '|', 'DONE']
         let g:org_plugins = [
             \ 'ShowHide', '|', 'Navigator',
             \ 'EditStructure', '|', 'Todo', 'Date', 'Misc'
         \ ]
-    " }}}
 
+    " }}}
     " Preview {{{
-        let g:PreviewBrowsers='open'
-    " }}}
 
+        let g:PreviewBrowsers='open'
+
+    " }}}
     " Python by Dmitry Vasiliev {{{
+
         let python_highlight_all = 1
         let python_print_as_function = 1
         let python_slow_sync = 1
-    " }}}
 
+    " }}}
     " Rainbow Parenthesis {{{
-        nmap <Leader>rp :RainbowParenthesesToggle<CR>
-    " }}}
 
+        nmap <Leader>rp :RainbowParenthesesToggle<CR>
+
+    " }}}
     " Ropevim {{{
+
         let ropevim_enable_shortcuts = 0
         let ropevim_guess_project = 1
         let ropevim_global_prefix = '<C-c>p'
-    " }}}
 
+    " }}}
     " Showmarks {{{
+
         " Do not enable showmarks at startup.
         let g:showmarks_enable = 0
 
         " Do not include the various brace marks (), {}, etc.
         let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
-    " }}}
 
+    " }}}
     " Solarized {{{
+
         if exists('g:colors_name') && g:colors_name == 'solarized'
             " Text is unreadable with background transparency.
             if has('gui_macvim')
@@ -726,15 +785,17 @@ endif
                 endif
             endif
         endif
-    " }}}
 
+    " }}}
     " Surround {{{
+
         let g:surround_40 = "(\r)"
         let g:surround_91 = "[\r]"
         let g:surround_60 = "<\r>"
-    " }}}
 
+    " }}}
     " Syntastic {{{
+
         " Mark syntax errors with :signs.
         let g:syntastic_enable_signs = 1
 
@@ -752,9 +813,10 @@ endif
 
         " Set the display format.
         let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-    " }}}
 
+    " }}}
     " Tagbar {{{
+
         let g:tagbar_sort = 1            " Sort by name.
         let g:tagbar_compact = 0         " Use compact layout.
         let g:tagbar_expand = 1          " Expand window in GUI mode.
@@ -769,20 +831,23 @@ endif
             \ ],
             \ 'fold': 0
         \ }
-    " }}}
 
+    " }}}
     " TaskList {{{
-        map <Leader>T <Plug>TaskList
-    " }}}
 
+        map <Leader>T <Plug>TaskList
+
+    " }}}
     " Tcomment {{{
+
         " Map 'gcp' comment the current paragraph (block).
         if exists('loaded_tcomment')
             nmap <silent> gcp <c-_>p
         endif
-    " }}}
 
+    " }}}
     " UltiSnips {{{
+
         " Only use honza/vim-snippets
         let g:UltiSnipsSnippetDirectories = ["../vim-snippets/UltiSnips"]
 
@@ -848,14 +913,16 @@ endif
 
         snoremap <Tab> <Esc>:call UltiSnips_JumpForwards()<CR>
         snoremap <S-Tab> <Esc>:call UltiSnips_JumpBackwards()<CR>
-    " }}}
 
+    " }}}
     " Yankring {{{
+
         " Hide the history file.
         let g:yankring_history_file = '.yankring-history'
-    " }}}
 
+    " }}}
     " YouCompleteMe {{{
+
         let g:ycm_min_num_of_chars_for_completion = 1
 
         " YCM will hose <Tab> bindings after .vimrc unless we redefine this list
@@ -889,9 +956,10 @@ endif
         endfunction
 
         inoremap <expr> <C-y> g:FixCtrlY()
-    " }}}
 
+    " }}}
     " NERDTree {{{
+
         let g:NERDShutUp = 1
         map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
         map <leader>e :NERDTreeFind<CR>
@@ -905,14 +973,17 @@ endif
         let NERDTreeShowHidden=1
         let NERDTreeKeepTreeInNewTab=1
         let g:nerdtree_tabs_open_on_gui_startup=0
-    " }}}
-" }}}
 
-" Key Remapping {{{
+    " }}}
+
+" }}}
+" Key Remapping ----------------------------------------------------------- {{{
+
     nnoremap <Leader>s :w<CR>
     nnoremap <Leader>q :wq<CR>
 
     " Tab Navigation {{{
+
         " Easily create a new tab.
         map <Leader>tt :tabnew<CR>
 
@@ -927,9 +998,10 @@ endif
 
         " Easily go to previous tab.
         noremap <Leader>tp :tabprevious<CR>
-    " }}}
 
+    " }}}
     " Window Navigation {{{
+
         " Navigate to left window.
         nnoremap <C-h> <C-w>h
 
@@ -947,25 +1019,28 @@ endif
 
         " Vertical split then move to right window.
         nnoremap <Leader>\| <C-w>v<C-w>l
-    " }}}
 
+    " }}}
     " Text Alignment {{{
+
         nnoremap <Leader>Al :left<CR>
         nnoremap <Leader>Ac :center<CR>
         nnoremap <Leader>Ar :right<CR>
         vnoremap <Leader>Al :left<CR>
         vnoremap <Leader>Ac :center<CR>
         vnoremap <Leader>Ar :right<CR>
-    " }}}
 
+    " }}}
     " Text Movement {{{
+
         noremap <Leader>j :m+<CR>
         noremap <Leader>k :m-2<CR>
         vnoremap <Leader>j :m'>+<CR>gv
         vnoremap <Leader>k :m-2<CR>gv
-    " }}}
 
+    " }}}
     " Miscellaneous Mappings {{{
+
         " Disable search match highlight.
         nnoremap <Leader><space> :noh<CR>
 
@@ -1063,18 +1138,22 @@ endif
         " inoremap <expr> <C-n> pumvisible() ?
         "     \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
         "     \ "\<lt>Down>" : ""<CR>'
-    " }}}
-" }}}
 
-" Text Objects (Credit: Steve Losh) {{{
+    " }}}
+
+" }}}
+" Text Objects (Credit: Steve Losh) --------------------------------------- {{{
+
     " Shortcut for [] {{{
+
         onoremap id i[
         onoremap ad a[
         vnoremap id i[
         vnoremap ad a[
-    " }}}
 
+    " }}}
     " Next/Last () {{{
+
         vnoremap <silent> inb :<C-U>normal! f(vib<CR>
         onoremap <silent> inb :<C-U>normal! f(vib<CR>
         vnoremap <silent> anb :<C-U>normal! f(vab<CR>
@@ -1092,9 +1171,10 @@ endif
         onoremap <silent> il( :<C-U>normal! F)vi(<CR>
         vnoremap <silent> al( :<C-U>normal! F)va(<CR>
         onoremap <silent> al( :<C-U>normal! F)va(<CR>
-    " }}}
 
+    " }}}
     " Next/Last {} {{{
+
         vnoremap <silent> inB :<C-U>normal! f{viB<CR>
         onoremap <silent> inB :<C-U>normal! f{viB<CR>
         vnoremap <silent> anB :<C-U>normal! f{vaB<CR>
@@ -1112,9 +1192,10 @@ endif
         onoremap <silent> il{ :<C-U>normal! F}vi{<CR>
         vnoremap <silent> al{ :<C-U>normal! F}va{<CR>
         onoremap <silent> al{ :<C-U>normal! F}va{<CR>
-    " }}}
 
+    " }}}
     " Next/Last [] {{{
+
         vnoremap <silent> ind :<C-U>normal! f[vi[<CR>
         onoremap <silent> ind :<C-U>normal! f[vi[<CR>
         vnoremap <silent> and :<C-U>normal! f[va[<CR>
@@ -1132,9 +1213,10 @@ endif
         onoremap <silent> il[ :<C-U>normal! F]vi[<CR>
         vnoremap <silent> al[ :<C-U>normal! F]va[<CR>
         onoremap <silent> al[ :<C-U>normal! F]va[<CR>
-    " }}}
 
+    " }}}
     " Next/Last <> {{{
+
         vnoremap <silent> in< :<C-U>normal! f<vi<<CR>
         onoremap <silent> in< :<C-U>normal! f<vi<<CR>
         vnoremap <silent> an< :<C-U>normal! f<va<<CR>
@@ -1144,9 +1226,10 @@ endif
         onoremap <silent> il< :<C-U>normal! f>vi<<CR>
         vnoremap <silent> al< :<C-U>normal! f>va<<CR>
         onoremap <silent> al< :<C-U>normal! f>va<<CR>
-    " }}}
 
+    " }}}
     " Next '' {{{
+
         vnoremap <silent> in' :<C-U>normal! f'vi'<CR>
         onoremap <silent> in' :<C-U>normal! f'vi'<CR>
         vnoremap <silent> an' :<C-U>normal! f'va'<CR>
@@ -1156,9 +1239,10 @@ endif
         onoremap <silent> il' :<C-U>normal! F'vi'<CR>
         vnoremap <silent> al' :<C-U>normal! F'va'<CR>
         onoremap <silent> al' :<C-U>normal! F'va'<CR>
-    " }}}
 
+    " }}}
     " Next "" {{{
+
         vnoremap <silent> in" :<C-U>normal! f"vi"<CR>
         onoremap <silent> in" :<C-U>normal! f"vi"<CR>
         vnoremap <silent> an" :<C-U>normal! f"va"<CR>
@@ -1168,17 +1252,21 @@ endif
         onoremap <silent> il" :<C-U>normal! F"vi"<CR>
         vnoremap <silent> al" :<C-U>normal! F"va"<CR>
         onoremap <silent> al" :<C-U>normal! F"va"<CR>
-    " }}}
-" }}}
 
-" Abbreviations {{{
+    " }}}
+
+" }}}
+" Abbreviations ----------------------------------------------------------- {{{
+
     cabbr cdf cd %:p:h<CR>
     cabbr lcdf lcd %:p:h<CR>
     cabbr cwd lcd %:p:h
-" }}}
 
-" Functions {{{
+" }}}
+" Functions --------------------------------------------------------------- {{{
+
     " Open URL {{{
+
         command! -bar -nargs=1 OpenURL :!open <args>
         function! OpenURLUnderCursor()
             let l:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
@@ -1189,9 +1277,10 @@ endif
             endif
         endfunction
         nmap <silent> <Leader>w :call OpenURLUnderCursor()<CR>
-    " }}}
 
+    " }}}
     " Error Toggle {{{
+
         command! ErrorsToggle call ErrorsToggle()
         function! ErrorsToggle()
             if exists("w:is_error_window")
@@ -1217,9 +1306,10 @@ endif
 
         nmap <silent> <F3> :ErrorsToggle<CR>
         nmap <silent> <F4> :QFixToggle<CR>
-    " }}}
 
+    " }}}
     " Strip Trailing Whitespace {{{
+
         function! StripTrailingWhitespace()
             if !&binary && &modifiable && &filetype != 'diff'
                 let l:winview = winsaveview()
@@ -1228,9 +1318,10 @@ endif
                 call winrestview(l:winview)
             endif
         endfunction
-    " }}}
 
+    " }}}
     " Toggle Background {{{
+
         function! BackgroundToggle()
             let &background = ( &background == "dark"? "light" : "dark" )
             if exists("g:colors_name")
@@ -1241,6 +1332,7 @@ endif
         silent! nnoremap <F2> :BackgroundToggle<CR>
         silent! inoremap <F2> :BackgroundToggle<CR>
         silent! vnoremap <F2> :BackgroundToggle<CR>
-    " }}}
-" }}}
 
+    " }}}
+
+" }}}
