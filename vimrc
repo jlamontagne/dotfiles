@@ -314,31 +314,36 @@ endif
     set foldmethod=syntax
     set foldnestmax=2
 
-    " Focus the current fold.
-    nnoremap <Leader>z zMzvzz
-
     " Make zO recursively open the top level fold regardless of cursor placement.
     nnoremap zO zCzO
 
-    " Credit: Steve Losh
-    function! SJLFoldText()
+    highlight Folded term=bold cterm=bold ctermfg=10 ctermbg=8
+
+    " "Focus" the current line.  Basically:
+    "
+    " 1. Close all folds.
+    " 2. Open just the folds containing the current line.
+    " 3. Move the line to a little bit (15 lines) above the center of the screen.
+    "
+    " This mapping wipes out the z mark, which I never use.
+    nnoremap <Leader>z mzzMzvzz15<c-e>`z
+
+    function! MyFoldText() " {{{
         let line = getline(v:foldstart)
 
-        let nucolwidth = &fdc + &number * &numberwidth
+        let nucolwidth = &fdc + (&number || &relativenumber) * &numberwidth
         let windowwidth = winwidth(0) - nucolwidth - 3
         let foldedlinecount = v:foldend - v:foldstart
 
-        " Expand tabs into spaces.
+        " expand tabs into spaces
         let onetab = strpart('          ', 0, &tabstop)
         let line = substitute(line, '\t', onetab, 'g')
 
         let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
         let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-        return line . ' ...' .
-            \ repeat(" ",fillcharcount) .
-            \ foldedlinecount . ' ...' . ' '
-    endfunction
-    set foldtext=SJLFoldText()
+        return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+    endfunction " }}}
+    set foldtext=MyFoldText()
 " }}}
 
 " File Name Auto Completion {{{
