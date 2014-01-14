@@ -907,6 +907,10 @@ endif
                 return "\<C-n>"
             elseif UltiSnips_MaybeJumpForwards()
                 return ""
+            elseif col(".") <= col("$") - 1
+                " Jump over the remaining characters in the line
+                call cursor(line("."), col("$"))
+                return ""
             else
                 return "\<Tab>"
             endif
