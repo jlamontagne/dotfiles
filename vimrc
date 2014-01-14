@@ -406,8 +406,8 @@ endif
     au VimResized * exe "normal! \<c-w>="
 
     " Strip trailing whitespace.
-    au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
-        \ call StripTrailingWhitespace()
+    " au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
+        " \ call StripTrailingWhitespace()
 
     " Cursorline {{{
 
