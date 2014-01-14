@@ -1340,7 +1340,7 @@ endif
     " Strip Trailing Whitespace {{{
 
         function! StripTrailingWhitespace()
-            if !&binary && &modifiable && &filetype != 'diff'
+            if !&binary && &modifiable && &filetype != 'diff' && &ft != 'jade'
                 let l:winview = winsaveview()
                 %s/\s\+$//e
                 let @/=''
