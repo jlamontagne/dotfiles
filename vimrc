@@ -506,7 +506,7 @@ endif
 
         aug ft_html
             au!
-            au FileType html compiler html
+            " au FileType html compiler html
             au FileType html ru ftplugin/html_autoclosetag.vim
         aug end
 
