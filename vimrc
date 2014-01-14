@@ -90,6 +90,7 @@ endif
         Bundle 'vim-scripts/matchit.zip'
         Bundle 'SirVer/ultisnips'
         Bundle 'honza/vim-snippets'
+        Bundle 'digitaltoad/vim-jade'
 
     " }}}
     " Git {{{
