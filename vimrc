@@ -194,6 +194,8 @@ endif
     set background=dark
     colorscheme solarized
 
+    hi LineNr ctermbg=8 ctermfg=0 cterm=italic
+
 " }}}
 " Window Title ------------------------------------------------------------ {{{
 
@@ -339,7 +341,7 @@ endif
     " Make zO recursively open the top level fold regardless of cursor placement.
     nnoremap zO zCzO
 
-    highlight Folded term=bold cterm=bold ctermfg=10 ctermbg=8
+    highlight Folded cterm=NONE ctermfg=10 ctermbg=0
 
     " "Focus" the current line.  Basically:
     "
@@ -418,6 +420,7 @@ endif
             au BufLeave * set nocursorline
             au InsertEnter * set nocursorline
             au InsertLeave * set cursorline
+            hi CursorLineNr ctermbg=8 ctermfg=10 cterm=italic
         aug end
 
     " }}}
@@ -970,6 +973,9 @@ endif
         endfunction
 
         inoremap <expr> <C-y> g:FixCtrlY()
+
+        hi Pmenu ctermbg=0 ctermfg=2 cterm=NONE
+        hi PmenuSel ctermbg=10 ctermfg=8 cterm=NONE
 
     " }}}
     " NERDTree {{{
