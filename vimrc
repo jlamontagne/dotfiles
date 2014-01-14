@@ -268,8 +268,6 @@ endif
     set smartcase
     " Wrap to top of buffer when searching.
     set wrapscan
-    " Make search and replace global by default.
-    set gdefault
 
     " Use sane regexes.
     nnoremap / /\v
