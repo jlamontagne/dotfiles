@@ -102,6 +102,7 @@ endif
         Bundle 'tpope/vim-fugitive'
         Bundle 'int3/vim-extradite'
         Bundle 'mattn/gist-vim'
+        Bundle 'airblade/vim-gitgutter'
 
     " }}}
     " Web Development {{{
@@ -695,6 +696,11 @@ endif
         let g:gist_clip_command = 'pbcopy'
         let g:gist_detect_filetype = 1
         let g:gist_open_browser_after_post = 1
+
+    " }}}
+    " Git Gutter {{{
+
+        hi SignColumn ctermbg=8
 
     " }}}
     " Golden Ratio {{{
