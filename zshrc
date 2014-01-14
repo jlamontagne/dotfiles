@@ -54,3 +54,5 @@ unalias sftp
 unalias rsync
 unalias scp
 unalias ln
+
+alias bower='noglob bower'
