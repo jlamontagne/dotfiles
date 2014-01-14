@@ -53,6 +53,7 @@ endif
         " Bundle 'vim-scripts/restore_view.vim'
         Bundle 'coderifous/textobj-word-column.vim'
         Bundle 'altercation/vim-colors-solarized'
+        Bundle 'bling/vim-airline'
 
     " }}}
     " Syntax {{{
@@ -636,6 +637,9 @@ endif
 
         map <Leader>a :Ack!
 
+    " }}}
+    " Airline {{{
+        let g:airline#extensions#tabline#enabled = 1
     " }}}
     " Auto Complete Pop {{{
 
