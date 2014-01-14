@@ -112,8 +112,7 @@ data TopicItem = TI { topicName   :: Topic
 
 myTopics =
     --   Name           Directory           Default Action
-    [ TI "ff"           ""                  (spawn "firefox-bin")
-    , TI "chrome"       ""                  (spawn "google-chrome")
+    [ TI "web"          ""                  (spawn "firefox-bin" >> spawn "google-chrome-unstable")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 3)
     , TI "src0"          "src"               (spawnShell >*> 2)
@@ -155,6 +154,7 @@ myPrettyPrinter = xmobarPP
                     }
 
 -- $ xprop | grep WM_CLASS
+-- doSideFloat SE, NW, NE, etc
 myManageHook = composeAll
     [ className =? "Gimp"           --> doFloat
     , className =? "MPlayer"        --> doFloat
@@ -163,6 +163,7 @@ myManageHook = composeAll
     -- , className =? "Google-chrome"  --> doShift "2:web"
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    , name =? "Kerbal Space Program" --> doFullFloat
     ]
     where name = stringProperty "WM_NAME"
 
