@@ -821,7 +821,7 @@ endif
         let g:syntastic_auto_loc_list = 0
 
         " Show warnings.
-        let g:syntastic_quiet_warnings = 0
+        let g:syntastic_quiet_messages = {'level': 'warnings'}
 
         " Do not validate the following file types.
         let g:syntastic_disabled_filetypes = ['html', 'python']
