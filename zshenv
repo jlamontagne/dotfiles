@@ -104,3 +104,5 @@ if [[ -d "$TMPDIR" ]]; then
     mkdir -p "$TMPPREFIX"
   fi
 fi
+
+source $HOME/.config/aws
