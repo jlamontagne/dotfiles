@@ -91,6 +91,12 @@ myKeys =
                     ]
         , (i, k) <- zip [1..] "123456789"
     ]
+    ++
+    -- mod-{w,f,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-shift-{w,f,r} %! Move client to screen 1, 2, or 3
+    [(("M-"++m++[key]), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip "wfr" [0..]
+        , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
 myLayout = (
     Tall 1 (3/100) (1/2) |||
