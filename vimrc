@@ -891,7 +891,7 @@ endif
 
         function! g:Wolfjourn_HandleCR()
             if !pumvisible()
-                return "\<Esc>"
+                return "\<CR>"
             elseif UltiSnips_MaybeExpandSnippet()
                 return ""
             else
@@ -1000,17 +1000,6 @@ endif
 
 " }}}
 " Key Remapping ----------------------------------------------------------- {{{
-
-    " Easily exit insert mode (DISABLED: This is handled in
-    " g:Wolfjourn_HandleCR)
-    "
-    " inoremap <CR> <Esc>
-
-    " <S-CR> is macroed to <C-b> on my Kinesis Advantage, which enables us to
-    " get around the problem of terminals sending <CR> for <C-CR>/<S-CR>. The
-    " net effect being that <CR> exits insert mode, while <S-CR> inserts
-    " a newline.
-    inoremap <C-b> <CR>
 
     nnoremap <Leader>s :w<CR>
     nnoremap <Leader>q :wq<CR>
