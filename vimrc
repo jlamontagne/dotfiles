@@ -332,7 +332,7 @@ endif
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 
-    set foldenable
+    set nofoldenable
     set foldmethod=syntax
     set foldnestmax=2
 
