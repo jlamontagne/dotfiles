@@ -13,8 +13,8 @@
 # https://jira.skype.com/browse/SCL-810
 # http://wiki.cyberleo.net/wiki/KnowledgeBase/AlsaEqual
 
-defaults.pcm.!card 1
-defaults.ctl.!card 1
+defaults.pcm.!card 2
+defaults.ctl.!card 2
 defaults.pcm.!device 0
 defaults.ctl.!device 0
 

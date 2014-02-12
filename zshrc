@@ -14,8 +14,10 @@ fi
 
 bindkey -M "viins" "\C-R" history-incremental-search-backward
 
+export EDITOR="vim"
+
 # Enable keychain/ssh-agent to ask for passwords in X
-export SSH_ASKPASS="/usr/bin/x11-ssh-askpass"
+export SSH_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
 
 export PATH="${HOME}/bin:${HOME}/bin/phantomjs/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}"
 export MANPATH="${HOME}/bin/share/man:${MANPATH}"

@@ -1,5 +1,5 @@
 ! Colours
-#include ".solarized.Xresources"
+#include "solarized.Xresources"
 
 ! Cursor theme
 Xcursor.theme: Oxygen_Black
