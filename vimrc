@@ -309,10 +309,6 @@ endif
     set textwidth=79
     set formatoptions=cqrn1
     set virtualedit+=block
-    " Do not show invisible characters.
-    set nolist
-    " List of characters to show instead of whitespace.
-    set listchars=tab:▸\ ,eol:¬,trail:⌴,extends:❯,precedes:❮
     " Highlight VCS conflict markers.
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
