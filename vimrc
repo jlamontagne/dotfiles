@@ -635,9 +635,11 @@ endif
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
 
-    let g:delimitMate_expand_cr = 1
+    let g:delimitMate_expand_cr = 2
     let g:delimitMate_expand_space = 1
-    let g:delimitMate_jump_expansion = 1
+
+    " Don't jump over shit on other lines
+    let g:delimitMate_jump_expansion = 0
 
     " Ack {{{
 
@@ -890,15 +892,17 @@ endif
         endfunction
 
         function! g:Wolfjourn_HandleCR()
-            if !pumvisible()
-                return "\<CR>"
-            elseif UltiSnips_MaybeExpandSnippet()
+            if UltiSnips_MaybeExpandSnippet()
                 return ""
-            else
+            elseif pumvisible()
                 " Close completion menu
                 " Use feedkeys since we need mappings
                 call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
                 return ""
+            elseif delimitMate#WithinEmptyPair()
+                return delimitMate#ExpandReturn()
+            else
+                return "\<CR>"
             endif
         endfunction
 
