@@ -1,5 +1,5 @@
 ! Colours
-#include "solarized.Xresources"
+#include "hybrid.Xresources"
 
 ! Cursor theme
 Xcursor.theme: Oxygen_Black
@@ -14,8 +14,8 @@ URxvt.urgentOnBell: true
 
 ! Display bold and underlined text in color, rather than using the terminal
 ! attributes. This makes reading man pages a little easier.
-URxvt.colorBD: S_blue
-URxvt.colorUL: S_red
+! URxvt.colorBD: S_blue
+! URxvt.colorUL: S_red
 
 ! Perl extensions
 URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard
@@ -44,7 +44,7 @@ URxvt.keysym.M-s:      perl:keyboard-select:search
 ! q/Escape: Deactivate URL selection mode
 URxvt.keysym.M-u:    perl:url-select:select_next
 URxvt.urlLauncher:   firefox
-URxvt.underlineURLs: true
+URxvt.underlineURLs: false
 
 ! clipboard
 ! ---------

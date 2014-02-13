@@ -52,7 +52,7 @@ endif
         " after restart vim.
         " Bundle 'vim-scripts/restore_view.vim'
         Bundle 'coderifous/textobj-word-column.vim'
-        Bundle 'altercation/vim-colors-solarized'
+        Bundle 'w0ng/vim-hybrid'
         Bundle 'bling/vim-airline'
 
     " }}}
@@ -192,7 +192,8 @@ endif
     syntax on
     filetype plugin indent on
     set background=dark
-    colorscheme solarized
+    let g:hybrid_use_Xresources = 1
+    colorscheme hybrid
 
     hi LineNr ctermbg=8 ctermfg=0 cterm=italic
 
@@ -788,24 +789,6 @@ endif
 
         " Do not include the various brace marks (), {}, etc.
         let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
-
-    " }}}
-    " Solarized {{{
-
-        if exists('g:colors_name') && g:colors_name == 'solarized'
-            " Text is unreadable with background transparency.
-            if has('gui_macvim')
-                set transparency=0
-            endif
-
-            " Highlighted text is unreadable in Terminal.app because it
-            " does not support setting of the cursor foreground color.
-            if !has('gui_running') && $TERM_PROGRAM == 'Apple_Terminal'
-                if &background == 'dark'
-                    hi Visual term=reverse cterm=reverse ctermfg=10 ctermbg=7
-                endif
-            endif
-        endif
 
     " }}}
     " Surround {{{
