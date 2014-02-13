@@ -44,7 +44,7 @@ endif
         Bundle 'Lokaltog/vim-easymotion'
         " History of yanks, changes, and deletes.
         " Bundle 'vim-scripts/YankRing.vim'
-        Bundle 'scrooloose/nerdtree'
+        Bundle 'tpope/vim-vinegar'
         Bundle 'kien/ctrlp.vim'
         " Easily search for, substitute, and abbreviate multiple variants of a word.
         Bundle 'tpope/vim-abolish'
@@ -967,23 +967,6 @@ endif
 
         hi Pmenu ctermbg=0 ctermfg=2 cterm=NONE
         hi PmenuSel ctermbg=10 ctermfg=8 cterm=NONE
-
-    " }}}
-    " NERDTree {{{
-
-        let g:NERDShutUp = 1
-        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-        map <leader>e :NERDTreeFind<CR>
-        nmap <leader>nt :NERDTreeFind<CR>
-
-        let NERDTreeShowBookmarks=1
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-        let NERDTreeChDirMode=0
-        let NERDTreeQuitOnOpen=0
-        let NERDTreeMouseMode=2
-        let NERDTreeShowHidden=1
-        let NERDTreeKeepTreeInNewTab=1
-        let g:nerdtree_tabs_open_on_gui_startup=0
 
     " }}}
 
