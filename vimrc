@@ -48,9 +48,8 @@ endif
         Bundle 'kien/ctrlp.vim'
         " Easily search for, substitute, and abbreviate multiple variants of a word.
         Bundle 'tpope/vim-abolish'
-        " Automatically restore one file's cursor position and folding information
-        " after restart vim.
-        " Bundle 'vim-scripts/restore_view.vim'
+        " Continuously updated session files
+        Bundle 'tpope/vim-obsession'
         Bundle 'coderifous/textobj-word-column.vim'
         Bundle 'w0ng/vim-hybrid'
         Bundle 'bling/vim-airline'
@@ -232,8 +231,6 @@ endif
             " Terminal type for mouse recognition.
             set ttymouse=xterm2
         endif
-        " Restore screen on exit.
-        set restorescreen
         " Terminal in 'termcap' mode.
         set t_ti=7[r[?47h
         " Terminal out of 'termcap mode.
@@ -386,11 +383,6 @@ endif
     " Auto save on lost focus. DISABLED: Closes help file when focus is lost.
     " au FocusLost * silent bufdo if !empty(bufname('%')) && !&ro | update | endif
     " au FocusLost * :wa
-
-    " Remember folds."
-    set viewoptions=cursor,folds
-    au BufWinLeave * silent! mkview
-    au BufWinEnter * silent! loadview
 
     " Switch the CWD to the current buffer.
     " au BufEnter * lcd %:p:h
