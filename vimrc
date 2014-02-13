@@ -28,7 +28,7 @@ endif
 
         Bundle 'gmarik/vundle'
         " Identifies file indentation.
-        Bundle 'Raimondi/YAIFA'
+        Bundle 'tpope/vim-sleuth'
         Bundle 'godlygeek/tabular'
         Bundle 'sjl/gundo.vim'
         Bundle 'tpope/vim-repeat'
@@ -125,7 +125,7 @@ endif
     set encoding=utf8
     " Share the clipboard.
     " set clipboard+=unnamed
-    set colorcolumn=80
+    set colorcolumn=+1
     set backspace=indent,eol,start
     set backup
     set backupdir^=$HOME/.vim/backup//
@@ -307,20 +307,12 @@ endif
     " placeholder.
     "
     " set selection=old
-    set noexpandtab
-    set tabstop=8
-    " Set soft tabs equal to 4 spaces.
-    " set softtabstop=4
-    " Set auto indent spacing.
-    set shiftwidth=8
     " Shift to the next round tab stop.
     set shiftround
-    " Insert spaces in front of lines.
-    " set smarttab
     " Copy indent from the current line.
     set autoindent
     set wrap
-    set textwidth=80
+    set textwidth=79
     set formatoptions=cqrn1
     set virtualedit+=block
     " Do not show invisible characters.
@@ -441,7 +433,6 @@ endif
         aug ft_bash
             au!
             au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
-            " setlocal tabstop=2 softtabstop=2 shiftwidth=2
         aug end
 
     " }}}
@@ -517,13 +508,6 @@ endif
         aug ft_haskell
             au!
             au FileType haskell compiler ghc
-            au FileType haskell
-                \ setlocal sw=4 et sts=4 ts=8 tw=79 cc=80
-                "          |    |  |     \_ Respect files with actual tabs in them,
-                "          |    |  \_______ but our 'tabs' are 4 positions...
-                "          |    \__________ and are not really tabs, but spaces.
-                "          |
-                "          \_______________ Indent in steps of 4 spaces.
         aug end
 
     " }}}
@@ -561,11 +545,6 @@ endif
                 \ noremap <buffer> <LocalLeader>ri :RopeOrganizeImports<CR>
                 \ setlocal
                     \ omnifunc=pythoncomplete#Complete
-                    \ tabstop=4
-                    \ softtabstop=4
-                    \ shiftwidth=4
-                    \ textwidth=79
-                    \ colorcolumn=80
 
                 " Pydoc
                 au FileType python noremap <buffer> <
@@ -628,7 +607,6 @@ endif
         aug ft_zsh
             au!
             au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
-            " setlocal tabstop=2 softtabstop=2 shiftwidth=2
         aug end
 
     " }}}
