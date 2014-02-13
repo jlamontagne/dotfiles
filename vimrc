@@ -648,6 +648,10 @@ endif
     " }}}
     " Airline {{{
         let g:airline#extensions#tabline#enabled = 1
+
+        " Showing git-gutter stats is mega slow
+        let g:airline_section_b = ''
+        let g:airline#extensions#hunks#enabled = 0
     " }}}
     " Auto Complete Pop {{{
 
