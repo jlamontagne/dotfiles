@@ -92,9 +92,6 @@ endif
         Bundle 'digitaltoad/vim-jade'
 
     " }}}
-    " PHP {{{
-        Bundle 'spf13/PIV'
-    " }}}
     " Git {{{
 
         Bundle 'tpope/vim-git'
