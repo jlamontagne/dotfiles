@@ -112,6 +112,7 @@ endif
         Bundle 'https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git'
         Bundle 'groenewege/vim-less'
         Bundle 'pangloss/vim-javascript'
+        Bundle 'mustache/vim-mustache-handlebars'
 
     " }}}
 
