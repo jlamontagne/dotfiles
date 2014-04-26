@@ -75,7 +75,10 @@ endif
         Bundle 'majutsushi/tagbar'
         Bundle 'scrooloose/syntastic'
         Bundle 'tomtom/tcomment_vim'
-        Bundle 'Valloric/YouCompleteMe'
+
+        " This shit is so slow and annoying.
+        " Bundle 'Valloric/YouCompleteMe'
+
         " Javascript tab completion
         " Bundle 'marijnh/tern_for_vim'
         Bundle 'kien/rainbow_parentheses.vim'
@@ -847,8 +850,9 @@ endif
             elseif pumvisible()
                 " Close completion menu
                 " Use feedkeys since we need mappings
-                call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
-                return ""
+                " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
+                " return ""
+                return "\<C-y>"
             elseif delimitMate#WithinEmptyPair()
                 return delimitMate#ExpandReturn()
             else
@@ -901,32 +905,32 @@ endif
         " Same for <S-Tab>
         let g:ycm_key_list_previous_completion = ['<Up>']
 
-        function! g:Wolfjourn_ToggleYCM()
-            if &completefunc != ''
-                let g:tmp_completefunc = &completefunc
-                let &completefunc = ''
-            else
-                let &completefunc = g:tmp_completefunc
-            endif
-
-            return ""
-        endfunction
-
-        inoremap <expr> <Plug>ToggleYCM g:Wolfjourn_ToggleYCM()
-
-        function! g:FixCtrlY()
-            if pumvisible()
-                call feedkeys("\<Plug>ToggleYCM")
-                call feedkeys("\<C-y>", 'n')
-                call feedkeys("\<Plug>ToggleYCM")
-            else
-                call feedkeys("\<C-y>", 'n')
-            endif
-
-            return ''
-        endfunction
-
-        inoremap <expr> <C-y> g:FixCtrlY()
+        " function! g:Wolfjourn_ToggleYCM()
+        "     if &completefunc != ''
+        "         let g:tmp_completefunc = &completefunc
+        "         let &completefunc = ''
+        "     else
+        "         let &completefunc = g:tmp_completefunc
+        "     endif
+        "
+        "     return ""
+        " endfunction
+        "
+        " inoremap <expr> <Plug>ToggleYCM g:Wolfjourn_ToggleYCM()
+        "
+        " function! g:FixCtrlY()
+        "     if pumvisible()
+        "         call feedkeys("\<Plug>ToggleYCM")
+        "         call feedkeys("\<C-y>", 'n')
+        "         call feedkeys("\<Plug>ToggleYCM")
+        "     else
+        "         call feedkeys("\<C-y>", 'n')
+        "     endif
+        "
+        "     return ''
+        " endfunction
+        "
+        " inoremap <expr> <C-y> g:FixCtrlY()
 
         hi Pmenu ctermbg=0 ctermfg=2 cterm=NONE
         hi PmenuSel ctermbg=10 ctermfg=8 cterm=NONE
