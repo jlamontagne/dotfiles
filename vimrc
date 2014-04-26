@@ -829,19 +829,19 @@ endif
 
         let g:ulti_expand_res = 0
         function! UltiSnips_MaybeExpandSnippet()
-            call UltiSnips_ExpandSnippet()
+            call UltiSnips#ExpandSnippet()
             return g:ulti_expand_res
         endfunction
 
         let g:ulti_jump_forwards_res = 0
         function! UltiSnips_MaybeJumpForwards()
-            call UltiSnips_JumpForwards()
+            call UltiSnips#JumpForwards()
             return g:ulti_jump_forwards_res
         endfunction
 
         let g:ulti_jump_backwards_res = 0
         function! UltiSnips_MaybeJumpBackwards()
-            call UltiSnips_JumpBackwards()
+            call UltiSnips#JumpBackwards()
             return g:ulti_jump_backwards_res
         endfunction
 
@@ -887,8 +887,8 @@ endif
         inoremap <Tab> <C-R>=g:Wolfjourn_HandleTab()<CR>
         inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
 
-        snoremap <Tab> <Esc>:call UltiSnips_JumpForwards()<CR>
-        snoremap <S-Tab> <Esc>:call UltiSnips_JumpBackwards()<CR>
+        snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
+        snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
 
     " }}}
     " Yankring {{{
