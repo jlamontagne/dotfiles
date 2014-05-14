@@ -31,9 +31,10 @@ URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard
 ! v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
 ! y/Return:   Copy selection to primary buffer, Return: deactivate afterwards
 ! q/Escape:   Deactivate keyboard selection mode
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:activate
+! URxvt.keysym.M-Escape: perl:keyboard-select:activate
 ! override Meta-s binding and enable kb-select directly in backward search mode
-URxvt.keysym.M-s:      perl:keyboard-select:search
+! URxvt.keysym.M-s:      perl:keyboard-select:search
 
 ! url-select
 ! ----------
