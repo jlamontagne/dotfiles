@@ -22,6 +22,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -48,6 +49,7 @@ myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     { workspaces         = myTopicNames
     , manageHook         = manageSpawn <+> myManageHook
     , layoutHook         = smartBorders $ myLayout
+    , logHook = fadeInactiveLogHook 0.5
     , handleEventHook    = docksEventHook
     , terminal           = "urxvt"
     , normalBorderColor  = "#586e75"
