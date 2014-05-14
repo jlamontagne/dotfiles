@@ -103,14 +103,9 @@ myKeys =
         , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
 myLayout = (
-    Tall 1 (3/100) (1/2) |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    -- tabbed shrinkText defaultTheme |||
-    -- Full |||
-    -- spiral (6/7)) |||
     ResizableTall 1 (3/100) (1/2) [] |||
-    noBorders (fullscreenFull Full) |||
-    ThreeColMid 1 (3/100) (1/2))
+    Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+    noBorders (fullscreenFull Full))
 
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
 
