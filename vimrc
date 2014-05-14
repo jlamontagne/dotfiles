@@ -300,15 +300,6 @@ endif
 
     highlight Folded cterm=NONE ctermfg=10 ctermbg=0
 
-    " "Focus" the current line.  Basically:
-    "
-    " 1. Close all folds.
-    " 2. Open just the folds containing the current line.
-    " 3. Move the line to a little bit (15 lines) above the center of the screen.
-    "
-    " This mapping wipes out the z mark, which I never use.
-    nnoremap <Leader>z mzzMzvzz15<c-e>`z
-
     function! MyFoldText() " {{{
         let line = getline(v:foldstart)
 
@@ -498,11 +489,6 @@ endif
     " Don't jump over shit on other lines
     let g:delimitMate_jump_expansion = 0
 
-    " Ack {{{
-
-        map <Leader>a :Ack!
-
-    " }}}
     " Airline {{{
         let g:airline#extensions#tabline#enabled = 0
 
@@ -533,15 +519,6 @@ endif
         " Use more restrictive/faster VCS file listing
         let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
-        " Map buffer search.
-        nnoremap <Leader>b :CtrlPBuffer<CR>
-
-        " Map most recently used file search.
-        nnoremap <Leader>m :CtrlPMRU<CR>
-
-        " Map clear cache.
-        nnoremap <Leader>c :CtrlPClearCache<CR>
-
     " }}}
     " Gist {{{
 
@@ -557,7 +534,6 @@ endif
     " }}}
     " Gundo {{{
 
-        nnoremap <Leader>U :GundoToggle<CR>
         let g:gundo_preview_bottom = 1
 
     " }}}
@@ -610,8 +586,6 @@ endif
         let g:tagbar_compact = 0         " Use compact layout.
         let g:tagbar_expand = 1          " Expand window in GUI mode.
 
-        map <Leader>i <Plug>TagbarToggle
-
         " Define custom Zsh support (requires definition in ~/.ctags).
         let g:tagbar_type_zsh = {
             \ 'ctagstype': 'zsh',
@@ -620,11 +594,6 @@ endif
             \ ],
             \ 'fold': 0
         \ }
-
-    " }}}
-    " TaskList {{{
-
-        map <Leader>T <Plug>TaskList
 
     " }}}
     " Tcomment {{{
@@ -719,9 +688,45 @@ endif
 " }}}
 " Key Remapping ----------------------------------------------------------- {{{
 
-    nnoremap <Leader>s :w<CR>
-    nnoremap <Leader>q :wq<CR>
+    " "Focus" the current line.  Basically:
+    "
+    " 1. Close all folds.
+    " 2. Open just the folds containing the current line.
+    " 3. Move the line to a little bit (15 lines) above the center of the screen.
+    "
+    " This mapping wipes out the z mark, which I never use.
+    nnoremap <Leader>z mzzMzvzz15<c-e>`z
+
+    nnoremap <Leader>a :Ack!
+    nnoremap <Leader>b :CtrlPBuffer<CR>
+    nnoremap <Leader>c :CtrlPClearCache<CR>
     nnoremap <Leader>g :Gstatus<CR>
+    nnoremap <Leader>i :TagbarToggle<CR>
+    nnoremap <Leader>m :CtrlPMRU<CR>
+    nnoremap <Leader>q :wq<CR>
+    nnoremap <Leader>s :w<CR>
+    nnoremap <Leader>u :GundoToggle<CR>
+
+    " Faster substitute.
+    nnoremap <Leader>S :%s//<left>
+
+    " Easier linewise reselection.
+    nnoremap <Leader>v V`]
+
+    " Reselect pasted text.
+    nnoremap <Leader>v V`]
+
+    " Strip trailing whitespace.
+    nnoremap <Leader>w :call StripTrailingWhitespace()<CR>
+
+    " Disable search match highlight.
+    nnoremap <Leader><space> :noh<CR>
+
+    " Text Movement
+     noremap <Leader>j :m+<CR>
+     noremap <Leader>k :m-2<CR>
+    vnoremap <Leader>j :m'>+<CR>gv
+    vnoremap <Leader>k :m-2<CR>gv
 
     " Tab Navigation {{{
 
@@ -772,18 +777,7 @@ endif
         vnoremap <Leader>Ar :right<CR>
 
     " }}}
-    " Text Movement {{{
-
-        noremap <Leader>j :m+<CR>
-        noremap <Leader>k :m-2<CR>
-        vnoremap <Leader>j :m'>+<CR>gv
-        vnoremap <Leader>k :m-2<CR>gv
-
-    " }}}
     " Miscellaneous Mappings {{{
-
-        " Disable search match highlight.
-        nnoremap <Leader><space> :noh<CR>
 
         " Duplicate a selection.
         vnoremap D y'>p
@@ -797,9 +791,6 @@ endif
         " Re hard wrap paragraph.
         " nnoremap <Leader>q gqip
 
-        " Reselect pasted text.
-        nnoremap <Leader>v V`]
-
         " Reselect text ater indent/unindent.
         vnoremap < <gv
         vnoremap > >gv
@@ -809,10 +800,10 @@ endif
         noremap k gk
 
         " Faster ESC.
-        inoremap jk <ESC>
-        inoremap kj <ESC>
-        inoremap jj <ESC>
-        inoremap kk <ESC>
+        " inoremap jk <ESC>
+        " inoremap kj <ESC>
+        " inoremap jj <ESC>
+        " inoremap kk <ESC>
 
         " Make Ctrl-C trigger InsertLeave autocmds
         "
@@ -827,8 +818,8 @@ endif
         nnoremap Q gqip
 
         " Change Case.
-        nnoremap <C-u> gUiw
-        inoremap <C-u> <ESC>gUiwea
+        nnoremap <C-u> g~iw
+        inoremap <C-u> <ESC>eg~iwea
 
         " Write with sudo.
         cnoremap w!! w !sudo tee % >/dev/null
@@ -838,9 +829,6 @@ endif
 
         " Shift+P replace selection without overwriting default register in vmode.
         vnoremap P p :call setreg('"', getreg('0'))<CR>
-
-        " Strip trailing whitespace.
-        nnoremap <Leader>W call StripTrailingWhiteSpace()
 
         " Quick return.
         inoremap <C-CR> <ESC>A<CR>
@@ -852,12 +840,6 @@ endif
         nnoremap Vat vatV
         nnoremap Vab vabV
         nnoremap VaB vaBV
-
-        " Faster substitute.
-        nnoremap <Leader>S :%s//<left>
-
-        " Easier linewise reselection.
-        nnoremap <Leader>v V`]
 
         " Toggle paste.
         set pastetoggle=<F12>
