@@ -1,5 +1,16 @@
 xrandr --output DVI-I-3 --primary
-xrandr --output DVI-I-0 --right-of DVI-I-3 --rotate left
+# xrandr --output DVI-I-0 --right-of DVI-I-3 --rotate left
+xrandr --output DVI-I-0 --right-of DVI-I-3
+# xrandr --output DVI-I-0 --off
+
+# Workaround for Nvidia shit: chrome/games/videos appearing on all workspaces
+# See https://bbs.archlinux.org/viewtopic.php?pid=1384701#p1384701
+# https://bbs.archlinux.org/viewtopic.php?id=175709
+# Also see /etc/X11/xorg.conf.d/70-nvidia-composite-fix.conf
+compton -CGb
+# xcompmgr -n &
+
+hsetroot -solid '#000000'
 
 # Add terminus/etc to X11:
 xset +fp /usr/share/fonts/local
