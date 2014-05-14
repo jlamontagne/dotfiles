@@ -27,6 +27,7 @@ endif
     " General {{{
 
         Bundle 'gmarik/vundle'
+
         " Identifies file indentation.
         Bundle 'tpope/vim-sleuth'
         Bundle 'godlygeek/tabular'
@@ -35,24 +36,31 @@ endif
         " Provides pairs of bracket mappings for buffer, file navigation and editing.
         Bundle 'tpope/vim-unimpaired'
         Bundle 'tpope/vim-scriptease'
-        " Renames the file in the current buffer.
-        Bundle 'vim-scripts/Rename2'
-        " Kills a  buffer without closing the split.
-        Bundle 'vim-scripts/bufkill.vim'
+        " :Unlink/:Remove/:Move/etc
+        Bundle 'tpope/vim-eunuch'
         " Show marks in a gutter.
-        Bundle 'vim-scripts/ShowMarks7'
+        Bundle 'kshenoy/vim-signature'
         Bundle 'Lokaltog/vim-easymotion'
         " History of yanks, changes, and deletes.
         " Bundle 'vim-scripts/YankRing.vim'
+
+        " netrw via -
         Bundle 'tpope/vim-vinegar'
         Bundle 'kien/ctrlp.vim'
         " Easily search for, substitute, and abbreviate multiple variants of a word.
+        " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
         Bundle 'tpope/vim-abolish'
         " Continuously updated session files
+        " :Obsession + vim -S Session.vim
         Bundle 'tpope/vim-obsession'
         Bundle 'coderifous/textobj-word-column.vim'
         Bundle 'w0ng/vim-hybrid'
         Bundle 'bling/vim-airline'
+        " tmux
+        " Bundle 'tpope/vim-tbone'
+        " Bundle 'benmills/vimux'
+        " json/etc
+        Bundle 'tpope/vim-jdaddy'
 
     " }}}
     " Syntax {{{
@@ -64,7 +72,6 @@ endif
 
         Bundle 'syntaxhaskell.vim'
         Bundle 'indenthaskell.vim'
-        Bundle 'lukerandall/haskellmode-vim'
 
     " }}}
     " Programming {{{
@@ -92,7 +99,6 @@ endif
         Bundle 'vim-scripts/matchit.zip'
         Bundle 'SirVer/ultisnips'
         Bundle 'honza/vim-snippets'
-        Bundle 'digitaltoad/vim-jade'
 
     " }}}
     " Git {{{
@@ -100,7 +106,6 @@ endif
         Bundle 'tpope/vim-git'
         Bundle 'tpope/vim-fugitive'
         Bundle 'int3/vim-extradite'
-        Bundle 'mattn/gist-vim'
         Bundle 'airblade/vim-gitgutter'
 
     " }}}
@@ -109,10 +114,10 @@ endif
         Bundle 'rstacruz/sparkup'
         Bundle 'othree/html5.vim'
         Bundle 'amirh/HTML-AutoCloseTag'
-        Bundle 'https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git'
-        Bundle 'groenewege/vim-less'
         Bundle 'pangloss/vim-javascript'
         Bundle 'mustache/vim-mustache-handlebars'
+        " Syntax highlighting for reddit mako templates
+        Bundle 'sophacles/vim-bundle-mako'
 
     " }}}
 
@@ -161,6 +166,8 @@ endif
     set linebreak
     " Show ↪ at the beginning of wrapped lines.
     let &showbreak=nr2char(8618).' '
+    set listchars=tab:▸\ ,trail:·
+    set list
     " Fast scrolling when on a decent connection.
     set ttyfast
     " Insert mode completion.
@@ -195,7 +202,7 @@ endif
     let g:hybrid_use_Xresources = 1
     colorscheme hybrid
 
-    hi LineNr ctermbg=8 ctermfg=0 cterm=italic
+    hi LineNr ctermbg=0 ctermfg=8 cterm=none
 
 " }}}
 " Window Title ------------------------------------------------------------ {{{
@@ -211,41 +218,6 @@ endif
         set titlestring+=\ -\ %{v:progname}
         " Working directory.
         set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-    endif
-
-" }}}
-" Terminal Interface ------------------------------------------------------ {{{
-
-    if &term =~ 'xterm'
-        if &termencoding == ''
-            set termencoding=utf-8
-        endif
-
-        if has('title')
-            " Restore the title of the shell upon exit.
-            let &titleold = 'Terminal'
-
-            " Set the title.
-            set title
-        endif
-        if has('mouse')
-            " Terminal type for mouse recognition.
-            set ttymouse=xterm2
-        endif
-        " Terminal in 'termcap' mode.
-        set t_ti=7[r[?47h
-        " Terminal out of 'termcap mode.
-        set t_te=[?47l8
-
-        " Tmux will only forward escape sequences to the terminal if surrounded by
-        " a DCS sequence (http://bit.ly/zImrzb).
-        if exists('$TMUX')
-            let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-            let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-        else
-            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-        endif
     endif
 
 " }}}
@@ -388,8 +360,8 @@ endif
     au VimResized * exe "normal! \<c-w>="
 
     " Strip trailing whitespace.
-    au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
-        \ call StripTrailingWhitespace()
+    " au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
+    "     \ call StripTrailingWhitespace()
 
     " Cursorline {{{
 
@@ -401,15 +373,6 @@ endif
             au InsertEnter * set nocursorline
             au InsertLeave * set cursorline
             hi CursorLineNr ctermbg=8 ctermfg=10 cterm=italic
-        aug end
-
-    " }}}
-    " Trailing Whitespace {{{
-
-        aug trailing
-            au!
-            au InsertEnter * :set listchars-=trail:⌴
-            au InsertLeave * :set listchars+=trail:⌴
         aug end
 
     " }}}
@@ -425,24 +388,16 @@ endif
         aug end
 
     " }}}
-    " CSS {{{
+    " CSS/LESS {{{
 
         aug ft_css
             au!
-            au BufNewFile,BufRead *.less setlocal filetype=less
-
-            " Use cc to change lines without borking the indentation.
-            au BufNewFile,BufRead *.css,*.less nnoremap <buffer> cc ddko
+            " au BufNewFile,BufRead *.less setlocal filetype=less
+            au BufNewFile,BufRead *.less setlocal filetype=css
 
             " Use <Leader>S to sort properties.
             au BufNewFile,BufRead *.css,*.less
                 \ nnoremap <buffer> <LocalLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-
-            " Make {<CR> insert a pair of brackets in such a way that the cursor is
-            " correctly positioned inside of them and the following code doesn't get
-            " unfolded.
-            au BufNewFile,BufRead *.css,*.less
-                \ inoremap <buffer> {<CR> {}<left><CR>.<CR><esc>kA<bs><tab>
         aug end
 
     " }}}
@@ -459,15 +414,6 @@ endif
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \   exe "normal! g'\"" |
             \ endif
-
-            " Map '..' to go up a directory in fugitive tree/blob buffers.
-            au User fugitive
-            \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-            \   nnoremap <buffer> .. :edit %:h<CR> |
-            \ endif
-
-            " Auto-clean fugitive buffers.
-            au BufReadPost fugitive://* set bufhidden=delete
 
         " }}}
 
@@ -492,68 +438,11 @@ endif
         aug end
 
     " }}}
-    " Haskell {{{
-
-        aug ft_haskell
-            au!
-            au FileType haskell compiler ghc
-        aug end
-
-    " }}}
-    " Mail {{{
-
-        aug ft_mail
-            au!
-            au Filetype mail setlocal spell
-        aug end
-
-    " }}}
     " Markdown {{{
 
         aug ft_markdown
             au!
             au BufNewFile,BufRead *.m*down setlocal filetype=markdown
-        aug end
-
-    " }}}
-    " Mercurial {{{
-
-        aug ft_mercurial
-            au!
-            au BufNewFile,BufRead .hgrc,hgrc,Mercurial.ini setlocal filetype=dosini
-        aug end
-
-    " }}}
-    " Python {{{
-
-        aug ft_python
-            au!
-            au FileType python
-                \ noremap <buffer> <LocalLeader>rr :RopeRename<CR>
-                \ vnoremap <buffer> <LocalLeader>rm :RopeExtractMethod<CR>
-                \ noremap <buffer> <LocalLeader>ri :RopeOrganizeImports<CR>
-                \ setlocal
-                    \ omnifunc=pythoncomplete#Complete
-
-                " Pydoc
-                au FileType python noremap <buffer> <
-                au FileType python noremap <buffer> <LocalLeader>ds :call ShowPyDoc('<C-R><C-W>', 1)<CR>
-        aug end
-
-    " }}}
-    " Python (Django) {{{
-
-        aug ft_django
-            au!
-            au BufNewFile,BufRead dashboard.py normal! zR
-            au BufNewFile,BufRead settings.py setlocal foldmethod=marker
-            au BufNewFile,BufRead urls.py
-                \ setlocal nowrap
-                \ normal! zR
-            au BufNewFile,BufRead admin.py,urls.py,models.py,views.py,settings.py,forms.py
-                \ setlocal filetype=python.django
-            au BufNewFile,BufRead common_settings.py
-                \ setlocal filetype=python.django foldmethod=marker
         aug end
 
     " }}}
@@ -615,23 +504,11 @@ endif
 
     " }}}
     " Airline {{{
-        let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#enabled = 0
 
         " Showing git-gutter stats is mega slow
         let g:airline_section_b = ''
         let g:airline#extensions#hunks#enabled = 0
-    " }}}
-    " Auto Complete Pop {{{
-
-        " Set length of characters before keyword completion.
-        let g:AutoComplPop_BehaviorKeywordLength = 4
-
-    " }}}
-    " Extradite {{{
-
-        " Show the commit hash.
-        let g:extradite_showhash = 1
-
     " }}}
     " CtrlP {{{
 
@@ -675,25 +552,13 @@ endif
     " }}}
     " Git Gutter {{{
 
-        hi SignColumn ctermbg=8
-
-    " }}}
-    " Golden Ratio {{{
-
-        nnoremap <Leader>G <Plug>(golden_ratio_resize)
-        let g:golden_ratio_autocommand = 0
+        hi SignColumn ctermbg=none
 
     " }}}
     " Gundo {{{
 
         nnoremap <Leader>U :GundoToggle<CR>
         let g:gundo_preview_bottom = 1
-
-    " }}}
-    " Haskellmode {{{
-
-        let g:haddock_browser = "firefox-bin"
-        let g:ghc = "ghc"
 
     " }}}
     " HTML5 {{{
@@ -704,58 +569,11 @@ endif
         let g:atia_attributes_complete = 0
 
     " }}}
-    " Indent Guides {{{
-
-        " Auto calculate guide colors.
-        let g:indent_guides_auto_colors = 1
-
-        " Use skinny guides.
-        let g:indent_guides_guide_size = 1
-
-        " Indent from level 2.
-        let g:indent_guides_start_level = 1
-
-    " }}}
-    " Org-Mode {{{
-
-        let g:org_todo_keywords = ['TODO', '|', 'DONE']
-        let g:org_plugins = [
-            \ 'ShowHide', '|', 'Navigator',
-            \ 'EditStructure', '|', 'Todo', 'Date', 'Misc'
-        \ ]
-
-    " }}}
-    " Preview {{{
-
-        let g:PreviewBrowsers='open'
-
-    " }}}
     " Python by Dmitry Vasiliev {{{
 
         let python_highlight_all = 1
         let python_print_as_function = 1
         let python_slow_sync = 1
-
-    " }}}
-    " Rainbow Parenthesis {{{
-
-        nmap <Leader>rp :RainbowParenthesesToggle<CR>
-
-    " }}}
-    " Ropevim {{{
-
-        let ropevim_enable_shortcuts = 0
-        let ropevim_guess_project = 1
-        let ropevim_global_prefix = '<C-c>p'
-
-    " }}}
-    " Showmarks {{{
-
-        " Do not enable showmarks at startup.
-        let g:showmarks_enable = 0
-
-        " Do not include the various brace marks (), {}, etc.
-        let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
 
     " }}}
     " Surround {{{
@@ -897,52 +715,13 @@ endif
         let g:yankring_history_file = '.yankring-history'
 
     " }}}
-    " YouCompleteMe {{{
-
-        let g:ycm_min_num_of_chars_for_completion = 3
-
-        " YCM will hose <Tab> bindings after .vimrc unless we redefine this list
-        let g:ycm_key_list_select_completion = ['<Down>']
-        " Same for <S-Tab>
-        let g:ycm_key_list_previous_completion = ['<Up>']
-
-        " function! g:Wolfjourn_ToggleYCM()
-        "     if &completefunc != ''
-        "         let g:tmp_completefunc = &completefunc
-        "         let &completefunc = ''
-        "     else
-        "         let &completefunc = g:tmp_completefunc
-        "     endif
-        "
-        "     return ""
-        " endfunction
-        "
-        " inoremap <expr> <Plug>ToggleYCM g:Wolfjourn_ToggleYCM()
-        "
-        " function! g:FixCtrlY()
-        "     if pumvisible()
-        "         call feedkeys("\<Plug>ToggleYCM")
-        "         call feedkeys("\<C-y>", 'n')
-        "         call feedkeys("\<Plug>ToggleYCM")
-        "     else
-        "         call feedkeys("\<C-y>", 'n')
-        "     endif
-        "
-        "     return ''
-        " endfunction
-        "
-        " inoremap <expr> <C-y> g:FixCtrlY()
-
-        hi Pmenu ctermbg=0 ctermfg=2 cterm=NONE
-        hi PmenuSel ctermbg=10 ctermfg=8 cterm=NONE
-
-    " }}}
 
 " }}}
 " Key Remapping ----------------------------------------------------------- {{{
 
     nnoremap <Leader>s :w<CR>
     nnoremap <Leader>q :wq<CR>
+    nnoremap <Leader>g :Gstatus<CR>
 
     " Tab Navigation {{{
 
@@ -1227,20 +1006,6 @@ endif
 " }}}
 " Functions --------------------------------------------------------------- {{{
 
-    " Open URL {{{
-
-        command! -bar -nargs=1 OpenURL :!open <args>
-        function! OpenURLUnderCursor()
-            let l:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
-            if l:uri != ""
-                exec '!open "' . l:uri . '"'
-            else
-                echo 'No URL found in line'
-            endif
-        endfunction
-        nmap <silent> <Leader>w :call OpenURLUnderCursor()<CR>
-
-    " }}}
     " Error Toggle {{{
 
         command! ErrorsToggle call ErrorsToggle()
@@ -1280,20 +1045,6 @@ endif
                 call winrestview(l:winview)
             endif
         endfunction
-
-    " }}}
-    " Toggle Background {{{
-
-        function! BackgroundToggle()
-            let &background = ( &background == "dark"? "light" : "dark" )
-            if exists("g:colors_name")
-                exe "colorscheme " . g:colors_name
-            endif
-        endfunction
-        command! BackgroundToggle :call BackgroundToggle()
-        silent! nnoremap <F2> :BackgroundToggle<CR>
-        silent! inoremap <F2> :BackgroundToggle<CR>
-        silent! vnoremap <F2> :BackgroundToggle<CR>
 
     " }}}
 
