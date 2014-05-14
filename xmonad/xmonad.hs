@@ -119,12 +119,12 @@ myTopics =
     --   Name           Directory           Default Action
     [ TI "web"          ""                  (spawn "firefox" >> spawn "google-chrome-unstable")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
-    , TI "src"          "src"               (spawnShell >*> 3)
-    , TI "src0"          "src"               (spawnShell >*> 2)
+    , TI "src"          "src"               (spawnShell >*> 2)
+    , TI "src0"         "src"               (spawnShell >*> 2)
     , TI "dotfiles"     ".dotfiles"         (vim "")
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
     , TI "music"        "music"             (runInTerm "" "ncmpcpp")
-    , TI "torrent"      ""                  (spawn "wine ~/bin/uTorrent.exe")
+    , TI "torrent"      ""                  (spawn "transmissionn-gtk")
     , TI "skype"        ""                  (spawn "ALSA_PCM=\"dmix\" skype")
     ]
     where
