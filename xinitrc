@@ -28,6 +28,9 @@ setxkbmap -option terminate:ctrl_alt_bksp
 xset m 1 1
 # xinput set-prop "pointer:Razer Razer Naga Epic" "Device Accel Constant Deceleration" 1.5
 
+# No beep
+xset -b
+
 xset -dpms
 xset s off
 
