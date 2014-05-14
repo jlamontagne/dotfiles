@@ -39,7 +39,7 @@ eval `keychain --eval -q id_dsa`
 
 # Sync PRIMARY with clipboard
 # This has spiked cpu usage while running eve
-#autocutsel -s PRIMARY -buttonup -fork &
+autocutsel -s PRIMARY -buttonup -fork &
 
 mpd
 exec xmonad
