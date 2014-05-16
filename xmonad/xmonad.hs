@@ -84,7 +84,7 @@ myKeys =
     -- Used to switch between floating EVE clients
     -- focus the next window (which should be floating), then swap it to master
     -- to pop it to the top of the view
-    , ("C-t"          , (windows W.focusDown) >> (windows W.swapMaster))
+    -- , ("C-t"          , (windows W.focusDown) >> (windows W.swapMaster))
     ]
     ++
     [ ("M-"++m++[k], a i)
