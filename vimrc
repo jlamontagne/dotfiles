@@ -520,13 +520,6 @@ endif
         let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
     " }}}
-    " Gist {{{
-
-        let g:gist_clip_command = 'pbcopy'
-        let g:gist_detect_filetype = 1
-        let g:gist_open_browser_after_post = 1
-
-    " }}}
     " Git Gutter {{{
 
         hi SignColumn ctermbg=none
@@ -543,13 +536,6 @@ endif
         let g:rdfa_attributes_complete = 0
         let g:microdata_attributes_complete = 0
         let g:atia_attributes_complete = 0
-
-    " }}}
-    " Python by Dmitry Vasiliev {{{
-
-        let python_highlight_all = 1
-        let python_print_as_function = 1
-        let python_slow_sync = 1
 
     " }}}
     " Surround {{{
