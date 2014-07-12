@@ -1,6 +1,6 @@
-xrandr --output DVI-I-3 --primary
+# xrandr --output DVI-I-3 --primary
 # xrandr --output DVI-I-0 --right-of DVI-I-3 --rotate left
-xrandr --output DVI-I-0 --right-of DVI-I-3
+# xrandr --output DVI-I-0 --right-of DVI-I-3
 # xrandr --output DVI-I-0 --off
 
 # Workaround for Nvidia shit: chrome/games/videos appearing on all workspaces
