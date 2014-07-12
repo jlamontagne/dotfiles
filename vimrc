@@ -415,10 +415,15 @@ endif
 
         aug ft_handlebars
             au!
-            au FileType handlebars compiler html
+            " au FileType handlebars compiler html
             au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
         aug end
 
+    " }}}
+    " Discourse {{{
+        aug ft_discourse
+            au!
+            au BufNewFile,BufRead *.js.es6 setlocal filetype=javascript
     " }}}
     " HTML {{{
 
