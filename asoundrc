@@ -1,15 +1,3 @@
-# I used this at some point to boost the signal for something. I think it was
-# voip from an xbox.
-#
-#pcm.boost {
-#	type	softvol
-#	slave.pcm	"default"
-#	control.name	"Softmaster"
-#	control.card	0
-#	max_dB	48.0
-#}
-#
-
 # https://jira.skype.com/browse/SCL-810
 # http://wiki.cyberleo.net/wiki/KnowledgeBase/AlsaEqual
 
@@ -17,29 +5,6 @@ defaults.pcm.!card 1
 defaults.ctl.!card 1
 defaults.pcm.!device 0
 defaults.ctl.!device 0
-
-ctl.equal {
-  type equal;
-}
-
-# We parameterize this as well since Skype tries everything in this file and
-# will attempt to load the 64-bit caps library via the alsaequal plugin. In
-# reality, this device is only used with type "equal", but we need this hack to
-# fix Skype.
-pcm.equal {
-  @args [ TYPE ]
-  @args.TYPE {
-    type string
-    default {
-      @func getenv
-      vars [ ALSA_PCM ]
-      default "equal"
-    }
-  }
-  type $TYPE;
-  # ipc_key 1025
-  slave.pcm "plug:dmix"
-}
 
 pcm.dsnooped {
   type dsnoop
@@ -63,7 +28,8 @@ pcm.asymed {
     default {
       @func getenv
       vars [ ALSA_PCM ]
-      default "equal"
+      default "crossfeed"
+      # default "dmix"
     }
   }
   type asym;
@@ -74,4 +40,17 @@ pcm.asymed {
 pcm.!default {
   type plug;
   slave.pcm asymed;
+}
+
+pcm.crossfeed {
+  type ladspa
+  # slave.pcm "float2int"
+  slave.pcm "plug:dmix"
+  path "/usr/lib/ladspa/"
+  plugins [{
+    label bs2b
+    input {
+      controls [ 700 6 ]
+    }
+  }]
 }
