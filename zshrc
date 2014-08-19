@@ -58,3 +58,13 @@ unalias scp
 unalias ln
 
 alias bower='noglob bower'
+
+# source /usr/share/chruby/chruby.sh
+
+for profile in /etc/profile.d/*.sh; do
+  if [ -x $profile ]; then
+    . $profile
+  fi
+done
+unset profile
+export rvmsudo_secure_path=0
