@@ -1,8 +1,14 @@
 ! Colours
-#include "hybrid.Xresources"
+*.background: Black
+*.foreground: White
+! #include "hybrid.Xresources"
+! #include "solarized.Xresources"
 
 ! Cursor theme
 Xcursor.theme: Oxygen_Black
+
+! http://superuser.com/questions/415565/rxvt-unicode-borders-appeared-in-ubuntu-precise
+URxvt.internalBorder: 0
 
 !URxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
 URxvt.font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
