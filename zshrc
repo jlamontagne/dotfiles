@@ -59,6 +59,17 @@ unalias ln
 
 alias bower='noglob bower'
 
+# function vim_session() {
+#   if [[ -f Session.vim ]] ; then
+#     /usr/bin/vim -S Session.vim $*
+#   else
+#     /usr/bin/vim $*
+#   fi
+# }
+#
+# alias vim=vim_session
+# compdef _vim vim_session
+
 # source /usr/share/chruby/chruby.sh
 
 for profile in /etc/profile.d/*.sh; do
