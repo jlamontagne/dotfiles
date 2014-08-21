@@ -1,9 +1,12 @@
-" ----------------------------------------------------------------------------
-"          FILE: .vimrc
-"   DESCRIPTION: Vim configuration file
-"        AUTHOR: Sorin Ionescu <sorin.ionescu@gmail.com>
-"       VERSION: 1.3.13
-" ----------------------------------------------------------------------------
+" References:
+"
+" http://statico.github.io/vim2.html
+" http://dougblack.io/words/a-good-vimrc.html
+" http://stackoverflow.com/questions/19030463/how-do-you-work-with-large-projects-in-vim
+" https://github.com/spf13/spf13-vim
+" https://github.com/tpope/tpope/blob/master/.vimrc
+
+" http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 
 if v:version < 703
     echo '.vimrc requires Vim 7.3 or greater'
@@ -28,46 +31,56 @@ endif
 
         Bundle 'gmarik/vundle'
 
+        Bundle 'flazz/vim-colorschemes'
+        " Bundle 'altercation/vim-colors-solarized'
+        " Bundle 'w0ng/vim-hybrid'
+        " Bundle 'vim-scripts/ScrollColors'
+
         " Identifies file indentation.
-        Bundle 'tpope/vim-sleuth'
         Bundle 'godlygeek/tabular'
         Bundle 'sjl/gundo.vim'
+        " Show marks in a gutter.
+        Bundle 'kshenoy/vim-signature'
+        Bundle 'Lokaltog/vim-easymotion'
+        " s?? to jump to next occurrence of ?? in the line
+        Bundle 'goldfeld/vim-seek'
+        " History of yanks, changes, and deletes.
+        " Bundle 'vim-scripts/YankRing.vim'
+        Bundle 'kien/ctrlp.vim'
+        Bundle 'coderifous/textobj-word-column.vim'
+        Bundle 'bling/vim-airline'
+        " Bundle 'benmills/vimux'
+
+    " }}}
+
+    " tpope {{{
+        Bundle 'tpope/vim-vividchalk'
+        Bundle 'tpope/vim-sleuth'
         Bundle 'tpope/vim-repeat'
         " Provides pairs of bracket mappings for buffer, file navigation and editing.
         Bundle 'tpope/vim-unimpaired'
         Bundle 'tpope/vim-scriptease'
         " :Unlink/:Remove/:Move/etc
         Bundle 'tpope/vim-eunuch'
-        " Show marks in a gutter.
-        Bundle 'kshenoy/vim-signature'
-        Bundle 'Lokaltog/vim-easymotion'
-        " History of yanks, changes, and deletes.
-        " Bundle 'vim-scripts/YankRing.vim'
-
         " netrw via -
         Bundle 'tpope/vim-vinegar'
-        Bundle 'kien/ctrlp.vim'
         " Easily search for, substitute, and abbreviate multiple variants of a word.
         " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
         Bundle 'tpope/vim-abolish'
         " Continuously updated session files
-        " :Obsession + vim -S Session.vim
         Bundle 'tpope/vim-obsession'
-        Bundle 'coderifous/textobj-word-column.vim'
-        Bundle 'w0ng/vim-hybrid'
-        Bundle 'bling/vim-airline'
-        " tmux
         " Bundle 'tpope/vim-tbone'
-        " Bundle 'benmills/vimux'
-        " json/etc
-        Bundle 'tpope/vim-jdaddy'
-
-    " }}}
-    " Syntax {{{
-
+        " Bundle 'tpope/vim-jdaddy'
         Bundle 'tpope/vim-markdown'
-
+        Bundle 'tpope/vim-rails'
+        " Yes. Setup tmux to make this awesome. TODO
+        " Bundle tpope/vim-dispatch
+        Bundle 'tpope/vim-surround'
+        Bundle 'tpope/vim-endwise'
+        Bundle 'tpope/vim-git'
+        Bundle 'tpope/vim-fugitive'
     " }}}
+
     " Haskell {{{
 
         Bundle 'syntaxhaskell.vim'
@@ -76,7 +89,7 @@ endif
     " }}}
     " Programming {{{
 
-        " A better paste.
+        " Context aware paste (indentation)
         Bundle 'sickill/vim-pasta'
         Bundle 'mileszs/ack.vim'
         Bundle 'majutsushi/tagbar'
@@ -88,36 +101,34 @@ endif
 
         " Javascript tab completion
         " Bundle 'marijnh/tern_for_vim'
-        Bundle 'kien/rainbow_parentheses.vim'
-        Bundle 'tpope/vim-surround'
+        " Bundle 'kien/rainbow_parentheses.vim'
         Bundle 'Raimondi/delimitMate'
         " Automatically closes functions, blocks, etc.
-        Bundle 'tpope/vim-endwise'
         Bundle 'kana/vim-textobj-user'
         Bundle 'michaeljsmith/vim-indent-object'
         " Configures % to match more than just single characters.
-        Bundle 'vim-scripts/matchit.zip'
-        Bundle 'SirVer/ultisnips'
-        Bundle 'honza/vim-snippets'
+        " Bundle 'vim-scripts/matchit.zip'
+        " Disabled until I get around to properly integrating/learning this.
+        " Bundle 'SirVer/ultisnips'
+        " Bundle 'honza/vim-snippets'
 
     " }}}
     " Git {{{
 
-        Bundle 'tpope/vim-git'
-        Bundle 'tpope/vim-fugitive'
         Bundle 'int3/vim-extradite'
         Bundle 'airblade/vim-gitgutter'
 
     " }}}
     " Web Development {{{
 
-        Bundle 'rstacruz/sparkup'
-        Bundle 'othree/html5.vim'
-        Bundle 'amirh/HTML-AutoCloseTag'
+        " What does any of this shit actually accomplish?
+        " Bundle 'rstacruz/sparkup'
+        " Bundle 'othree/html5.vim'
+        " Bundle 'amirh/HTML-AutoCloseTag'
         Bundle 'pangloss/vim-javascript'
         Bundle 'mustache/vim-mustache-handlebars'
         " Syntax highlighting for reddit mako templates
-        Bundle 'sophacles/vim-bundle-mako'
+        " Bundle 'sophacles/vim-bundle-mako'
 
     " }}}
 
@@ -174,8 +185,10 @@ endif
     set completeopt=menuone,preview
 
     " Do not draw while executing macros.
-    " Note: Enabling this will lag startup display if Powerline is enabled.
-    " set lazyredraw
+    " Horrible lag when scrolling through ruby files with this disabled.
+    " See: http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
+    " http://stackoverflow.com/a/20519492
+    set lazyredraw
 
     " Set keys move cursor to next/previous line.
     set ww+=<,>,[,]
@@ -198,11 +211,15 @@ endif
     endif
     syntax on
     filetype plugin indent on
-    set background=dark
-    let g:hybrid_use_Xresources = 1
-    colorscheme hybrid
+    " set background=dark
 
-    hi LineNr ctermbg=0 ctermfg=8 cterm=none
+    " let g:hybrid_use_Xresources = 1
+    " colorscheme hybrid
+    " colorscheme badwolf
+    colorscheme vividchalk
+
+    " hi LineNr ctermbg=0 ctermfg=8 cterm=none
+    " hi CursorLine cterm=none
 
 " }}}
 " Window Title ------------------------------------------------------------ {{{
@@ -272,6 +289,9 @@ endif
 " }}}
 " Whitespace -------------------------------------------------------------- {{{
 
+    set tabstop=4
+    set softtabstop=4
+    set expandtab
     " Do not select the end of line.
     " XXX: Using 'old' breaks UltiSnips by selecting one character past the
     " placeholder.
@@ -291,9 +311,13 @@ endif
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 
-    set nofoldenable
+    set foldenable
     set foldmethod=syntax
     set foldnestmax=2
+    set foldlevelstart=5
+
+    " space open/closes fold
+    nnoremap <space> za
 
     " Make zO recursively open the top level fold regardless of cursor placement.
     nnoremap zO zCzO
@@ -363,7 +387,8 @@ endif
             au BufLeave * set nocursorline
             au InsertEnter * set nocursorline
             au InsertLeave * set cursorline
-            hi CursorLineNr ctermbg=8 ctermfg=10 cterm=italic
+            hi CursorLine   ctermbg=235 cterm=NONE
+            hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
         aug end
 
     " }}}
@@ -371,119 +396,40 @@ endif
 " }}}
 " File Settings ----------------------------------------------------------- {{{
 
-    " BASH {{{
+    aug file_settings
+        au!
+        au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
 
-        aug ft_bash
-            au!
-            au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
-        aug end
+        " au BufNewFile,BufRead *.less setlocal filetype=less
+        au BufNewFile,BufRead *.less setlocal filetype=css
 
-    " }}}
-    " CSS/LESS {{{
+        " Use <Leader>S to sort properties.
+        au BufNewFile,BufRead *.css,*.less
+            \ nnoremap <buffer> <LocalLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+        au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable textwidth=72
 
-        aug ft_css
-            au!
-            " au BufNewFile,BufRead *.less setlocal filetype=less
-            au BufNewFile,BufRead *.less setlocal filetype=css
+        " Jump to the last known position when reopening a file.
+        au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal! g'\"" |
+        \ endif
 
-            " Use <Leader>S to sort properties.
-            au BufNewFile,BufRead *.css,*.less
-                \ nnoremap <buffer> <LocalLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-        aug end
+        " au FileType handlebars compiler html
+        au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
+        au BufNewFile,BufRead *.js.es6 setlocal filetype=javascript
 
-    " }}}
-    " Git {{{
+        " au FileType html compiler html
+        au FileType html ru ftplugin/html_autoclosetag.vim
+        au BufNewFile,BufRead *.m*down setlocal filetype=markdown
+        au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
 
-        aug ft_git
-            au!
-            au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable textwidth=72
-
-        " Fugitive {{{
-
-            " Jump to the last known position when reopening a file.
-            au BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   exe "normal! g'\"" |
-            \ endif
-
-        " }}}
-
-        aug end
-
-    " }}}
-    " Handlebars {{{
-
-        aug ft_handlebars
-            au!
-            " au FileType handlebars compiler html
-            au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
-        aug end
-
-    " }}}
-    " Discourse {{{
-        aug ft_discourse
-            au!
-            au BufNewFile,BufRead *.js.es6 setlocal filetype=javascript
-    " }}}
-    " HTML {{{
-
-        aug ft_html
-            au!
-            " au FileType html compiler html
-            au FileType html ru ftplugin/html_autoclosetag.vim
-        aug end
-
-    " }}}
-    " Markdown {{{
-
-        aug ft_markdown
-            au!
-            au BufNewFile,BufRead *.m*down setlocal filetype=markdown
-        aug end
-
-    " }}}
-    " QuickFix {{{
-
-        aug ft_quickfix
-            au!
-            au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
-        aug end
-
-    " }}}
-    " Text {{{
-
-        aug ft_text
-            au!
-            " Enable soft-wrapping for text files
-            au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
-        aug end
-
-    " }}}
-    " Vagrant {{{
-
-        aug ft_vagrant
-            au!
-            au BufRead,BufNewFile Vagrantfile set filetype=ruby
-        aug end
-
-    " }}}
-    " Vim {{{
-
-        aug ft_vim
-            au!
-            au FileType vim,help setlocal textwidth=78
-            au FileType vim setlocal foldmethod=marker colorcolumn=79
-        aug end
-
-    " }}}
-    " Zsh {{{
-
-        aug ft_zsh
-            au!
-            au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
-        aug end
-
-    " }}}
+        " Enable soft-wrapping for text files
+        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
+        au BufRead,BufNewFile Vagrantfile set filetype=ruby
+        au FileType vim,help setlocal textwidth=78
+        au FileType vim setlocal foldmethod=marker colorcolumn=79
+        au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
+    aug end
 
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
@@ -494,8 +440,11 @@ endif
     " Don't jump over shit on other lines
     let g:delimitMate_jump_expansion = 0
 
+    " Ack/The Silver Searcher {{{
+        let g:ackprg = 'ag --nogroup --nocolor --column'
+    " }}}
     " Airline {{{
-        let g:airline#extensions#tabline#enabled = 0
+        " let g:airline#extensions#tabline#enabled = 0
 
         " Showing git-gutter stats is mega slow
         let g:airline_section_b = ''
@@ -506,23 +455,26 @@ endif
         " Go up the file system until '.git', or similar, is found.
         let g:ctrlp_working_path_mode = 'raw'
 
-        " Set the maximum height of the match window.
         let g:ctrlp_max_height = 10
-
-        " Do not remember the last input.
         let g:ctrlp_persistent_input = 0
-
-        " Do not override Ctrl + P.
         let g:ctrlp_map = '<Leader>t'
-
-        " Update results after typing has stopped.
         let g:ctrlp_lazy_update = 1
 
         " Enable help tag, exuberant ctags, quickfix, and directory search.
         let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir']
 
-        " Use more restrictive/faster VCS file listing
-        let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+        let g:ctrlp_custom_ignore = {
+            \ 'dir': '\.git$\|\.hg$\|\.svn$',
+            \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$'
+        \ }
+
+        let g:ctrlp_user_command = {
+            \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+            \ },
+            \ 'fallback': 'ag %s --nocolor -l -g ""'
+        \ }
 
     " }}}
     " Git Gutter {{{
@@ -624,15 +576,18 @@ endif
         endfunction
 
         function! g:Wolfjourn_HandleCR()
-            if UltiSnips_MaybeExpandSnippet()
-                return ""
-            elseif pumvisible()
-                " Close completion menu
-                " Use feedkeys since we need mappings
-                " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
-                " return ""
-                return "\<C-y>"
-            elseif delimitMate#WithinEmptyPair()
+            " For now, fuck this shit.
+            "
+            " if UltiSnips_MaybeExpandSnippet()
+            "     return ""
+            " elseif pumvisible()
+            "     " Close completion menu
+            "     " Use feedkeys since we need mappings
+            "     " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
+            "     " return ""
+            "     return "\<C-y>"
+            " elseif delimitMate#WithinEmptyPair()
+            if delimitMate#WithinEmptyPair()
                 return delimitMate#ExpandReturn()
             else
                 return "\<CR>"
@@ -640,30 +595,31 @@ endif
         endfunction
 
         function! g:Wolfjourn_HandleTab()
-            if pumvisible()
-                return "\<C-n>"
-            elseif UltiSnips_MaybeJumpForwards()
-                return ""
-            elseif delimitMate#ShouldJump()
+            " if pumvisible()
+            "     return "\<C-n>"
+            " elseif UltiSnips_MaybeJumpForwards()
+            "     return ""
+            " elseif delimitMate#ShouldJump()
+            if delimitMate#ShouldJump()
                 return delimitMate#JumpAny()
             else
                 return "\<Tab>"
             endif
         endfunction
 
-        function! g:Wolfjourn_HandleShiftTab()
-            if pumvisible()
-                return "\<C-p>"
-            elseif UltiSnips_MaybeJumpBackwards()
-                return ""
-            else
-                return "\<S-Tab>"
-            endif
-        endfunction
+        " function! g:Wolfjourn_HandleShiftTab()
+        "     if pumvisible()
+        "         return "\<C-p>"
+        "     elseif UltiSnips_MaybeJumpBackwards()
+        "         return ""
+        "     else
+        "         return "\<S-Tab>"
+        "     endif
+        " endfunction
 
         inoremap <CR> <C-R>=g:Wolfjourn_HandleCR()<CR>
         inoremap <Tab> <C-R>=g:Wolfjourn_HandleTab()<CR>
-        inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
+        " inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
 
         snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
         snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
@@ -719,6 +675,10 @@ endif
     vnoremap <Leader>j :m'>+<CR>gv
     vnoremap <Leader>k :m-2<CR>gv
 
+    " edit/source vimrc
+    " nnoremap <leader>ev :vsp $MYVIMRC<CR>
+    nnoremap <leader>v :source $MYVIMRC<CR>
+
     " Tab Navigation {{{
 
         " Easily create a new tab.
@@ -739,23 +699,16 @@ endif
     " }}}
     " Window Navigation {{{
 
-        " Navigate to left window.
-        nnoremap <C-h> <C-w>h
-
-        " Navigate to down window.
-        nnoremap <C-j> <C-w>j
-
-        " Navigate to top window.
-        nnoremap <C-k> <C-w>k
-
-        " Navigate to right window.
-        nnoremap <C-l> <C-w>l
+        nnoremap <C-h> <C-w>h<C-w>_
+        nnoremap <C-j> <C-w>j<C-w>_
+        nnoremap <C-k> <C-w>k<C-w>_
+        nnoremap <C-l> <C-w>l<C-w>_
 
         " Horizontal split then move to bottom window.
-        nnoremap <Leader>- <C-w>s
+        nnoremap <Leader>- <C-w>s<C-w>_
 
         " Vertical split then move to right window.
-        nnoremap <Leader>\| <C-w>v<C-w>l
+        nnoremap <Leader>\| <C-w>v<C-w>l<C-w>_
 
     " }}}
     " Text Alignment {{{
@@ -800,7 +753,10 @@ endif
         "
         " This is very heavy-handed, but Ctrl-C is what I'm accustomed to using to
         " leave insert mode.
-        inoremap <C-C> <ESC>
+        inoremap <C-C> <Esc>`^
+
+        " Yank to end of line
+        nnoremap Y y$
 
         " Format Paragraph.
         " nnoremap <Leader>q gwap
