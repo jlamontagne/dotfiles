@@ -5,136 +5,92 @@
 " http://stackoverflow.com/questions/19030463/how-do-you-work-with-large-projects-in-vim
 " https://github.com/spf13/spf13-vim
 " https://github.com/tpope/tpope/blob/master/.vimrc
+" https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 
 " http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 
-if v:version < 703
-    echo '.vimrc requires Vim 7.3 or greater'
-    finish
-endif
+" TODO: Unite as a replacement for ctrlp/vim-vinegar/etc.
+" http://www.codeography.com/2013/06/17/replacing-all-the-things-with-unite-vim.html
+" http://bling.github.io/blog/2013/06/02/unite-dot-vim-the-plugin-you-didnt-know-you-need/
 
-" Bundles ----------------------------------------------------------------- {{{
+" Plugins ----------------------------------------------------------------- {{{
+    set nocompatible
+    filetype off
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
 
-    " Vundle {{{
+    Plugin 'gmarik/Vundle.vim'
+    Plugin 'godlygeek/tabular'
+    Plugin 'sjl/gundo.vim'
+    Plugin 'Lokaltog/vim-easymotion'
+    " s?? to jump to next occurrence of ?? in the line
+    " Disabled due to unfortunate collision with s/S
+    " Plugin 'goldfeld/vim-seek'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'coderifous/textobj-word-column.vim'
+    Plugin 'szw/vim-tags'
+    let g:vim_tags_use_vim_dispatch = 1
 
-        " Turn off vi compatibility.
-        set nocompatible
-        " Turning filetype off is necessary to load ftdetect files.
-        filetype off
-        " Install Vundle for bundles to work:
-        "     git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-        set rtp+=~/.vim/bundle/vundle/
-        call vundle#rc()
+    Plugin 'tpope/vim-vividchalk'
+    Plugin 'tpope/vim-sleuth'
+    Plugin 'tpope/vim-repeat'
+    " Provides pairs of bracket mappings for buffer, file navigation and editing.
+    Plugin 'tpope/vim-unimpaired'
+    Plugin 'tpope/vim-scriptease'
+    " :Unlink/:Remove/:Move/etc
+    Plugin 'tpope/vim-eunuch'
+    " netrw via -
+    Plugin 'tpope/vim-vinegar'
+    " Easily search for, substitute, and abbreviate multiple variants of a word.
+    " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
+    Plugin 'tpope/vim-abolish'
+    " Continuously updated session files
+    Plugin 'tpope/vim-obsession'
+    " Plugin 'tpope/vim-tbone'
+    " Plugin 'tpope/vim-jdaddy'
+    Plugin 'tpope/vim-markdown'
+    Plugin 'tpope/vim-rails'
+    " Yes. Setup tmux to make this awesome. TODO
+    Plugin 'tpope/vim-dispatch'
+    Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-endwise'
+    Plugin 'tpope/vim-git'
+    Plugin 'tpope/vim-fugitive'
 
-    " }}}
-    " General {{{
+    Plugin 'syntaxhaskell.vim'
+    Plugin 'indenthaskell.vim'
 
-        Bundle 'gmarik/vundle'
+    " Context aware paste (indentation)
+    Plugin 'sickill/vim-pasta'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'tomtom/tcomment_vim'
 
-        Bundle 'flazz/vim-colorschemes'
-        " Bundle 'altercation/vim-colors-solarized'
-        " Bundle 'w0ng/vim-hybrid'
-        " Bundle 'vim-scripts/ScrollColors'
+    Plugin 'Raimondi/delimitMate'
+    " Automatically closes functions, blocks, etc.
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'michaeljsmith/vim-indent-object'
+    " Configures % to match more than just single characters.
+    Plugin 'vim-scripts/matchit.zip'
+    " Disabled until I get around to properly integrating/learning this.
+    " Plugin 'SirVer/ultisnips'
+    " Plugin 'honza/vim-snippets'
 
-        " Identifies file indentation.
-        Bundle 'godlygeek/tabular'
-        Bundle 'sjl/gundo.vim'
-        " Show marks in a gutter.
-        Bundle 'kshenoy/vim-signature'
-        Bundle 'Lokaltog/vim-easymotion'
-        " s?? to jump to next occurrence of ?? in the line
-        Bundle 'goldfeld/vim-seek'
-        " History of yanks, changes, and deletes.
-        " Bundle 'vim-scripts/YankRing.vim'
-        Bundle 'kien/ctrlp.vim'
-        Bundle 'coderifous/textobj-word-column.vim'
-        Bundle 'bling/vim-airline'
-        " Bundle 'benmills/vimux'
+    Plugin 'int3/vim-extradite'
 
-    " }}}
+    " Plugin 'rstacruz/sparkup'
+    " Plugin 'othree/html5.vim'
+    " Plugin 'amirh/HTML-AutoCloseTag'
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'mustache/vim-mustache-handlebars'
 
-    " tpope {{{
-        Bundle 'tpope/vim-vividchalk'
-        Bundle 'tpope/vim-sleuth'
-        Bundle 'tpope/vim-repeat'
-        " Provides pairs of bracket mappings for buffer, file navigation and editing.
-        Bundle 'tpope/vim-unimpaired'
-        Bundle 'tpope/vim-scriptease'
-        " :Unlink/:Remove/:Move/etc
-        Bundle 'tpope/vim-eunuch'
-        " netrw via -
-        Bundle 'tpope/vim-vinegar'
-        " Easily search for, substitute, and abbreviate multiple variants of a word.
-        " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
-        Bundle 'tpope/vim-abolish'
-        " Continuously updated session files
-        Bundle 'tpope/vim-obsession'
-        " Bundle 'tpope/vim-tbone'
-        " Bundle 'tpope/vim-jdaddy'
-        Bundle 'tpope/vim-markdown'
-        Bundle 'tpope/vim-rails'
-        " Yes. Setup tmux to make this awesome. TODO
-        " Bundle tpope/vim-dispatch
-        Bundle 'tpope/vim-surround'
-        Bundle 'tpope/vim-endwise'
-        Bundle 'tpope/vim-git'
-        Bundle 'tpope/vim-fugitive'
-    " }}}
-
-    " Haskell {{{
-
-        Bundle 'syntaxhaskell.vim'
-        Bundle 'indenthaskell.vim'
-
-    " }}}
-    " Programming {{{
-
-        " Context aware paste (indentation)
-        Bundle 'sickill/vim-pasta'
-        Bundle 'mileszs/ack.vim'
-        Bundle 'majutsushi/tagbar'
-        Bundle 'scrooloose/syntastic'
-        Bundle 'tomtom/tcomment_vim'
-
-        " This shit is so slow and annoying.
-        " Bundle 'Valloric/YouCompleteMe'
-
-        " Javascript tab completion
-        " Bundle 'marijnh/tern_for_vim'
-        " Bundle 'kien/rainbow_parentheses.vim'
-        Bundle 'Raimondi/delimitMate'
-        " Automatically closes functions, blocks, etc.
-        Bundle 'kana/vim-textobj-user'
-        Bundle 'michaeljsmith/vim-indent-object'
-        " Configures % to match more than just single characters.
-        " Bundle 'vim-scripts/matchit.zip'
-        " Disabled until I get around to properly integrating/learning this.
-        " Bundle 'SirVer/ultisnips'
-        " Bundle 'honza/vim-snippets'
-
-    " }}}
-    " Git {{{
-
-        Bundle 'int3/vim-extradite'
-        Bundle 'airblade/vim-gitgutter'
-
-    " }}}
-    " Web Development {{{
-
-        " What does any of this shit actually accomplish?
-        " Bundle 'rstacruz/sparkup'
-        " Bundle 'othree/html5.vim'
-        " Bundle 'amirh/HTML-AutoCloseTag'
-        Bundle 'pangloss/vim-javascript'
-        Bundle 'mustache/vim-mustache-handlebars'
-        " Syntax highlighting for reddit mako templates
-        " Bundle 'sophacles/vim-bundle-mako'
-
-    " }}}
+    call vundle#end()
+    filetype plugin indent on
 
 " }}}
 " General Settings -------------------------------------------------------- {{{
 
+    set ttimeoutlen=50
     set modelines=0
     set undolevels=1000
     set history=50
@@ -178,6 +134,8 @@ endif
     " Show ↪ at the beginning of wrapped lines.
     let &showbreak=nr2char(8618).' '
     set listchars=tab:▸\ ,trail:·
+    " let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
+    " let &fillchars = "vert:\u259a,fold:\u00b7"
     set list
     " Fast scrolling when on a decent connection.
     set ttyfast
@@ -206,11 +164,11 @@ endif
     set cf
     " Set diff fill char.
     set fillchars+=diff:⣿
+    set titlestring=%f\ "%h%m%r%w\ -\ %{v:progname}\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
     if has('mouse')
         set mouse=a
     endif
     syntax on
-    filetype plugin indent on
     " set background=dark
 
     " let g:hybrid_use_Xresources = 1
@@ -222,28 +180,14 @@ endif
     " hi CursorLine cterm=none
 
 " }}}
-" Window Title ------------------------------------------------------------ {{{
-
-    if has('title') && (has('gui_running') || &title)
-        " Set the title.
-        set titlestring=
-        " File name.
-        set titlestring+=%f\ "
-        " Flags.
-        set titlestring+=%h%m%r%w
-        " Program name.
-        set titlestring+=\ -\ %{v:progname}
-        " Working directory.
-        set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-    endif
-
-" }}}
 " Status Line ------------------------------------------------------------- {{{
 
     " Always show status.
     set laststatus=2
     " Disable status line fill chars.
     set fillchars+=stl:\ ,stlnc:\ " Space.
+    " set statusline=%<%.99f\ %h%w%m%r%{SL('CapsLockStatusline')}%y%{SL('fugitive#statusline')}%*%=%-14.(%l,%c%V%)\ %P
+    set statusline=%<%f\ (%{&ft})%r\ %-4(%m%)%=%-16(%3l,%02c%03V%)\ %P
 
 " }}}
 " Search and Replace ------------------------------------------------------ {{{
@@ -350,16 +294,17 @@ endif
     " Wildcard expansion completion.
     set wildmode=list:longest,full
 
-    set wildignore+=.hg,.git,.svn
+    " set wildignore+=.hg,.git,.svn
     set wildignore+=node_modules
-    set wildignore+=*.aux,*.out,*.toc
-    set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
-    set wildignore+=*.luac
-    set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
+    " set wildignore+=*.aux,*.out,*.toc
+    " set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+    " set wildignore+=*.luac
+    " set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
     set wildignore+=*.pyc
-    set wildignore+=*.spl
-    set wildignore+=*~,#*#,*.sw?,%*,*=
+    " set wildignore+=*.spl
+    " set wildignore+=*~,#*#,*.sw?,%*,*=
     set wildignore+=*.DS_Store
+    set wildignore+=tags
 
 " }}}
 " Auto Commands ----------------------------------------------------------- {{{
@@ -429,6 +374,10 @@ endif
         au FileType vim,help setlocal textwidth=78
         au FileType vim setlocal foldmethod=marker colorcolumn=79
         au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
+        au FileType help nnoremap <silent><buffer> q :q<CR>
+        au FileType gitcommit setlocal spell
+        autocmd FileType * if exists("+omnifunc") && &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+        autocmd FileType * if exists("+completefunc") && &completefunc == "" | setlocal completefunc=syntaxcomplete#Complete | endif
     aug end
 
 " }}}
@@ -442,13 +391,6 @@ endif
 
     " Ack/The Silver Searcher {{{
         let g:ackprg = 'ag --nogroup --nocolor --column'
-    " }}}
-    " Airline {{{
-        " let g:airline#extensions#tabline#enabled = 0
-
-        " Showing git-gutter stats is mega slow
-        let g:airline_section_b = ''
-        let g:airline#extensions#hunks#enabled = 0
     " }}}
     " CtrlP {{{
 
@@ -477,11 +419,6 @@ endif
         \ }
 
     " }}}
-    " Git Gutter {{{
-
-        hi SignColumn ctermbg=none
-
-    " }}}
     " Gundo {{{
 
         let g:gundo_preview_bottom = 1
@@ -500,43 +437,6 @@ endif
         let g:surround_40 = "(\r)"
         let g:surround_91 = "[\r]"
         let g:surround_60 = "<\r>"
-
-    " }}}
-    " Syntastic {{{
-
-        " Mark syntax errors with :signs.
-        let g:syntastic_enable_signs = 1
-
-        " Do not auto jump to the error when saving a file.
-        let g:syntastic_auto_jump = 0
-
-        " Do not auto show the error list.
-        let g:syntastic_auto_loc_list = 0
-
-        " Show warnings.
-        let g:syntastic_quiet_messages = {'level': 'warnings'}
-
-        " Do not validate the following file types.
-        let g:syntastic_disabled_filetypes = ['html', 'python']
-
-        " Set the display format.
-        let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-
-    " }}}
-    " Tagbar {{{
-
-        let g:tagbar_sort = 1            " Sort by name.
-        let g:tagbar_compact = 0         " Use compact layout.
-        let g:tagbar_expand = 1          " Expand window in GUI mode.
-
-        " Define custom Zsh support (requires definition in ~/.ctags).
-        let g:tagbar_type_zsh = {
-            \ 'ctagstype': 'zsh',
-            \ 'kinds': [
-                \ 'f:functions:1'
-            \ ],
-            \ 'fold': 0
-        \ }
 
     " }}}
     " Tcomment {{{
@@ -575,26 +475,23 @@ endif
             return g:ulti_jump_backwards_res
         endfunction
 
-        function! g:Wolfjourn_HandleCR()
-            " For now, fuck this shit.
-            "
+        function! g:InsertCRWrapper()
             " if UltiSnips_MaybeExpandSnippet()
             "     return ""
-            " elseif pumvisible()
+            if pumvisible()
+                return "\<C-y>"
             "     " Close completion menu
             "     " Use feedkeys since we need mappings
             "     " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
             "     " return ""
-            "     return "\<C-y>"
-            " elseif delimitMate#WithinEmptyPair()
-            if delimitMate#WithinEmptyPair()
+            elseif delimitMate#WithinEmptyPair()
                 return delimitMate#ExpandReturn()
             else
                 return "\<CR>"
             endif
         endfunction
 
-        function! g:Wolfjourn_HandleTab()
+        function! g:InsertTabWrapper()
             " if pumvisible()
             "     return "\<C-n>"
             " elseif UltiSnips_MaybeJumpForwards()
@@ -617,18 +514,12 @@ endif
         "     endif
         " endfunction
 
-        inoremap <CR> <C-R>=g:Wolfjourn_HandleCR()<CR>
-        inoremap <Tab> <C-R>=g:Wolfjourn_HandleTab()<CR>
+        inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
+        inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
         " inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
 
         snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
         snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
-
-    " }}}
-    " Yankring {{{
-
-        " Hide the history file.
-        let g:yankring_history_file = '.yankring-history'
 
     " }}}
 
@@ -644,11 +535,13 @@ endif
     " This mapping wipes out the z mark, which I never use.
     nnoremap <Leader>z mzzMzvzz15<c-e>`z
 
+    nnoremap <silent> <leader>ps :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
+    nnoremap <silent> <leader>pe :exe ":profile pause"<cr>:noautocmd qall!<cr>
+
     nnoremap <Leader>a :Ack!
     nnoremap <Leader>b :CtrlPBuffer<CR>
     nnoremap <Leader>c :CtrlPClearCache<CR>
     nnoremap <Leader>g :Gstatus<CR>
-    nnoremap <Leader>i :TagbarToggle<CR>
     nnoremap <Leader>m :CtrlPMRU<CR>
     nnoremap <Leader>q :wq<CR>
     nnoremap <Leader>s :w<CR>
@@ -677,40 +570,25 @@ endif
 
     " edit/source vimrc
     " nnoremap <leader>ev :vsp $MYVIMRC<CR>
-    nnoremap <leader>v :source $MYVIMRC<CR>
+    nnoremap <leader>v :so ~/.vimrc<CR>
 
-    " Tab Navigation {{{
+    " Tabs
+    map <Leader>tt :tabnew<CR>
+    map <Leader>tc :tabclose<CR>
+    noremap <Leader>tm :tabmove<CR>
+    noremap <Leader>tn :tabnext<CR>
+    noremap <Leader>tp :tabprevious<CR>
 
-        " Easily create a new tab.
-        map <Leader>tt :tabnew<CR>
+    " Windows
+    nnoremap <C-h> <C-w>h<C-w>_
+    nnoremap <C-j> <C-w>j<C-w>_
+    nnoremap <C-k> <C-w>k<C-w>_
+    nnoremap <C-l> <C-w>l<C-w>_
+    " Horizontal split then move to bottom window.
+    nnoremap <Leader>- <C-w>s<C-w>_
+    " Vertical split then move to right window.
+    nnoremap <Leader>\| <C-w>v<C-w>l<C-w>_
 
-        " Easily close a tab.
-        map <Leader>tc :tabclose<CR>
-
-        " Easily move a tab.
-        noremap <Leader>tm :tabmove<CR>
-
-        " Easily go to next tab.
-        noremap <Leader>tn :tabnext<CR>
-
-        " Easily go to previous tab.
-        noremap <Leader>tp :tabprevious<CR>
-
-    " }}}
-    " Window Navigation {{{
-
-        nnoremap <C-h> <C-w>h<C-w>_
-        nnoremap <C-j> <C-w>j<C-w>_
-        nnoremap <C-k> <C-w>k<C-w>_
-        nnoremap <C-l> <C-w>l<C-w>_
-
-        " Horizontal split then move to bottom window.
-        nnoremap <Leader>- <C-w>s<C-w>_
-
-        " Vertical split then move to right window.
-        nnoremap <Leader>\| <C-w>v<C-w>l<C-w>_
-
-    " }}}
     " Text Alignment {{{
 
         nnoremap <Leader>Al :left<CR>
@@ -746,14 +624,21 @@ endif
         " Faster ESC.
         " inoremap jk <ESC>
         " inoremap kj <ESC>
-        " inoremap jj <ESC>
+        inoremap jj <ESC>
         " inoremap kk <ESC>
+        aug auto_leave_insert
+            au!
+            au CursorHoldI * stopinsert
+            au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+            au InsertLeave * let &updatetime=updaterestore
+        aug end
 
         " Make Ctrl-C trigger InsertLeave autocmds
         "
         " This is very heavy-handed, but Ctrl-C is what I'm accustomed to using to
         " leave insert mode.
         inoremap <C-C> <Esc>`^
+        " inoremap <C-C> <Esc>
 
         " Yank to end of line
         nnoremap Y y$
@@ -791,23 +676,11 @@ endif
         " Toggle paste.
         set pastetoggle=<F12>
 
-        " Replaste.
-        nnoremap <D-p> "_ddPV`]
-
         " Diff.
         nnoremap <silent><Leader>do :diffoff!<CR>
         nnoremap <silent><Leader>dg :diffget<CR>:diffupdate<CR>
         nnoremap <silent><Leader>dp :diffput<CR>:diffupdate<CR>
         nnoremap <silent><Leader>du :diffupdate<CR>
-
-        " Better completion.
-        " inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-        " inoremap <expr> <C-p> pumvisible() ?
-        "     \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-        "         \ "\<lt>up>" : ""<CR>'
-        " inoremap <expr> <C-n> pumvisible() ?
-        "     \ '<C-n>'  : '<C-n><C-r>=pumvisible() ?
-        "     \ "\<lt>Down>" : ""<CR>'
 
     " }}}
 
@@ -934,6 +807,14 @@ endif
 
 " }}}
 " Functions --------------------------------------------------------------- {{{
+
+    function! SL(function)
+        if exists('*'.a:function)
+            return call(a:function,[])
+        else
+            return ''
+        endif
+    endfunction
 
     " Error Toggle {{{
 
