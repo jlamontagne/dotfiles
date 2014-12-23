@@ -1,16 +1,33 @@
 # https://jira.skype.com/browse/SCL-810
 # http://wiki.cyberleo.net/wiki/KnowledgeBase/AlsaEqual
 
-defaults.pcm.!card 1
-defaults.ctl.!card 1
-defaults.pcm.!device 0
-defaults.ctl.!device 0
-
-pcm.dsnooped {
-  type dsnoop
-  ipc_key 1027
-  slave.pcm "hw:3,0"
+# Use PulseAudio by default
+pcm.!default {
+  type pulse
+  fallback "sysdefault"
+  hint {
+    show on
+    description "Default ALSA Output (currently PulseAudio Sound Server)"
+  }
 }
+
+ctl.!default {
+  type pulse
+  fallback "sysdefault"
+}
+
+# vim:set ft=alsaconf:
+
+# defaults.pcm.!card 1
+# defaults.ctl.!card 1
+# defaults.pcm.!device 0
+# defaults.ctl.!device 0
+#
+# pcm.dsnooped {
+#   type dsnoop
+#   ipc_key 1027
+#   slave.pcm "hw:3,0"
+# }
 
 # The alsaequal plugin is not compatible with 32-bit programs on amd64, so it
 # will crash them with the following message:
@@ -21,36 +38,36 @@ pcm.dsnooped {
 # CAPT, to direct the slave PCMs. These are controlled either by arguments
 # in the slave definition (i.e. slave.pcm "asymed:dmix,dsnoop" ), or by
 # environment variables (ALSA_ASYM_PLAY=dmix ALSA_ASYM_CAPT=dsnoop aplay ...)
-pcm.asymed {
-  @args [ TYPE ]
-  @args.TYPE {
-    type string
-    default {
-      @func getenv
-      vars [ ALSA_PCM ]
-      default "crossfeed"
-      # default "dmix"
-    }
-  }
-  type asym;
-  playback.pcm $TYPE;
-  capture.pcm "dsnooped";
-}
-
-pcm.!default {
-  type plug;
-  slave.pcm asymed;
-}
-
-pcm.crossfeed {
-  type ladspa
-  # slave.pcm "float2int"
-  slave.pcm "plug:dmix"
-  path "/usr/lib/ladspa/"
-  plugins [{
-    label bs2b
-    input {
-      controls [ 700 6 ]
-    }
-  }]
-}
+# pcm.asymed {
+#   @args [ TYPE ]
+#   @args.TYPE {
+#     type string
+#     default {
+#       @func getenv
+#       vars [ ALSA_PCM ]
+#       default "crossfeed"
+#       # default "dmix"
+#     }
+#   }
+#   type asym;
+#   playback.pcm $TYPE;
+#   capture.pcm "dsnooped";
+# }
+#
+# pcm.!default {
+#   type plug;
+#   slave.pcm asymed;
+# }
+#
+# pcm.crossfeed {
+#   type ladspa
+#   # slave.pcm "float2int"
+#   slave.pcm "plug:dmix"
+#   path "/usr/lib/ladspa/"
+#   plugins [{
+#     label bs2b
+#     input {
+#       controls [ 700 6 ]
+#     }
+#   }]
+# }
