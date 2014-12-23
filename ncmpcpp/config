@@ -285,7 +285,7 @@
 #
 #incremental_seeking = "yes"
 #
-#seek_time = "1"
+seek_time = "15"
 #
 #autocenter_mode = "no"
 #
