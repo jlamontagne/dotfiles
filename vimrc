@@ -97,7 +97,6 @@
     set encoding=utf8
     " Share the clipboard.
     " set clipboard+=unnamed
-    set colorcolumn=+1
     set backspace=indent,eol,start
     set backup
     set backupdir^=$HOME/.vim/backup//
@@ -116,7 +115,8 @@
     " set shell=bash
     let mapleader = ','
     let maplocalleader = ';'
-    set winminheight=1
+    set winheight=5
+    set winminheight=5
     set shortmess=aIoOtT
     set showmode
     set showcmd
@@ -151,7 +151,8 @@
     " Set keys move cursor to next/previous line.
     set ww+=<,>,[,]
     set ruler
-    set relativenumber
+    " set relativenumber
+    " set numberwidth=2
     set hidden
     set showmatch
     " Match for 3 tenths of a second.
@@ -160,7 +161,6 @@
     set matchpairs+=<:>
     set printoptions+=syntax:y
     set printoptions+=number:y
-    " Enable error jumping.
     set cf
     " Set diff fill char.
     set fillchars+=diff:⣿
@@ -175,6 +175,7 @@
     " colorscheme hybrid
     " colorscheme badwolf
     colorscheme vividchalk
+    " colorscheme grb256
 
     " hi LineNr ctermbg=0 ctermfg=8 cterm=none
     " hi CursorLine cterm=none
@@ -246,8 +247,9 @@
     " Copy indent from the current line.
     set autoindent
     set wrap
-    set textwidth=79
-    set formatoptions=cqrn1
+    set textwidth=80
+    set colorcolumn=+1
+    set formatoptions=tcqrn1
     set virtualedit+=block
     " Highlight VCS conflict markers.
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -371,8 +373,7 @@
         " Enable soft-wrapping for text files
         au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
         au BufRead,BufNewFile Vagrantfile set filetype=ruby
-        au FileType vim,help setlocal textwidth=78
-        au FileType vim setlocal foldmethod=marker colorcolumn=79
+        au FileType vim setlocal foldmethod=marker
         au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
         au FileType help nnoremap <silent><buffer> q :q<CR>
         au FileType gitcommit setlocal spell
@@ -580,14 +581,14 @@
     noremap <Leader>tp :tabprevious<CR>
 
     " Windows
-    nnoremap <C-h> <C-w>h<C-w>_
-    nnoremap <C-j> <C-w>j<C-w>_
-    nnoremap <C-k> <C-w>k<C-w>_
-    nnoremap <C-l> <C-w>l<C-w>_
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
     " Horizontal split then move to bottom window.
-    nnoremap <Leader>- <C-w>s<C-w>_
+    nnoremap <Leader>- <C-w>s
     " Vertical split then move to right window.
-    nnoremap <Leader>\| <C-w>v<C-w>l<C-w>_
+    nnoremap <Leader>\| <C-w>v<C-w>l
 
     " Text Alignment {{{
 
@@ -626,12 +627,12 @@
         " inoremap kj <ESC>
         inoremap jj <ESC>
         " inoremap kk <ESC>
-        aug auto_leave_insert
-            au!
-            au CursorHoldI * stopinsert
-            au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
-            au InsertLeave * let &updatetime=updaterestore
-        aug end
+        " aug auto_leave_insert
+        "     au!
+        "     au CursorHoldI * stopinsert
+        "     au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+        "     au InsertLeave * let &updatetime=updaterestore
+        " aug end
 
         " Make Ctrl-C trigger InsertLeave autocmds
         "
