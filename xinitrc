@@ -7,10 +7,11 @@
 # See https://bbs.archlinux.org/viewtopic.php?pid=1384701#p1384701
 # https://bbs.archlinux.org/viewtopic.php?id=175709
 # Also see /etc/X11/xorg.conf.d/70-nvidia-composite-fix.conf
-compton -CGb
+# compton -CGb
 # xcompmgr -n &
 
-hsetroot -solid '#000000'
+/usr/bin/start-pulseaudio-x11
+# hsetroot -solid '#000000'
 
 # Add terminus/etc to X11:
 xset +fp /usr/share/fonts/local
