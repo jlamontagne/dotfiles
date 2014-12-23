@@ -133,6 +133,8 @@ zstyle ':prezto:module:prompt' theme 'wolfjourn'
 # Auto set the tab and window titles.
 zstyle ':prezto:module:terminal' auto-title 'yes'
 
+zstyle ':prezto:environment:grep' color 'no'
+
 # Set the window title format.
 # zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 
