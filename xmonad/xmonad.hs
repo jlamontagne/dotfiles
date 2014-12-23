@@ -32,6 +32,7 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
+import XMonad.Layout.Reflect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Prompt
@@ -52,7 +53,8 @@ myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     , logHook = fadeInactiveLogHook 0.5
     , handleEventHook    = docksEventHook
     , terminal           = "urxvt"
-    , normalBorderColor  = "#586e75"
+    -- , normalBorderColor  = "#586e75"
+    , normalBorderColor  = "#111111"
     , focusedBorderColor = "#cccccc"
     , borderWidth = 1
     , focusFollowsMouse  = False
@@ -101,7 +103,7 @@ myKeys =
         , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
 myLayout = (
-    ResizableTall 1 (3/100) (1/2) [] |||
+    reflectHoriz $ ResizableTall 1 (3/100) (1/2) [] |||
     Mirror (ResizableTall 1 (3/100) (1/2) []) |||
     noBorders (fullscreenFull Full))
 
@@ -119,10 +121,12 @@ myTopics =
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 2)
     , TI "src0"         "src"               (spawnShell >*> 2)
+    , TI "medrem"       "src/medem"         (spawnShell >*> 3)
+    , TI "townlobby"    "src/lownlobby"     (spawnShell >*> 3)
     , TI "dotfiles"     ".dotfiles"         (vim "")
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
     , TI "music"        "music"             (runInTerm "" "ncmpcpp")
-    , TI "torrent"      ""                  (spawn "transmissionn-gtk")
+    , TI "torrent"      ""                  (spawn "transmission-gtk")
     , TI "skype"        ""                  (spawn "ALSA_PCM=\"dmix\" skype")
     ]
     where
@@ -159,16 +163,18 @@ myPrettyPrinter = xmobarPP
 -- $ xprop | grep WM_CLASS
 -- doSideFloat SE, NW, NE, etc
 myManageHook = composeAll
-    [ className =? "Gimp"           --> doFloat
+    [ className =? "Gimp"  --> doShift "*" -- may be "Gimp" or "Gimp-2.4" instead
+    , (className =? "Gimp" <&&> fmap ("tool" `isSuffixOf`) role) --> doFloat
     , className =? "MPlayer"        --> doFloat
     , resource  =? "skype"          --> doFloat
     -- , className =? "Chromium"       --> doShift "2:web"
     -- , className =? "Google-chrome"  --> doShift "2:web"
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
-    , name =? "Kerbal Space Program" --> doFullFloat
+    -- , name =? "Kerbal Space Program" --> doFullFloat
     ]
-    where name = stringProperty "WM_NAME"
+    where role = stringProperty "WM_WINDOW_ROLE"
+    -- where name = stringProperty "WM_NAME"
 
 goto :: Topic -> X ()
 goto topic = do
