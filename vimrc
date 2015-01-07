@@ -258,7 +258,8 @@
 " Folding ----------------------------------------------------------------- {{{
 
     set foldenable
-    set foldmethod=syntax
+    " syntax method slows ruby files to a crawl
+    set foldmethod=marker
     set foldnestmax=2
     set foldlevelstart=5
 
