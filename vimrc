@@ -376,8 +376,7 @@
         au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
 
         " Enable soft-wrapping for text files
-        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap
-        linebreak nolist shiftwidth=4
+        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist shiftwidth=4
         au BufRead,BufNewFile Vagrantfile set filetype=ruby
         au FileType vim setlocal foldmethod=marker
         au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
