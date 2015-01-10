@@ -117,7 +117,7 @@ data TopicItem = TI { topicName   :: Topic
 
 myTopics =
     --   Name           Directory           Default Action
-    [ TI "web"          ""                  (spawn "firefox" >> spawn "google-chrome-unstable")
+    [ TI "web"          ""                  (spawn "google-chrome-stable")
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 2)
     , TI "src0"         "src"               (spawnShell >*> 2)
