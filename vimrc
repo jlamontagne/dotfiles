@@ -27,6 +27,8 @@
     " Disabled due to unfortunate collision with s/S
     " Plugin 'goldfeld/vim-seek'
     Plugin 'kien/ctrlp.vim'
+
+    " ic, ac, iC, aC
     Plugin 'coderifous/textobj-word-column.vim'
     Plugin 'szw/vim-tags'
     let g:vim_tags_use_vim_dispatch = 1
@@ -81,8 +83,10 @@
     " Plugin 'rstacruz/sparkup'
     " Plugin 'othree/html5.vim'
     " Plugin 'amirh/HTML-AutoCloseTag'
-    Plugin 'pangloss/vim-javascript'
+    " Plugin 'pangloss/vim-javascript'
     Plugin 'mustache/vim-mustache-handlebars'
+    " <c-y>,
+    Plugin 'mattn/emmet-vim'
 
     call vundle#end()
     filetype plugin indent on
@@ -126,7 +130,7 @@
     set sidescroll=3
     set visualbell
     " Don't keep windows at equal size.
-    set noequalalways
+    " set noequalalways
     set splitbelow
     set splitright
     " Line break at the characters in breakat.
@@ -372,7 +376,8 @@
         au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
 
         " Enable soft-wrapping for text files
-        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist
+        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap
+        linebreak nolist shiftwidth=4
         au BufRead,BufNewFile Vagrantfile set filetype=ruby
         au FileType vim setlocal foldmethod=marker
         au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
@@ -424,14 +429,6 @@
     " Gundo {{{
 
         let g:gundo_preview_bottom = 1
-
-    " }}}
-    " HTML5 {{{
-
-        let g:event_handler_attributes_complete = 0
-        let g:rdfa_attributes_complete = 0
-        let g:microdata_attributes_complete = 0
-        let g:atia_attributes_complete = 0
 
     " }}}
     " Surround {{{
@@ -519,9 +516,10 @@
         inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
         inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
         " inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
+        " let g:user_emmet_next_key = '<s-tab>'
 
         snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
-        snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
+        " snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
 
     " }}}
 
