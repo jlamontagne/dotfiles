@@ -58,6 +58,8 @@
     Plugin 'tpope/vim-endwise'
     Plugin 'tpope/vim-git'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'w0ng/vim-hybrid'
     Plugin 'chriskempson/base16-vim'
 
     Plugin 'syntaxhaskell.vim'
@@ -176,7 +178,7 @@
     syntax on
     " set background=dark
 
-    " let g:hybrid_use_Xresources = 1
+    let g:hybrid_use_Xresources = 1
     " colorscheme hybrid
 
     " Change base16 scheme by changing xresources file
@@ -185,6 +187,7 @@
     " colorscheme badwolf
     " colorscheme grb256
     " colorscheme vividchalk
+    " colorscheme solarized
 
     " hi LineNr ctermbg=0 ctermfg=8 cterm=none
     " hi CursorLine cterm=none
