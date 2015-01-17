@@ -95,7 +95,15 @@ URxvt.urgentOnBell: true
 ! URxvt.colorUL: S_red
 
 ! Perl extensions
-URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard
+URxvt.perl-lib: /home/josh/.urxvt/urxvt-font-size/
+URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard,font-size
+
+! font-size
+! ---------
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
 
 ! keyboard-select
 ! ---------------
