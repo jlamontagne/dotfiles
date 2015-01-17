@@ -23,6 +23,7 @@ import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.FloatNext
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -48,7 +49,7 @@ main = do
 
 myConfig = withUrgencyHook NoUrgencyHook defaultConfig
     { workspaces         = myTopicNames
-    , manageHook         = manageSpawn <+> myManageHook
+    , manageHook         = manageSpawn <+> floatNextHook <+> myManageHook
     , layoutHook         = smartBorders $ myLayout
     , logHook = fadeInactiveLogHook 0.5
     , handleEventHook    = docksEventHook
@@ -82,6 +83,7 @@ myKeys =
     , ("M-S-<Page_Up>", clearUrgents)
     , ("M-a"          , sendMessage MirrorShrink)
     , ("M-z"          , sendMessage MirrorExpand)
+    , ("M-f"          , toggleFloatAllNew)
 
     -- Used to switch between floating EVE clients
     -- focus the next window (which should be floating), then swap it to master
@@ -95,12 +97,12 @@ myKeys =
                     ]
         , (i, k) <- zip [1..] "123456789"
     ]
-    ++
+    -- ++
     -- mod-{w,f,r} %! Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,f,r} %! Move client to screen 1, 2, or 3
-    [(("M-"++m++[key]), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip "wfr" [0..]
-        , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
+    -- [(("M-"++m++[key]), screenWorkspace sc >>= flip whenJust (windows . f))
+    --     | (key, sc) <- zip "wfr" [0..]
+    --     , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
 myLayout = (
     reflectHoriz $ ResizableTall 1 (3/100) (1/2) [] |||
