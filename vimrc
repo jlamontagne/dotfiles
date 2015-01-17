@@ -58,6 +58,7 @@
     Plugin 'tpope/vim-endwise'
     Plugin 'tpope/vim-git'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'chriskempson/base16-vim'
 
     Plugin 'syntaxhaskell.vim'
     Plugin 'indenthaskell.vim'
@@ -177,9 +178,13 @@
 
     " let g:hybrid_use_Xresources = 1
     " colorscheme hybrid
+
+    " Change base16 scheme by changing xresources file
+    colorscheme base16-default
+
     " colorscheme badwolf
-    colorscheme vividchalk
     " colorscheme grb256
+    " colorscheme vividchalk
 
     " hi LineNr ctermbg=0 ctermfg=8 cterm=none
     " hi CursorLine cterm=none
