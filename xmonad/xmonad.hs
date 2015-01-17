@@ -105,6 +105,7 @@ myKeys =
 myLayout = (
     reflectHoriz $ ResizableTall 1 (3/100) (1/2) [] |||
     Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+    ThreeColMid 1 (3/100) (1/3) |||
     noBorders (fullscreenFull Full))
 
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
