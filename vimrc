@@ -34,7 +34,7 @@
     let g:vim_tags_use_vim_dispatch = 1
 
     Plugin 'tpope/vim-vividchalk'
-    Plugin 'tpope/vim-sleuth'
+    " Plugin 'tpope/vim-sleuth'
     Plugin 'tpope/vim-repeat'
     " Provides pairs of bracket mappings for buffer, file navigation and editing.
     Plugin 'tpope/vim-unimpaired'
@@ -58,6 +58,7 @@
     Plugin 'tpope/vim-endwise'
     Plugin 'tpope/vim-git'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-projectionist'
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'w0ng/vim-hybrid'
     Plugin 'chriskempson/base16-vim'
@@ -86,7 +87,8 @@
     " Plugin 'rstacruz/sparkup'
     " Plugin 'othree/html5.vim'
     " Plugin 'amirh/HTML-AutoCloseTag'
-    " Plugin 'pangloss/vim-javascript'
+    Plugin 'jelera/vim-javascript-syntax'
+    Plugin 'pangloss/vim-javascript'
     Plugin 'mustache/vim-mustache-handlebars'
     " <c-y>,
     Plugin 'mattn/emmet-vim'
@@ -175,6 +177,13 @@
     if has('mouse')
         set mouse=a
     endif
+
+    " Default cinoptions are:
+    " set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,N0,ps,ts,is,+s, c3,C0,/0,(2s,us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0
+
+    " Line up args on additional lines, etc.
+    set cinoptions+=(0,w1,m1
+
     syntax on
     " set background=dark
 
@@ -196,11 +205,18 @@
 " Status Line ------------------------------------------------------------- {{{
 
     " Always show status.
-    set laststatus=2
+    " set laststatus=2
     " Disable status line fill chars.
-    set fillchars+=stl:\ ,stlnc:\ " Space.
+    " set fillchars+=stl:\ ,stlnc:\ " Space.
     " set statusline=%<%.99f\ %h%w%m%r%{SL('CapsLockStatusline')}%y%{SL('fugitive#statusline')}%*%=%-14.(%l,%c%V%)\ %P
-    set statusline=%<%f\ (%{&ft})%r\ %-4(%m%)%=%-16(%3l,%02c%03V%)\ %P
+    " set statusline=%<%f\ (%{&ft})%r\ %-4(%m%)%=%-16(%3l,%02c%03V%)\ %P
+
+    set laststatus=2                                         " always show status
+    set statusline=%<%f\                                     " Filename
+    set statusline+=%w%h%m%r                                 " Options
+    set statusline+=\ %y                                     " filetype
+    set statusline+=\ [%{join(split(getcwd(),'/')[3:],'/')}] " current dir
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%        " Right aligned file nav info
 
 " }}}
 " Search and Replace ------------------------------------------------------ {{{
@@ -246,16 +262,23 @@
 " }}}
 " Whitespace -------------------------------------------------------------- {{{
 
-    set tabstop=4
-    set softtabstop=4
     set expandtab
+    " set shiftwidth=4
+    " set softtabstop=4
     " Do not select the end of line.
     " XXX: Using 'old' breaks UltiSnips by selecting one character past the
     " placeholder.
     "
     " set selection=old
-    " Shift to the next round tab stop.
-    set shiftround
+
+    " Don't shift to the next round tab stop. This fucks with reindenting
+    " manually indented code. e.g.:
+    "
+    " <div class="lined up"
+    "      id="nicely">
+    "
+    " set shiftround
+
     " Copy indent from the current line.
     set autoindent
     set wrap
@@ -358,15 +381,10 @@
 
     aug file_settings
         au!
-        au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
-
-        " au BufNewFile,BufRead *.less setlocal filetype=less
-        au BufNewFile,BufRead *.less setlocal filetype=css
 
         " Use <Leader>S to sort properties.
         au BufNewFile,BufRead *.css,*.less
             \ nnoremap <buffer> <LocalLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-        au FileType git* setlocal noexpandtab tabstop=4 shiftwidth=4 nofoldenable textwidth=72
 
         " Jump to the last known position when reopening a file.
         au BufReadPost *
@@ -375,21 +393,25 @@
         \ endif
 
         " au FileType handlebars compiler html
-        au BufNewFile,BufRead *.handlebars setlocal filetype=handlebars syntax=html
+        au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
+        " au BufNewFile,BufRead *.less setlocal filetype=less
+        au BufNewFile,BufRead *.less setlocal filetype=css
+        " au BufNewFile,BufRead *.handlebars,*.hbs setlocal filetype=html syntax=html
         au BufNewFile,BufRead *.js.es6 setlocal filetype=javascript
+        au BufNewFile,BufRead *.m*down setlocal filetype=markdown
+        au BufNewFile,BufRead Vagrantfile set filetype=ruby
+        au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
 
         " au FileType html compiler html
-        au FileType html ru ftplugin/html_autoclosetag.vim
-        au BufNewFile,BufRead *.m*down setlocal filetype=markdown
+        " au FileType html ru ftplugin/html_autoclosetag.vim
         au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
-
-        " Enable soft-wrapping for text files
-        au FileType text,markdown,handlebars,html,xhtml,eruby setlocal wrap linebreak nolist shiftwidth=4
-        au BufRead,BufNewFile Vagrantfile set filetype=ruby
+        au FileType git* setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4 nofoldenable textwidth=72
+        au FileType text,markdown,eruby setlocal wrap linebreak
+        au FileType html.handlebars,html,xhtml setlocal wrap linebreak et sw=2 sts=2 indentkeys-={,}
         au FileType vim setlocal foldmethod=marker
-        au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
         au FileType help nnoremap <silent><buffer> q :q<CR>
         au FileType gitcommit setlocal spell
+        au FileType javascript setlocal et sw=2 sts=2
         autocmd FileType * if exists("+omnifunc") && &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
         autocmd FileType * if exists("+completefunc") && &completefunc == "" | setlocal completefunc=syntaxcomplete#Complete | endif
     aug end
@@ -399,6 +421,7 @@
 
     let g:delimitMate_expand_cr = 2
     let g:delimitMate_expand_space = 1
+    " let g:delimitMate_excluded_ft = "html.mustache,html.handlebars,html,xhtml"
 
     " Don't jump over shit on other lines
     let g:delimitMate_jump_expansion = 0
