@@ -7,3 +7,5 @@ django=.py,.html
 less=.less
 --type-set
 front=.html,.js,.less,.css
+--ignore-dir=dist
+--ignore-dir=tmp
