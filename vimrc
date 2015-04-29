@@ -166,8 +166,6 @@
     set showmatch
     " Match for 3 tenths of a second.
     set matchtime=3
-    " Pairs to match.
-    set matchpairs+=<:>
     set printoptions+=syntax:y
     set printoptions+=number:y
     set cf
