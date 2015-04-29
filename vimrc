@@ -54,6 +54,7 @@
     Plugin 'tpope/vim-rails'
     " Yes. Setup tmux to make this awesome. TODO
     Plugin 'tpope/vim-dispatch'
+    " Great for HTML editing
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-endwise'
     Plugin 'tpope/vim-git'
@@ -72,8 +73,8 @@
     Plugin 'scrooloose/syntastic'
     Plugin 'tomtom/tcomment_vim'
 
-    Plugin 'Raimondi/delimitMate'
     " Automatically closes functions, blocks, etc.
+    Plugin 'Raimondi/delimitMate'
     Plugin 'kana/vim-textobj-user'
     Plugin 'michaeljsmith/vim-indent-object'
     " Configures % to match more than just single characters.
