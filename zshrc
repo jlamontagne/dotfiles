@@ -60,8 +60,8 @@ unalias ln
 alias bower='noglob bower'
 
 # https://bugs.gentoo.org/show_bug.cgi?id=413637
-alias killchrome='ps -C chrome -C chrome-sandbox -C nacl_helper -C Chrome_ProcessL -C BrowserBlocking -o pid= | tee | xargs kill'
-alias kill9chrome='ps -C chrome -C chrome-sandbox -C nacl_helper -C Chrome_ProcessL -C BrowserBlocking -o pid= | tee | xargs kill -9'
+alias killchrome='ps -C chrome -C chrome-sandbox -C nacl_helper -C Chrome_ProcessL -C Chrome_FileThre -C BrowserBlocking -o pid= | tee | xargs kill'
+alias kill9chrome='ps -C chrome -C chrome-sandbox -C nacl_helper -C Chrome_ProcessL -C Chrome_FileThre -C BrowserBlocking -o pid= | tee | xargs kill -9'
 
 # function vim_session() {
 #   if [[ -f Session.vim ]] ; then
