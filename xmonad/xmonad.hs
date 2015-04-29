@@ -30,10 +30,13 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 -- import XMonad.Hooks.Place
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.FixedColumn
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Magnifier
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
 import XMonad.Layout.Reflect
+import XMonad.Layout.LimitWindows
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Prompt
@@ -105,9 +108,11 @@ myKeys =
     --     , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
 myLayout = (
-    reflectHoriz $ ResizableTall 1 (3/100) (1/2) [] |||
-    Mirror (ResizableTall 1 (3/100) (1/2) []) |||
-    ThreeColMid 1 (3/100) (1/3) |||
+    (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
+    -- (limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10) |||
+    (reflectHoriz $ magnifiercz' 1.4 $ FixedColumn 1 0 165 20) |||
+    -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+    -- ThreeColMid 1 (3/100) (1/3) |||
     noBorders (fullscreenFull Full))
 
 myXPConfig = greenXPConfig { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
@@ -124,7 +129,7 @@ myTopics =
     , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
     , TI "src"          "src"               (spawnShell >*> 2)
     , TI "src0"         "src"               (spawnShell >*> 2)
-    , TI "medrem"       "src/medrem"        (spawnShell >*> 3)
+    , TI "medrem"       "src/medrem"        (vim "" >> spawnShell >*> 2)
     , TI "townlobby"    "src/townlobby"     (spawnShell >*> 3)
     , TI "dotfiles"     ".dotfiles"         (vim "")
     , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
@@ -174,10 +179,16 @@ myManageHook = composeAll
     -- , className =? "Google-chrome"  --> doShift "2:web"
     -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    , fmap not isDialog --> doF avoidMaster
     -- , name =? "Kerbal Space Program" --> doFullFloat
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
     -- where name = stringProperty "WM_NAME"
+
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+     W.Stack t [] (r:rs) ->  W.Stack t [r] rs
+     otherwise           -> c
 
 goto :: Topic -> X ()
 goto topic = do
