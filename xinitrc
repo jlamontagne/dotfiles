@@ -15,6 +15,7 @@
 
 # Add terminus/etc to X11:
 xset +fp /usr/share/fonts/local
+xset +fp /home/josh/.local/share/fonts
 xset fp rehash
 
 xrdb $HOME/.Xresources
