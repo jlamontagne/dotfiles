@@ -32,7 +32,6 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.FixedColumn
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Magnifier
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
 import XMonad.Layout.Reflect
@@ -110,7 +109,7 @@ myKeys =
 myLayout = (
     (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
     -- (limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10) |||
-    (reflectHoriz $ magnifiercz' 1.4 $ FixedColumn 1 0 165 20) |||
+    (reflectHoriz $ FixedColumn 1 0 165 20) |||
     -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
     -- ThreeColMid 1 (3/100) (1/3) |||
     noBorders (fullscreenFull Full))
