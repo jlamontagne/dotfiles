@@ -1,0 +1,13 @@
+#include ".Xresources.d/base16.Xresources"
+! #include ".Xresources.d/hybrid.Xresources"
+! #include ".Xresources.d/solarized.Xresources"
+! #include ".Xresources.d/tomorrow-night-bright.Xresources"
+#include ".Xresources.d/rxvt-unicode.Xresources"
+#include ".Xresources.d/x11-ssh-askpass.Xresources"
+
+! Colours
+! *.background: Black
+! *.foreground: White
+
+! Cursor theme
+Xcursor.theme: Oxygen_Black

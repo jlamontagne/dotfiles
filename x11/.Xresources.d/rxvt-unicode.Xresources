@@ -1,0 +1,63 @@
+! http://superuser.com/questions/415565/rxvt-unicode-borders-appeared-in-ubuntu-precise
+URxvt.internalBorder: 0
+
+!URxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+URxvt.font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
+URxvt.boldFont: -xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1
+
+URxvt.saveLines: 16384
+URxvt.scrollBar: false
+URxvt.urgentOnBell: true
+
+! Display bold and underlined text in color, rather than using the terminal
+! attributes. This makes reading man pages a little easier.
+! URxvt.colorBD: S_blue
+! URxvt.colorUL: S_red
+
+! Perl extensions
+URxvt.perl-lib: /home/josh/.urxvt/urxvt-font-size/
+URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard,font-size
+
+! font-size
+! ---------
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+
+! keyboard-select
+! ---------------
+! h/j/k/l:    Move cursor left/down/up/right (also with arrow keys)
+! g/G/0/^/$/H/M/L/f/F/;/,/w/W/b/B/e/E: More vi-like cursor movement keys
+! '/'/?:      Start forward/backward search
+! n/N:        Repeat last search, N: in reverse direction
+! Ctrl-f/b:   Scroll down/up one screen
+! Ctrl-d/u:   Scroll down/up half a screen
+! v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
+! y/Return:   Copy selection to primary buffer, Return: deactivate afterwards
+! q/Escape:   Deactivate keyboard selection mode
+URxvt.keysym.M-s: perl:keyboard-select:activate
+! URxvt.keysym.M-Escape: perl:keyboard-select:activate
+! override Meta-s binding and enable kb-select directly in backward search mode
+! URxvt.keysym.M-s:      perl:keyboard-select:search
+
+! url-select
+! ----------
+! j/k:      Select next downward/upward URL (also with arrow keys)
+! g/G:      Select first/last URL (also with home/end key)
+! o/Return: Open selected URL in browser, Return: deactivate afterwards
+! y:        Copy (yank) selected URL and deactivate selection mode
+! q/Escape: Deactivate URL selection mode
+URxvt.keysym.M-u:    perl:url-select:select_next
+URxvt.urlLauncher:   firefox
+URxvt.underlineURLs: false
+
+! clipboard
+! ---------
+! Depends on having xsel installed.
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+! Fix for solarized colours: https://bbs.archlinux.org/viewtopic.php?id=164108
+URxvt.intensityStyles: false

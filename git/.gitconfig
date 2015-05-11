@@ -1,0 +1,64 @@
+[alias]
+	addremove = !git add --all && git ls-files --deleted -z | xargs -0 git rm
+	switch = checkout
+	unadd = reset --mixed
+	uncommit = reset --soft
+	undo = reset --hard
+	unstage = reset
+[user]
+	name = Josh Lamontagne
+	email = josh@joshlamontagne.com
+[color]
+	ui = auto
+[format]
+	numbered = auto
+[core]
+	legacyheaders = false
+	excludesfile = ~/.gitignore
+	whitespace = trailing-space,space-before-tab
+	quotepath = false
+	autocrlf = input
+	safecrlf = true
+[apply]
+	whitespace = warn
+[repack]
+	usedeltabaseoffset = true
+[branch]
+	autosetupmerge = true
+[pager]
+	status = false
+[tig]
+	show-date = relative
+	author-width = 8
+	show-rev-graph = yes
+[advice]
+	pushNonFastForward = false
+	statusHints = false
+[push]
+	default = tracking
+[rerere]
+	enabled = true
+[diff]
+	tool = vimdiff
+	guitool = ksdiff
+	mnemonicprefix = true
+	renames = copies
+[difftool]
+	prompt = false
+[merge]
+	; conflictstyle = diff3
+	; tool = vimdiff3
+	conflictstyle = merge
+	tool = threesome
+	stat = true
+[mergetool]
+	prompt = false
+[mergetool "vimdiff3"]
+	cmd = vim -d -c 'wincmd J' -c 'resize 10' \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+	trustExitCode = false
+[mergetool "gvimdiff3"]
+	cmd = gvim -f -d -c 'wincmd J' -c 'resize 10' \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+	trustExitCode = false
+[mergetool "threesome"]
+	cmd = vim -f -c 'ThreesomeInit' \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	trustExitCode = true

@@ -1,9 +1,9 @@
-[submodule "urxvt/ext"]
-	path = urxvt/ext
+[submodule "zsh/.zprezto"]
+	path = zsh/.zprezto
+	url = git@github.com:sorin-ionescu/prezto.git
+[submodule "x11/.urxvt/ext"]
+	path = x11/.urxvt/ext
 	url = git://github.com/muennich/urxvt-perls.git
-[submodule "zprezto"]
-	path = zprezto
-	url = git://github.com/sorin-ionescu/prezto.git
-[submodule "urxvt-font-size"]
-	path = urxvt/urxvt-font-size
-	url = https://github.com/majutsushi/urxvt-font-size.git
+[submodule "x11/.urxvt/urxvt-font-size"]
+	path = x11/.urxvt/urxvt-font-size
+	url = git://github.com/majutsushi/urxvt-font-size.git

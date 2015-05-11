@@ -1,4 +1,0 @@
---python-kinds=-iv
---langdef=zsh
---langmap=zsh:.zsh
---regex-zsh=/(function[ \t]+)?([A-Za-z0-9_\-]+)[ \t]*([^\)]\))?([ \t]*)?\{/\2/f,function/
