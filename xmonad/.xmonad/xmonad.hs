@@ -22,6 +22,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.FloatNext
 import XMonad.Hooks.ManageDocks
@@ -29,7 +30,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 -- import XMonad.Hooks.Place
-import XMonad.Layout.Fullscreen
+import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.FixedColumn
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
@@ -49,12 +50,12 @@ main = do
     checkTopicConfig myTopicNames myTopicConfig
     xmonad =<< statusBar "xmobar" myPrettyPrinter toggleStrutsKey myConfig
 
-myConfig = withUrgencyHook NoUrgencyHook defaultConfig
+myConfig = ewmh $ withUrgencyHook NoUrgencyHook defaultConfig
     { workspaces         = myTopicNames
     , manageHook         = manageSpawn <+> floatNextHook <+> myManageHook
     , layoutHook         = smartBorders $ myLayout
     , logHook = fadeInactiveLogHook 0.5
-    , handleEventHook    = docksEventHook
+    , handleEventHook    = docksEventHook <+> fullscreenEventHook
     , terminal           = "urxvt"
     -- , normalBorderColor  = "#586e75"
     , normalBorderColor  = "#111111"
