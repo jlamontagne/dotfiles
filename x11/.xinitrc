@@ -9,6 +9,8 @@
 # Also see /etc/X11/xorg.conf.d/70-nvidia-composite-fix.conf
 # compton -CGb
 # xcompmgr -n &
+# setxbmap colemak
+# xmodmap xmodmap.colemak
 
 /usr/bin/start-pulseaudio-x11
 # hsetroot -solid '#000000'
