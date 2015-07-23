@@ -49,7 +49,7 @@ URxvt.keysym.M-s: perl:keyboard-select:activate
 ! y:        Copy (yank) selected URL and deactivate selection mode
 ! q/Escape: Deactivate URL selection mode
 URxvt.keysym.M-u:    perl:url-select:select_next
-URxvt.urlLauncher:   firefox
+URxvt.urlLauncher:   google-chrome-stable
 URxvt.underlineURLs: false
 
 ! clipboard
