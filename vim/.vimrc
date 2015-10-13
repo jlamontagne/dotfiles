@@ -22,7 +22,7 @@
     Plugin 'gmarik/Vundle.vim'
     Plugin 'godlygeek/tabular'
     Plugin 'sjl/gundo.vim'
-    Plugin 'Lokaltog/vim-easymotion'
+    " Plugin 'Lokaltog/vim-easymotion'
     " s?? to jump to next occurrence of ?? in the line
     " Disabled due to unfortunate collision with s/S
     " Plugin 'goldfeld/vim-seek'
@@ -30,11 +30,9 @@
 
     " ic, ac, iC, aC
     Plugin 'coderifous/textobj-word-column.vim'
-    Plugin 'szw/vim-tags'
-    let g:vim_tags_use_vim_dispatch = 1
 
     Plugin 'tpope/vim-vividchalk'
-    " Plugin 'tpope/vim-sleuth'
+    Plugin 'tpope/vim-sleuth'
     Plugin 'tpope/vim-repeat'
     " Provides pairs of bracket mappings for buffer, file navigation and editing.
     Plugin 'tpope/vim-unimpaired'
@@ -47,11 +45,11 @@
     " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
     Plugin 'tpope/vim-abolish'
     " Continuously updated session files
-    Plugin 'tpope/vim-obsession'
+    " Plugin 'tpope/vim-obsession'
     " Plugin 'tpope/vim-tbone'
-    " Plugin 'tpope/vim-jdaddy'
+    Plugin 'tpope/vim-jdaddy'
     Plugin 'tpope/vim-markdown'
-    Plugin 'tpope/vim-rails'
+    " Plugin 'tpope/vim-rails'
     " Yes. Setup tmux to make this awesome. TODO
     Plugin 'tpope/vim-dispatch'
     " Great for HTML editing
@@ -80,7 +78,7 @@
     " Configures % to match more than just single characters.
     Plugin 'vim-scripts/matchit.zip'
     " Disabled until I get around to properly integrating/learning this.
-    " Plugin 'SirVer/ultisnips'
+    Plugin 'jlamontagne/ultisnips'
     " Plugin 'honza/vim-snippets'
 
     Plugin 'int3/vim-extradite'
@@ -88,6 +86,8 @@
     " Plugin 'rstacruz/sparkup'
     " Plugin 'othree/html5.vim'
     " Plugin 'amirh/HTML-AutoCloseTag'
+    " Plugin 'hail2u/vim-css3-syntax'
+    Plugin 'wavded/vim-stylus'
     Plugin 'jelera/vim-javascript-syntax'
     Plugin 'pangloss/vim-javascript'
     Plugin 'mustache/vim-mustache-handlebars'
@@ -161,8 +161,8 @@
     " Set keys move cursor to next/previous line.
     set ww+=<,>,[,]
     set ruler
-    " set relativenumber
-    " set numberwidth=2
+    set relativenumber
+    set numberwidth=2
     set hidden
     set showmatch
     " Match for 3 tenths of a second.
@@ -173,9 +173,6 @@
     " Set diff fill char.
     set fillchars+=diff:⣿
     set titlestring=%f\ "%h%m%r%w\ -\ %{v:progname}\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-    if has('mouse')
-        set mouse=a
-    endif
 
     " Default cinoptions are:
     " set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,N0,ps,ts,is,+s, c3,C0,/0,(2s,us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0
@@ -261,7 +258,7 @@
 " }}}
 " Whitespace -------------------------------------------------------------- {{{
 
-    set expandtab
+    " set expandtab
     " set shiftwidth=4
     " set softtabstop=4
     " Do not select the end of line.
@@ -333,10 +330,10 @@
 
     " set wildignore+=.hg,.git,.svn
     set wildignore+=node_modules
-    " set wildignore+=*.aux,*.out,*.toc
-    " set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
-    " set wildignore+=*.luac
-    " set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
+    set wildignore+=*.aux,*.out,*.toc
+    set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+    set wildignore+=*.luac
+    set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
     set wildignore+=*.pyc
     " set wildignore+=*.spl
     " set wildignore+=*~,#*#,*.sw?,%*,*=
@@ -418,6 +415,8 @@
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
 
+    let g:syntastic_html_tidy_exec = 'tidy'
+    let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
     let g:delimitMate_expand_cr = 2
     let g:delimitMate_expand_space = 1
     " let g:delimitMate_excluded_ft = "html.mustache,html.handlebars,html,xhtml"
@@ -477,16 +476,12 @@
     " }}}
     " UltiSnips {{{
 
-        " Only use honza/vim-snippets
-        let g:UltiSnipsSnippetDirectories = ["../vim-snippets/UltiSnips"]
-
         let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
-
         let g:UltiSnipsExpandTrigger = "<Nul>"
         let g:UltiSnipsJumpForwardTrigger = "<Nul>"
 
         let g:ulti_expand_res = 0
-        function! UltiSnips_MaybeExpandSnippet()
+        function! MaybeExpandSnippet()
             call UltiSnips#ExpandSnippet()
             return g:ulti_expand_res
         endfunction
@@ -504,28 +499,29 @@
         endfunction
 
         function! g:InsertCRWrapper()
-            " if UltiSnips_MaybeExpandSnippet()
-            "     return ""
+            let snippet = MaybeExpandSnippet()
+
             if pumvisible()
                 return "\<C-y>"
-            "     " Close completion menu
-            "     " Use feedkeys since we need mappings
-            "     " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
-            "     " return ""
+                " Close completion menu
+                " Use feedkeys since we need mappings
+                " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
+                " return ""
             elseif delimitMate#WithinEmptyPair()
                 return delimitMate#ExpandReturn()
-            else
+            elseif !snippet
                 return "\<CR>"
+            else
+                return ""
             endif
         endfunction
 
         function! g:InsertTabWrapper()
-            " if pumvisible()
-            "     return "\<C-n>"
-            " elseif UltiSnips_MaybeJumpForwards()
-            "     return ""
-            " elseif delimitMate#ShouldJump()
-            if delimitMate#ShouldJump()
+            if pumvisible()
+                return "\<C-n>"
+            elseif UltiSnips_MaybeJumpForwards()
+                return ""
+            elseif delimitMate#ShouldJump()
                 return delimitMate#JumpAny()
             else
                 return "\<Tab>"
