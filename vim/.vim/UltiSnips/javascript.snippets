@@ -9,3 +9,62 @@ ${1:argument} => {
 	${VISUAL}$0
 }
 endsnippet
+
+snippet log "console.log" b
+console.log(${1:\`${2:value}\`});
+endsnippet
+
+snippet bug "debugger"
+debugger;
+endsnippet
+
+snippet imp "import" b
+import ${1:\{ ${2:imports} \}} from '${3:module}';
+endsnippet
+
+snippet cla "angular class" b
+class ${1:class_name} {
+	constructor(${2:dependencies}) {
+		${2/(\w+),?(\s|$)+/this.$1 = $1;\n/g}$3
+	}$0
+}
+
+$1.$inject = [
+	${2/(\w+),?(\s|$)+/'$1',$2/g}
+];
+
+export default $1;
+endsnippet
+
+snippet tests "angular unit tests" b
+import angular from 'angular';
+import { inject } from 'angular-mocks';
+
+describe('$1', () => {
+	$0
+}
+endsnippet
+
+snippet des "describe" b
+describe('${1:description}', () => {
+	$0
+});
+endsnippet
+
+snippet it "it" b
+it('${1:description}', () => {
+	$0
+});
+endsnippet
+
+snippet bef "before each" b
+beforeEach(() => {
+	$0
+});
+endsnippet
+
+snippet befi "before each inject" b
+beforeEach(inject(${1:($2)} => {
+	$0
+}));
+endsnippet

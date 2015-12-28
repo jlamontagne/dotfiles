@@ -181,13 +181,14 @@
     set cinoptions+=(0,w1,m1
 
     syntax on
-    " set background=dark
+    set background=dark
 
     let g:hybrid_use_Xresources = 1
     " colorscheme hybrid
 
     " Change base16 scheme by changing xresources file
     colorscheme base16-default
+    " let base16colorspace=256
 
     " colorscheme badwolf
     " colorscheme grb256
@@ -360,15 +361,15 @@
     " Cursorline {{{
 
         " Highlight the current line in the current window.
-        aug cursorline
-            au!
-            au BufEnter * set cursorline
-            au BufLeave * set nocursorline
-            au InsertEnter * set nocursorline
-            au InsertLeave * set cursorline
-            hi CursorLine   ctermbg=235 cterm=NONE
-            hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
-        aug end
+        " aug cursorline
+        "     au!
+        "     au BufEnter * set cursorline
+        "     au BufLeave * set nocursorline
+        "     au InsertEnter * set nocursorline
+        "     au InsertLeave * set cursorline
+        "     hi CursorLine   ctermbg=235 cterm=NONE
+        "     hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
+        " aug end
 
     " }}}
 
@@ -518,7 +519,7 @@
 
         function! g:InsertTabWrapper()
             if pumvisible()
-                return "\<C-n>"
+                return "\<C-y>"
             elseif UltiSnips_MaybeJumpForwards()
                 return ""
             elseif delimitMate#ShouldJump()
@@ -538,10 +539,23 @@
         "     endif
         " endfunction
 
+        function! g:InsertSpaceWrapper()
+            if pumvisible()
+                return "\<C-y>"
+                " Close completion menu
+                " Use feedkeys since we need mappings
+                " call feedkeys("\<Plug>ToggleYCM\<C-y>\<Plug>ToggleYCM")
+                " return ""
+            else
+                return "\<Space>"
+            endif
+        endfunction
+
         inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
         inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
         " inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
         " let g:user_emmet_next_key = '<s-tab>'
+        inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
 
         snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
         " snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
