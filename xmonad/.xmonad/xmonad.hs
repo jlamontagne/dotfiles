@@ -31,7 +31,6 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 -- import XMonad.Hooks.Place
 import XMonad.Layout.Fullscreen (fullscreenFull)
-import XMonad.Layout.FixedColumn
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
@@ -59,9 +58,9 @@ myConfig = ewmh $ withUrgencyHook NoUrgencyHook defaultConfig
     , terminal           = "urxvt"
     -- , normalBorderColor  = "#586e75"
     , normalBorderColor  = "#111111"
-    , focusedBorderColor = "#cccccc"
+    , focusedBorderColor = "#00AA00"
     , borderWidth = 1
-    , focusFollowsMouse  = False
+    , focusFollowsMouse  = True
     , modMask            = mod4Mask
     , startupHook        = return () >> checkKeymap myConfig myKeys -- as prescribed by docs
     -- , startupHook        = composeAll
@@ -107,9 +106,7 @@ myKeys =
 
 myLayout = (
     (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
-    -- (limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10) |||
-    (reflectHoriz $ FixedColumn 1 0 165 20) |||
-    -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+    Mirror (ResizableTall 1 (3/100) (1/2) []) |||
     -- ThreeColMid 1 (3/100) (1/3) |||
     noBorders (fullscreenFull Full))
 
@@ -124,16 +121,14 @@ data TopicItem = TI { topicName   :: Topic
 myTopics =
     --   Name           Directory           Default Action
     [ TI "web"          ""                  (spawn "google-chrome-stable")
-    , TI "mail"         ""                  (runInTerm "" "ssh 10.8.0.1 -t mutt")
-    , TI "src"          "src"               (spawnShell >*> 2)
-    , TI "src0"         "src"               (spawnShell >*> 2)
-    , TI "medrem"       "src/medrem"        (vim "" >> spawnShell >*> 2)
-    , TI "townlobby"    "src/townlobby"     (spawnShell >*> 3)
+    , TI "src"          "src"               (spawnShell)
+    , TI "webapp"       "src/webapp"        (spawnShell)
+    , TI "test"         "src/webapp"        (spawnShell)
+    , TI "review"       "src/review-webapp" (spawnShell)
     , TI "dotfiles"     ".dotfiles"         (vim "")
-    , TI "xm"           ".dotfiles/xmonad"  (vim "xmonad.hs")
+    , TI "xm"           ".dotfiles"         (vim "xmonad/.xmonad/xmonad.hs")
     , TI "music"        "music"             (runInTerm "" "ncmpcpp")
     , TI "torrent"      ""                  (spawn "transmission-gtk")
-    , TI "skype"        ""                  (spawn "ALSA_PCM=\"dmix\" skype")
     ]
     where
         -- Helper for topics that just need a shell
@@ -153,14 +148,14 @@ myTopicConfig :: TopicConfig
 myTopicConfig = defaultTopicConfig
     { topicDirs          = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
-    , defaultTopic       = "src"
+    , defaultTopic       = "web"
     , maxTopicHistory    = 10
     , topicActions       = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
     }
 
 myPrettyPrinter = xmobarPP
                     { ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                    , ppTitle   = xmobarColor "green"  "" . shorten 40
+                    , ppTitle   = xmobarColor "green"  "" . shorten 60
                     , ppVisible = wrap "(" ")"
                     , ppUrgent  = xmobarColor "red" "" . xmobarStrip
                     , ppSort    = ppSortTS

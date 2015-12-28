@@ -6,7 +6,6 @@
 " https://github.com/spf13/spf13-vim
 " https://github.com/tpope/tpope/blob/master/.vimrc
 " https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
-
 " http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 
 " TODO: Unite as a replacement for ctrlp/vim-vinegar/etc.
@@ -29,8 +28,6 @@ Plugin 'kien/ctrlp.vim'
 
 " ic, ac, iC, aC
 Plugin 'coderifous/textobj-word-column.vim'
-
-Plugin 'tpope/vim-vividchalk'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-repeat'
 " Provides pairs of bracket mappings for buffer, file navigation and editing.
@@ -48,15 +45,16 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-jdaddy'
 Plugin 'tpope/vim-markdown'
 " Yes. Setup tmux to make this awesome. TODO
-Plugin 'tpope/vim-dispatch'
+" Plugin 'tpope/vim-dispatch'
 " Great for HTML editing
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-projectionist'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'w0ng/vim-hybrid'
+" Plugin 'tpope/vim-vividchalk'
+" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'w0ng/vim-hybrid'
 Plugin 'chriskempson/base16-vim'
 Plugin 'syntaxhaskell.vim'
 Plugin 'indenthaskell.vim'
@@ -71,18 +69,10 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'kana/vim-textobj-user'
 Plugin 'michaeljsmith/vim-indent-object'
-" Configures % to match more than just single characters.
-Plugin 'vim-scripts/matchit.zip'
 " Disabled until I get around to properly integrating/learning this.
 Plugin 'jlamontagne/ultisnips'
 " Plugin 'honza/vim-snippets'
-
 Plugin 'int3/vim-extradite'
-
-" Plugin 'rstacruz/sparkup'
-" Plugin 'othree/html5.vim'
-" Plugin 'amirh/HTML-AutoCloseTag'
-" Plugin 'hail2u/vim-css3-syntax'
 Plugin 'wavded/vim-stylus'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
@@ -98,8 +88,6 @@ set modelines=0
 set undolevels=1000
 set history=50
 set encoding=utf8
-" Share the clipboard.
-" set clipboard+=unnamed
 set backspace=indent,eol,start
 set backup
 set backupdir^=$HOME/.vim/backup//
@@ -115,7 +103,6 @@ set autoread
 " Auto write before certain commands.
 set autowrite
 set spelllang=en_ca
-" set shell=bash
 let mapleader = ','
 let maplocalleader = ';'
 set winheight=5
@@ -123,24 +110,14 @@ set winminheight=5
 set shortmess=aIoOtT
 set showmode
 set showcmd
-" Scroll n lines before vertical edge.
 set scrolloff=3
-" Scroll n lines before horizontal edge.
 set sidescroll=3
 set visualbell
-" Don't keep windows at equal size.
-" set noequalalways
-set splitbelow
-set splitright
-" Line break at the characters in breakat.
 set linebreak
 " Show ↪ at the beginning of wrapped lines.
 let &showbreak=nr2char(8618).' '
 set listchars=tab:▸\ ,trail:·
-" let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
-" let &fillchars = "vert:\u259a,fold:\u00b7"
 set list
-" Fast scrolling when on a decent connection.
 set ttyfast
 " Insert mode completion.
 set completeopt=menuone,preview
@@ -160,8 +137,6 @@ set hidden
 set showmatch
 " Match for 3 tenths of a second.
 set matchtime=3
-set printoptions+=syntax:y
-set printoptions+=number:y
 set cf
 " Set diff fill char.
 set fillchars+=diff:⣿
@@ -181,10 +156,6 @@ colorscheme base16-default
 " colorscheme badwolf
 " colorscheme grb256
 " colorscheme vividchalk
-" colorscheme solarized
-
-" hi LineNr ctermbg=0 ctermfg=8 cterm=none
-" hi CursorLine cterm=none
 
 " Always show status.
 " set laststatus=2
@@ -214,16 +185,6 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-
-" Keep search matches in the middle of the window.
-nnoremap * *zzzv
-nnoremap # #zzzv
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Keep jumps in the middle of the window.
-nnoremap g, g,zz
-nnoremap g; g;zz
 
 " set expandtab
 " set shiftwidth=4
@@ -264,47 +225,18 @@ nnoremap zO zCzO
 
 highlight Folded cterm=NONE ctermfg=10 ctermbg=0
 
-function! MyFoldText()
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + (&number || &relativenumber) * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-endfunction
-set foldtext=MyFoldText()
-
 " Show a list entries.
 set wildmenu
-
-" Wildcard expansion completion.
 set wildmode=list:longest,full
-
-" set wildignore+=.hg,.git,.svn
+set wildignore+=.hg,.git,.svn
 set wildignore+=node_modules
 set wildignore+=*.aux,*.out,*.toc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set wildignore+=*.luac
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
 set wildignore+=*.pyc
-" set wildignore+=*.spl
-" set wildignore+=*~,#*#,*.sw?,%*,*=
 set wildignore+=*.DS_Store
 set wildignore+=tags
-
-" Auto save on lost focus. DISABLED: Closes help file when focus is lost.
-" au FocusLost * silent bufdo if !empty(bufname('%')) && !&ro | update | endif
-" au FocusLost * :wa
-
-" Switch the CWD to the current buffer.
-" au BufEnter * lcd %:p:h
 
 " Resize splits when the window is resized.
 au VimResized * exe "normal! \<c-w>="
@@ -313,27 +245,19 @@ au VimResized * exe "normal! \<c-w>="
 " au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
 "     \ call StripTrailingWhitespace()
 
-" Cursorline {{{
-
-    " Highlight the current line in the current window.
-    " aug cursorline
-    "     au!
-    "     au BufEnter * set cursorline
-    "     au BufLeave * set nocursorline
-    "     au InsertEnter * set nocursorline
-    "     au InsertLeave * set cursorline
-    "     hi CursorLine   ctermbg=235 cterm=NONE
-    "     hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
-    " aug end
-
-" }}}
+" Highlight the current line in the current window.
+" aug cursorline
+"     au!
+"     au BufEnter * set cursorline
+"     au BufLeave * set nocursorline
+"     au InsertEnter * set nocursorline
+"     au InsertLeave * set cursorline
+"     hi CursorLine   ctermbg=235 cterm=NONE
+"     hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
+" aug end
 
 aug file_settings
     au!
-
-    " Use <Leader>S to sort properties.
-    au BufNewFile,BufRead *.css,*.less
-        \ nnoremap <buffer> <LocalLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
     " Jump to the last known position when reopening a file.
     au BufReadPost *
@@ -341,7 +265,6 @@ aug file_settings
     \   exe "normal! g'\"" |
     \ endif
 
-    " au FileType handlebars compiler html
     au BufNewFile,BufRead bash-fc-* setlocal filetype=sh
     " au BufNewFile,BufRead *.less setlocal filetype=less
     au BufNewFile,BufRead *.less setlocal filetype=css
@@ -351,8 +274,6 @@ aug file_settings
     au BufNewFile,BufRead Vagrantfile set filetype=ruby
     au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
 
-    " au FileType html compiler html
-    " au FileType html ru ftplugin/html_autoclosetag.vim
     au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
     au FileType git* setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4 nofoldenable textwidth=72
     au FileType text,markdown,eruby setlocal wrap linebreak
@@ -378,7 +299,6 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Go up the file system until '.git', or similar, is found.
 let g:ctrlp_working_path_mode = 'raw'
-
 let g:ctrlp_max_height = 10
 let g:ctrlp_persistent_input = 0
 let g:ctrlp_map = '<Leader>t'
@@ -494,35 +414,16 @@ inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
 snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
 " snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
 
-" "Focus" the current line.  Basically:
-"
-" 1. Close all folds.
-" 2. Open just the folds containing the current line.
-" 3. Move the line to a little bit (15 lines) above the center of the screen.
-"
-" This mapping wipes out the z mark, which I never use.
-nnoremap <Leader>z mzzMzvzz15<c-e>`z
-
 nnoremap <silent> <leader>ps :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
 nnoremap <silent> <leader>pe :exe ":profile pause"<cr>:noautocmd qall!<cr>
 
 nnoremap <Leader>a :Ack!
 nnoremap <Leader>b :CtrlPBuffer<CR>
-nnoremap <Leader>c :CtrlPClearCache<CR>
 nnoremap <Leader>g :Gstatus<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>s :w<CR>
 nnoremap <Leader>u :GundoToggle<CR>
-
-" Faster substitute.
-nnoremap <Leader>S :%s//<left>
-
-" Easier linewise reselection.
-nnoremap <Leader>v V`]
-
-" Reselect pasted text.
-nnoremap <Leader>v V`]
 
 " Strip trailing whitespace.
 nnoremap <Leader>w :call StripTrailingWhitespace()<CR>
@@ -557,29 +458,6 @@ nnoremap <Leader>- <C-w>s
 " Vertical split then move to right window.
 nnoremap <Leader>\| <C-w>v<C-w>l
 
-nnoremap <Leader>Al :left<CR>
-nnoremap <Leader>Ac :center<CR>
-nnoremap <Leader>Ar :right<CR>
-vnoremap <Leader>Al :left<CR>
-vnoremap <Leader>Ac :center<CR>
-vnoremap <Leader>Ar :right<CR>
-
-" Duplicate a selection.
-vnoremap D y'>p
-
-" Tab to indent in visual mode.
-" vnoremap <Tab> >gv
-
-" Shift+Tab to unindent in visual mode.
-" vnoremap <S-Tab> <gv
-
-" Re hard wrap paragraph.
-" nnoremap <Leader>q gqip
-
-" Reselect text ater indent/unindent.
-vnoremap < <gv
-vnoremap > >gv
-
 " Display-wise up/down movement instead of linewise.
 noremap j gj
 noremap k gk
@@ -601,52 +479,17 @@ inoremap jj <ESC>
 " This is very heavy-handed, but Ctrl-C is what I'm accustomed to using to
 " leave insert mode.
 inoremap <C-C> <Esc>`^
-" inoremap <C-C> <Esc>
 
 " Yank to end of line
 nnoremap Y y$
 
-" Format Paragraph.
-" nnoremap <Leader>q gwap
-
 " Formatting, TextMate-style.
 nnoremap Q gqip
-
-" Change Case.
-nnoremap <C-u> g~iw
-inoremap <C-u> <ESC>eg~iwea
-
-" Write with sudo.
-cnoremap w!! w !sudo tee % >/dev/null
-
-" Toggle spell checking.
-" nnoremap <silent><Leader>s :set spell!<CR>
-
-" Shift+P replace selection without overwriting default register in vmode.
-vnoremap P p :call setreg('"', getreg('0'))<CR>
-
-" Quick return.
-inoremap <C-CR> <ESC>A<CR>
-inoremap <S-C-CR> <ESC>A:<CR>
-
-" Fix linewise visual selection of various text objects.
-nnoremap VV V
-nnoremap Vit vitVkoj
-nnoremap Vat vatV
-nnoremap Vab vabV
-nnoremap VaB vaBV
 
 " Toggle paste.
 set pastetoggle=<F12>
 
-" Diff.
-nnoremap <silent><Leader>do :diffoff!<CR>
-nnoremap <silent><Leader>dg :diffget<CR>:diffupdate<CR>
-nnoremap <silent><Leader>dp :diffput<CR>:diffupdate<CR>
-nnoremap <silent><Leader>du :diffupdate<CR>
-
 " Text Objects (Credit: Steve Losh)
-
 " Shortcut for []
 onoremap id i[
 onoremap ad a[

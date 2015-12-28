@@ -37,9 +37,10 @@ xset -b
 
 xset -dpms
 xset s off
+xset r rate 250 50
 
 # Cache keys
-eval `keychain --eval -q id_dsa`
+eval `keychain --eval -q id_rsa`
 
 # Sync PRIMARY with clipboard
 # This has spiked cpu usage while running eve

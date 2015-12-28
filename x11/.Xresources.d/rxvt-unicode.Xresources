@@ -2,8 +2,8 @@
 URxvt.internalBorder: 0
 
 !URxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
-URxvt.font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
-URxvt.boldFont: -xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1
+URxvt.font: -xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1
+URxvt.boldFont: -xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1
 
 URxvt.saveLines: 16384
 URxvt.scrollBar: false
@@ -17,6 +17,8 @@ URxvt.urgentOnBell: true
 ! Perl extensions
 URxvt.perl-lib: /home/josh/.urxvt/urxvt-font-size/
 URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard,font-size
+!URxvt.perl-ext-common:
+!URxvt.perl-ext:
 
 ! font-size
 ! ---------

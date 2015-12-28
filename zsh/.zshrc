@@ -50,14 +50,109 @@ unalias man
 unalias mkdir
 unalias mysql
 unalias which-command
-unalias topc
-unalias topm
+# unalias topc
+# unalias topm
 unalias sftp
 unalias rsync
 unalias scp
 unalias ln
 
 alias bower='noglob bower'
+
+unalias gcO
+unalias gcf
+unalias gcF
+unalias gcp
+unalias gcP
+unalias gcr
+unalias gcR
+unalias gcs
+unalias gcl
+unalias gCl
+unalias gCa
+unalias gCe
+unalias gCo
+unalias gCO
+unalias gCt
+unalias gCT
+unalias gd
+unalias gdc
+unalias gdx
+unalias gdm
+unalias gdu
+unalias gdk
+unalias gdi
+unalias gf
+unalias gfc
+unalias gfm
+unalias gfr
+unalias gg
+unalias ggi
+unalias ggl
+unalias ggL
+unalias ggv
+unalias ggw
+unalias giA
+unalias giD
+unalias gmC
+unalias gmF
+unalias gma
+unalias gmt
+unalias gpa
+unalias gpA
+unalias gpt
+unalias gpc
+unalias gpp
+unalias grs
+unalias gR
+unalias gRl
+unalias gRa
+unalias gRx
+unalias gRm
+unalias gRu
+unalias gRp
+unalias gRs
+unalias gRb
+unalias gsL
+unalias gsr
+unalias gS
+unalias gSa
+unalias gSf
+unalias gSi
+unalias gSI
+unalias gSl
+unalias gSm
+unalias gSs
+unalias gSu
+unalias gSx
+
+alias gf='git fetch --all --prune'
+
+alias wg='cd ~/src/webapp && make clean && make -j test build && make -j watch watch-test serve | awk ''
+  /problem.*error.*warning/ {
+    print "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░";
+    print "░░░░░░░░░░░░░▄▄▄▄▄▄▄░░░░░░░░░";
+    print "░░░░░░░░░▄▀▀▀░░░░░░░▀▄░░░░░░░";
+    print "░░░░░░░▄▀░░░░░░░░░░░░▀▄░░░░░░";
+    print "░░░░░░▄▀░░░░░░░░░░▄▀▀▄▀▄░░░░░";
+    print "░░░░▄▀░░░░░░░░░░▄▀░░██▄▀▄░░░░";
+    print "░░░▄▀░░▄▀▀▀▄░░░░█░░░▀▀░█▀▄░░░";
+    print "░░░█░░█▄▄░░░█░░░▀▄░░░░░▐░█░░░";
+    print "░░▐▌░░█▀▀░░▄▀░░░░░▀▄▄▄▄▀░░█░░";
+    print "░░▐▌░░█░░░▄▀░░░░░░░░░░░░░░█░░";
+    print "░░▐▌░░░▀▀▀░░░░░░░░░░░░░░░░▐▌░";
+    print "░░▐▌░░░░░░░░░░░░░░░▄░░░░░░▐▌░";
+    print "░░▐▌░░░░░░░░░▄░░░░░█░░░░░░▐▌░";
+    print "░░░█░░░░░░░░░▀█▄░░▄█░░░░░░▐▌░";
+    print "░░░▐▌░░░░░░░░░░▀▀▀▀░░░░░░░▐▌░";
+    print "░░░░█░░░░░░░░░░░░░░░░░░░░░█░░";
+    print "░░░░▐▌▀▄░░░░░░░░░░░░░░░░░▐▌░░";
+    print "░░░░░█░░▀░░░░░░░░░░░░░░░░▀░░░";
+    print "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░";
+  }
+
+  !/^\s+at/ { print $0 }
+'''
 
 # function vim_session() {
 #   if [[ -f Session.vim ]] ; then

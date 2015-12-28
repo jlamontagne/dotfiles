@@ -11,8 +11,8 @@
 # file:// protocol) or streaming files over an accepted protocol.
 #
 #music_directory			"/var/lib/mpd/music"
-# music_directory			"/home/josh/music"
-music_directory			"/home/josh/videos"
+music_directory			"/home/josh/music"
+# music_directory			"/home/josh/videos"
 #
 # This setting sets the MPD internal playlist directory. The purpose of this
 # directory is storage for playlists created by MPD. The server will use
