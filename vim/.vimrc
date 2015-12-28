@@ -1,5 +1,6 @@
 " References:
 "
+" https://github.com/skwp/dotfiles
 " http://statico.github.io/vim2.html
 " http://dougblack.io/words/a-good-vimrc.html
 " http://stackoverflow.com/questions/19030463/how-do-you-work-with-large-projects-in-vim
@@ -18,6 +19,26 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'gregsexton/gitv'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'tpope/vim-ragtag'
+
+" Text objects
+Plugin 'austintaylor/vim-indentobject'
+Plugin 'bootleq/vim-textobj-rubysymbol'
+Plugin 'coderifous/textobj-word-column.vim'
+Plugin 'kana/vim-textobj-datetime'
+Plugin 'kana/vim-textobj-entire'
+Plugin 'kana/vim-textobj-function'
+Plugin 'kana/vim-textobj-user'
+Plugin 'lucapette/vim-textobj-underscore'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'thinca/vim-textobj-function-javascript'
+Plugin 'vim-scripts/argtextobj.vim'
+
 Plugin 'godlygeek/tabular'
 Plugin 'sjl/gundo.vim'
 " Plugin 'Lokaltog/vim-easymotion'
@@ -26,8 +47,6 @@ Plugin 'sjl/gundo.vim'
 " Plugin 'goldfeld/vim-seek'
 Plugin 'kien/ctrlp.vim'
 
-" ic, ac, iC, aC
-Plugin 'coderifous/textobj-word-column.vim'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-repeat'
 " Provides pairs of bracket mappings for buffer, file navigation and editing.
@@ -42,8 +61,6 @@ Plugin 'tpope/vim-abolish'
 " Continuously updated session files
 " Plugin 'tpope/vim-obsession'
 " Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-markdown'
 " Yes. Setup tmux to make this awesome. TODO
 " Plugin 'tpope/vim-dispatch'
 " Great for HTML editing
@@ -56,8 +73,6 @@ Plugin 'tpope/vim-projectionist'
 " Plugin 'altercation/vim-colors-solarized'
 " Plugin 'w0ng/vim-hybrid'
 Plugin 'chriskempson/base16-vim'
-Plugin 'syntaxhaskell.vim'
-Plugin 'indenthaskell.vim'
 
 " Context aware paste (indentation)
 Plugin 'sickill/vim-pasta'
@@ -67,16 +82,10 @@ Plugin 'tomtom/tcomment_vim'
 
 " Automatically closes functions, blocks, etc.
 Plugin 'Raimondi/delimitMate'
-Plugin 'kana/vim-textobj-user'
 Plugin 'michaeljsmith/vim-indent-object'
-" Disabled until I get around to properly integrating/learning this.
 Plugin 'jlamontagne/ultisnips'
 " Plugin 'honza/vim-snippets'
 Plugin 'int3/vim-extradite'
-Plugin 'wavded/vim-stylus'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mustache/vim-mustache-handlebars'
 " <c-y>,
 Plugin 'mattn/emmet-vim'
 
