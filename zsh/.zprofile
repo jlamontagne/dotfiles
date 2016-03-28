@@ -74,3 +74,5 @@ fi
 TMPPREFIX="${TMPDIR%/}/zsh"
 
 source $HOME/.config/aws
+
+source /usr/share/nvm/init-nvm.sh
