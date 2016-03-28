@@ -57,6 +57,24 @@ it('${1:description}', () => {
 });
 endsnippet
 
+snippet itd "itd" b
+it('${1:description}', done => {
+	$0
+});
+endsnippet
+
+snippet hb "$httpBackend" b
+$httpBackend.${1:method}(${2:args});
+endsnippet
+
+snippet hbf "$httpBackend.flush()" b
+$httpBackend.flush();
+endsnippet
+
+snippet ex "expect" b
+expect(${1:thing}).${2:tobe};
+endsnippet
+
 snippet bef "before each" b
 beforeEach(() => {
 	$0
