@@ -24,6 +24,7 @@ Plugin 'gregsexton/gitv'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'tpope/vim-ragtag'
+Plugin 'airblade/vim-gitgutter'
 
 " Text objects
 Plugin 'austintaylor/vim-indentobject'
@@ -62,7 +63,7 @@ Plugin 'tpope/vim-abolish'
 " Plugin 'tpope/vim-obsession'
 " Plugin 'tpope/vim-tbone'
 " Yes. Setup tmux to make this awesome. TODO
-" Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-dispatch'
 " Great for HTML editing
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
@@ -159,6 +160,9 @@ set background=dark
 
 " Change base16 scheme by changing xresources file
 colorscheme base16-default
+
+hi Search ctermfg=0 ctermbg=9
+hi IncSearch ctermfg=0 ctermbg=3
 
 " let g:hybrid_use_Xresources = 1
 " colorscheme hybrid
@@ -300,6 +304,7 @@ let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
 " let g:delimitMate_excluded_ft = "html.mustache,html.handlebars,html,xhtml"
+let g:delimitMate_excluded_ft = "scss,html.mustache,html.handlebars,html,xhtml"
 
 " Don't jump over shit on other lines
 let g:delimitMate_jump_expansion = 0
