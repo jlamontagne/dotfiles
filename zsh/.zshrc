@@ -19,7 +19,7 @@ export EDITOR="vim"
 # Enable keychain/ssh-agent to ask for passwords in X
 export SSH_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
 
-export PATH="${HOME}/bin:${HOME}/.cabal/bin:${HOME}/.gem/ruby/2.1.0/bin:${HOME}/bin/phantomjs/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}"
+export PATH="${HOME}/bin:${HOME}/.cabal/bin:${HOME}/.gem/ruby/2.1.0/bin:${HOME}/bin/phantomjs/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}:${HOME}/.gem/ruby/2.2.0/bin"
 export MANPATH="${HOME}/bin/share/man:${MANPATH}"
 
 # Disable Ctrl-S/Q flow control
