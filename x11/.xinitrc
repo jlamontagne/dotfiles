@@ -31,6 +31,8 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # every time you change from wired to wireless and vice-versa.
 xset m 1 1
 # xinput set-prop "pointer:Razer Razer Naga Epic" "Device Accel Constant Deceleration" 1.5
+xinput set-prop pointer:Razer\ Razer\ Naga\ Epic 'libinput Accel Speed' 0
+
 
 # No beep
 xset -b
