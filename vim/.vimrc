@@ -28,7 +28,6 @@ Plugin 'airblade/vim-gitgutter'
 
 " Text objects
 Plugin 'austintaylor/vim-indentobject'
-Plugin 'bootleq/vim-textobj-rubysymbol'
 Plugin 'coderifous/textobj-word-column.vim'
 Plugin 'kana/vim-textobj-datetime'
 Plugin 'kana/vim-textobj-entire'
@@ -36,35 +35,20 @@ Plugin 'kana/vim-textobj-function'
 Plugin 'kana/vim-textobj-user'
 Plugin 'lucapette/vim-textobj-underscore'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'thinca/vim-textobj-function-javascript'
 Plugin 'vim-scripts/argtextobj.vim'
 
 Plugin 'godlygeek/tabular'
 Plugin 'sjl/gundo.vim'
-" Plugin 'Lokaltog/vim-easymotion'
-" s?? to jump to next occurrence of ?? in the line
-" Disabled due to unfortunate collision with s/S
-" Plugin 'goldfeld/vim-seek'
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-repeat'
-" Provides pairs of bracket mappings for buffer, file navigation and editing.
 Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-scriptease'
-" :Unlink/:Remove/:Move/etc
-Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-vinegar'
 " Easily search for, substitute, and abbreviate multiple variants of a word.
 " Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
 Plugin 'tpope/vim-abolish'
-" Continuously updated session files
-" Plugin 'tpope/vim-obsession'
-" Plugin 'tpope/vim-tbone'
-" Yes. Setup tmux to make this awesome. TODO
-Plugin 'tpope/vim-dispatch'
-" Great for HTML editing
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-git'
@@ -171,12 +155,6 @@ hi IncSearch ctermfg=0 ctermbg=3
 " colorscheme vividchalk
 
 " Always show status.
-" set laststatus=2
-" Disable status line fill chars.
-" set fillchars+=stl:\ ,stlnc:\ " Space.
-" set statusline=%<%.99f\ %h%w%m%r%{SL('CapsLockStatusline')}%y%{SL('fugitive#statusline')}%*%=%-14.(%l,%c%V%)\ %P
-" set statusline=%<%f\ (%{&ft})%r\ %-4(%m%)%=%-16(%3l,%02c%03V%)\ %P
-
 set laststatus=2                                         " always show status
 set statusline=%<%f\                                     " Filename
 set statusline+=%w%h%m%r                                 " Options
@@ -225,7 +203,6 @@ set formatoptions=tcqrn1
 set virtualedit+=block
 
 set foldenable
-" syntax method is slow
 set foldmethod=marker
 set foldnestmax=2
 set foldlevelstart=5
@@ -253,21 +230,6 @@ set wildignore+=tags
 
 " Resize splits when the window is resized.
 au VimResized * exe "normal! \<c-w>="
-
-" Strip trailing whitespace.
-" au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre *
-"     \ call StripTrailingWhitespace()
-
-" Highlight the current line in the current window.
-" aug cursorline
-"     au!
-"     au BufEnter * set cursorline
-"     au BufLeave * set nocursorline
-"     au InsertEnter * set nocursorline
-"     au InsertLeave * set cursorline
-"     hi CursorLine   ctermbg=235 cterm=NONE
-"     hi CursorLineNr ctermbg=235 ctermfg=10 cterm=italic
-" aug end
 
 aug file_settings
     au!
@@ -301,9 +263,9 @@ aug end
 
 let g:syntastic_html_tidy_exec = 'tidy'
 let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
+
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
-" let g:delimitMate_excluded_ft = "html.mustache,html.handlebars,html,xhtml"
 let g:delimitMate_excluded_ft = "scss,html.mustache,html.handlebars,html,xhtml"
 
 " Don't jump over shit on other lines
@@ -476,17 +438,7 @@ nnoremap <Leader>\| <C-w>v<C-w>l
 noremap j gj
 noremap k gk
 
-" Faster ESC.
-" inoremap jk <ESC>
-" inoremap kj <ESC>
 inoremap jj <ESC>
-" inoremap kk <ESC>
-" aug auto_leave_insert
-"     au!
-"     au CursorHoldI * stopinsert
-"     au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
-"     au InsertLeave * let &updatetime=updaterestore
-" aug end
 
 " Make Ctrl-C trigger InsertLeave autocmds
 "
@@ -503,114 +455,9 @@ nnoremap Q gqip
 " Toggle paste.
 set pastetoggle=<F12>
 
-" Text Objects (Credit: Steve Losh)
-" Shortcut for []
-onoremap id i[
-onoremap ad a[
-vnoremap id i[
-vnoremap ad a[
-
-" Next/Last ()
-vnoremap <silent> inb :<C-U>normal! f(vib<CR>
-onoremap <silent> inb :<C-U>normal! f(vib<CR>
-vnoremap <silent> anb :<C-U>normal! f(vab<CR>
-onoremap <silent> anb :<C-U>normal! f(vab<CR>
-vnoremap <silent> in( :<C-U>normal! f(vi(<CR>
-onoremap <silent> in( :<C-U>normal! f(vi(<CR>
-vnoremap <silent> an( :<C-U>normal! f(va(<CR>
-onoremap <silent> an( :<C-U>normal! f(va(<CR>
-
-vnoremap <silent> ilb :<C-U>normal! F)vib<CR>
-onoremap <silent> ilb :<C-U>normal! F)vib<CR>
-vnoremap <silent> alb :<C-U>normal! F)vab<CR>
-onoremap <silent> alb :<C-U>normal! F)vab<CR>
-vnoremap <silent> il( :<C-U>normal! F)vi(<CR>
-onoremap <silent> il( :<C-U>normal! F)vi(<CR>
-vnoremap <silent> al( :<C-U>normal! F)va(<CR>
-onoremap <silent> al( :<C-U>normal! F)va(<CR>
-
-" Next/Last {}
-vnoremap <silent> inB :<C-U>normal! f{viB<CR>
-onoremap <silent> inB :<C-U>normal! f{viB<CR>
-vnoremap <silent> anB :<C-U>normal! f{vaB<CR>
-onoremap <silent> anB :<C-U>normal! f{vaB<CR>
-vnoremap <silent> in{ :<C-U>normal! f{vi{<CR>
-onoremap <silent> in{ :<C-U>normal! f{vi{<CR>
-vnoremap <silent> an{ :<C-U>normal! f{va{<CR>
-onoremap <silent> an{ :<C-U>normal! f{va{<CR>
-
-vnoremap <silent> ilB :<C-U>normal! F}viB<CR>
-onoremap <silent> ilB :<C-U>normal! F}viB<CR>
-vnoremap <silent> alB :<C-U>normal! F}vaB<CR>
-onoremap <silent> alB :<C-U>normal! F}vaB<CR>
-vnoremap <silent> il{ :<C-U>normal! F}vi{<CR>
-onoremap <silent> il{ :<C-U>normal! F}vi{<CR>
-vnoremap <silent> al{ :<C-U>normal! F}va{<CR>
-onoremap <silent> al{ :<C-U>normal! F}va{<CR>
-
-" Next/Last []
-vnoremap <silent> ind :<C-U>normal! f[vi[<CR>
-onoremap <silent> ind :<C-U>normal! f[vi[<CR>
-vnoremap <silent> and :<C-U>normal! f[va[<CR>
-onoremap <silent> and :<C-U>normal! f[va[<CR>
-vnoremap <silent> in[ :<C-U>normal! f[vi[<CR>
-onoremap <silent> in[ :<C-U>normal! f[vi[<CR>
-vnoremap <silent> an[ :<C-U>normal! f[va[<CR>
-onoremap <silent> an[ :<C-U>normal! f[va[<CR>
-
-vnoremap <silent> ild :<C-U>normal! F]vi[<CR>
-onoremap <silent> ild :<C-U>normal! F]vi[<CR>
-vnoremap <silent> ald :<C-U>normal! F]va[<CR>
-onoremap <silent> ald :<C-U>normal! F]va[<CR>
-vnoremap <silent> il[ :<C-U>normal! F]vi[<CR>
-onoremap <silent> il[ :<C-U>normal! F]vi[<CR>
-vnoremap <silent> al[ :<C-U>normal! F]va[<CR>
-onoremap <silent> al[ :<C-U>normal! F]va[<CR>
-
-" Next/Last <>
-vnoremap <silent> in< :<C-U>normal! f<vi<<CR>
-onoremap <silent> in< :<C-U>normal! f<vi<<CR>
-vnoremap <silent> an< :<C-U>normal! f<va<<CR>
-onoremap <silent> an< :<C-U>normal! f<va<<CR>
-
-vnoremap <silent> il< :<C-U>normal! f>vi<<CR>
-onoremap <silent> il< :<C-U>normal! f>vi<<CR>
-vnoremap <silent> al< :<C-U>normal! f>va<<CR>
-onoremap <silent> al< :<C-U>normal! f>va<<CR>
-
-" Next ''
-vnoremap <silent> in' :<C-U>normal! f'vi'<CR>
-onoremap <silent> in' :<C-U>normal! f'vi'<CR>
-vnoremap <silent> an' :<C-U>normal! f'va'<CR>
-onoremap <silent> an' :<C-U>normal! f'va'<CR>
-
-vnoremap <silent> il' :<C-U>normal! F'vi'<CR>
-onoremap <silent> il' :<C-U>normal! F'vi'<CR>
-vnoremap <silent> al' :<C-U>normal! F'va'<CR>
-onoremap <silent> al' :<C-U>normal! F'va'<CR>
-
-" Next ""
-vnoremap <silent> in" :<C-U>normal! f"vi"<CR>
-onoremap <silent> in" :<C-U>normal! f"vi"<CR>
-vnoremap <silent> an" :<C-U>normal! f"va"<CR>
-onoremap <silent> an" :<C-U>normal! f"va"<CR>
-
-vnoremap <silent> il" :<C-U>normal! F"vi"<CR>
-onoremap <silent> il" :<C-U>normal! F"vi"<CR>
-vnoremap <silent> al" :<C-U>normal! F"va"<CR>
-onoremap <silent> al" :<C-U>normal! F"va"<CR>
-
 cabbr cdf cd %:p:h<CR>
 cabbr lcdf lcd %:p:h<CR>
 cabbr cwd lcd %:p:h
-
-function! SL(function)
-    if exists('*'.a:function)
-        return call(a:function,[])
-    else
-        return ''
-    endif
-endfunction
 
 command! ErrorsToggle call ErrorsToggle()
 function! ErrorsToggle()
