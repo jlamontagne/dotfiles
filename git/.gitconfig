@@ -11,3 +11,5 @@
 	review = !git fetch --all --prune && git checkout
 [merge]
 	conflictstyle = diff3
+[core]
+	editor = vim

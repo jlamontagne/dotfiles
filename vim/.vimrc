@@ -13,18 +13,22 @@
 " http://www.codeography.com/2013/06/17/replacing-all-the-things-with-unite-vim.html
 " http://bling.github.io/blog/2013/06/02/unite-dot-vim-the-plugin-you-didnt-know-you-need/
 
+" fish screws things up
+set shell=sh
+
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'gregsexton/gitv'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'tpope/vim-ragtag'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'dag/vim-fish'
 
 " Text objects
 Plugin 'austintaylor/vim-indentobject'
