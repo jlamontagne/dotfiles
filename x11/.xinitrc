@@ -42,11 +42,12 @@ xset s off
 xset r rate 250 50
 
 # Cache keys
-##eval `keychain --eval -q id_rsa`
+eval `keychain --eval -q id_rsa`
 
 # Sync PRIMARY with clipboard
 # This has spiked cpu usage while running eve
 autocutsel -s PRIMARY -buttonup -fork &
 
 mpd
+xscreensaver &
 exec xmonad

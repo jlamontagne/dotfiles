@@ -119,16 +119,19 @@ data TopicItem = TI { topicName   :: Topic
                     }
 
 myTopics =
-    --   Name           Directory           Default Action
-    [ TI "web"          ""                  (spawn "google-chrome-stable")
-    , TI "src"          "src"               (spawnShell)
-    , TI "webapp"       "src/webapp"        (spawnShell)
-    , TI "test"         "src/webapp"        (spawnShell)
-    , TI "review"       "src/review-webapp" (spawnShell)
-    , TI "dotfiles"     ".dotfiles"         (vim "")
-    , TI "xm"           ".dotfiles"         (vim "xmonad/.xmonad/xmonad.hs")
-    , TI "music"        "music"             (runInTerm "" "ncmpcpp")
-    , TI "torrent"      ""                  (spawn "transmission-gtk")
+    --   Name             Directory           Default Action
+    [ TI "web"            ""                  (spawn "google-chrome-stable")
+    , TI "src"            "src"               (spawnShell)
+    , TI "agw"            "src/api-gateway"   (spawnShell)
+    , TI "agw-review"     "src/review-agw"    (spawnShell)
+    , TI "cms"            "src/cms"           (spawnShell)
+    , TI "cms-review"     "src/review-cms"    (spawnShell)
+    , TI "webapp"         "src/webapp"        (spawnShell)
+    , TI "test"           "src/webapp"        (spawnShell)
+    , TI "platform"       "src"               (spawnShell)
+    , TI "dotfiles"       ".dotfiles"         (vim "")
+    , TI "xm"             ".dotfiles"         (vim "xmonad/.xmonad/xmonad.hs")
+    , TI "music"          "music"             (runInTerm "" "ncmpcpp")
     ]
     where
         -- Helper for topics that just need a shell
