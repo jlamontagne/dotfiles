@@ -147,7 +147,7 @@ syntax on
 set background=dark
 
 " Change base16 scheme by changing xresources file
-colorscheme base16-default
+colorscheme base16-default-dark
 
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3
