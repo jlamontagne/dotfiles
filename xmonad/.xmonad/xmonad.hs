@@ -17,7 +17,7 @@ import Data.List
 import Data.Maybe
 import Data.Ord
 import System.IO
-import XMonad
+import XMonad hiding (Tall)
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
@@ -30,14 +30,20 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 -- import XMonad.Hooks.Place
+import XMonad.Layout.Accordion
 import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.SimpleDecoration
+import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.Reflect
 import XMonad.Layout.LimitWindows
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.LayoutHints
+import XMonad.Layout.HintedTile
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Util.EZConfig
@@ -104,9 +110,15 @@ myKeys =
         | (key, sc) <- zip "wfr" [0..]
         , (f, m) <- [(W.view, ""), (W.shift, "S-")]]
 
-myLayout = (
-    (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
-    Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+myLayout =
+    onWorkspace "deploy" (simpleDeco shrinkText defaultTheme (Accordion)) $
+    (HintedTile 1 (3/100) (1/2) TopLeft Tall |||
+    -- layoutHintsToCenter (Accordion) |||
+    simpleDeco shrinkText defaultTheme (Accordion) |||
+    -- simpleDeco shrinkText defaultTheme (layoutHints $ Accordion) |||
+    -- noFrillsDeco shrinkText defaultTheme (layoutHints $ Accordion) |||
+    -- (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
+    -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
     -- ThreeColMid 1 (3/100) (1/3) |||
     noBorders (fullscreenFull Full))
 
@@ -130,6 +142,14 @@ myTopics =
     , TI "webapp-review"  "src/review-webapp" (spawnShell >> spawn "google-chrome-stable --incognito 'https://localhost.worldgaming.com:7443'")
     , TI "test"           "src/webapp"        (spawnShell)
     , TI "platform"       "src"               (spawnShell)
+    , TI "deploy"         "src"               (
+        (spawnHere $ "cd src/platform && urxvt --title 'PLATFORM' -e zsh -is eval 'sudo systemctl restart tomcat7; make clean build deploy; sudo journalctl -u tomcat7 -f'") >>
+        (spawnHere $ "cd src/webapi && urxvt --title 'PLAY' -e zsh -is eval 'make start'") >>
+        (spawnHere $ "cd src/api-gateway && urxvt --title 'AGW' -e zsh -is eval 'make clean test build serve'") >>
+        (spawnHere $ "cd src/adminosaurus && urxvt --title 'ADMINOSAURUS' -e zsh -is eval 'make clean test build serve'") >>
+        (spawnHere $ "cd src/cms && urxvt --title 'CMS' -e zsh -is eval 'make clean test build serve'") >>
+        (spawnHere $ "cd src/webapp && urxvt --title 'WEBAPP' -e zsh -is eval 'make clean test build serve'")
+    )
     , TI "dotfiles"       ".dotfiles"         (vim "")
     , TI "xm"             ".dotfiles"         (vim "xmonad/.xmonad/xmonad.hs")
     , TI "music"          "music"             (runInTerm "" "ncmpcpp")

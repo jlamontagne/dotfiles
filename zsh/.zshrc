@@ -178,3 +178,13 @@ for profile in /etc/profile.d/*.sh; do
 done
 unset profile
 export rvmsudo_secure_path=0
+
+# Support staying in term after a default command:
+#
+# zsh -is eval 'make test'
+#
+# http://www.zsh.org/mla/users/2005/msg00599.html
+if [[ $1 == eval ]]; then
+  "$@"
+  set --
+fi

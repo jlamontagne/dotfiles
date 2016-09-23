@@ -138,7 +138,7 @@ zstyle ':prezto:module:prompt' theme 'steeef'
 #
 
 # Auto set the tab and window titles.
-zstyle ':prezto:module:terminal' auto-title 'yes'
+# zstyle ':prezto:module:terminal' auto-title 'yes'
 
 zstyle ':prezto:environment:grep' color 'no'
 
