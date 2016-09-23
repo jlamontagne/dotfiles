@@ -127,6 +127,7 @@ myTopics =
     , TI "cms"            "src/cms"           (spawnShell)
     , TI "cms-review"     "src/review-cms"    (spawnShell)
     , TI "webapp"         "src/webapp"        (spawnShell)
+    , TI "webapp-review"  "src/review-webapp" (spawnShell >> spawn "google-chrome-stable --incognito 'https://localhost.worldgaming.com:7443'")
     , TI "test"           "src/webapp"        (spawnShell)
     , TI "platform"       "src"               (spawnShell)
     , TI "dotfiles"       ".dotfiles"         (vim "")

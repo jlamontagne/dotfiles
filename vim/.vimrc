@@ -77,6 +77,7 @@ Plugin 'jlamontagne/ultisnips'
 Plugin 'int3/vim-extradite'
 " <c-y>,
 Plugin 'mattn/emmet-vim'
+Plugin 'justinmk/vim-sneak'
 
 call vundle#end()
 filetype plugin indent on
