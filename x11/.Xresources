@@ -1,4 +1,4 @@
-#include ".Xresources.d/base16.Xresources"
+! #include ".Xresources.d/base16.Xresources"
 ! #include ".Xresources.d/hybrid.Xresources"
 ! #include ".Xresources.d/solarized.Xresources"
 ! #include ".Xresources.d/tomorrow-night-bright.Xresources"

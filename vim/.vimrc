@@ -146,8 +146,10 @@ set cinoptions+=(0,w1,m1
 syntax on
 set background=dark
 
-" Change base16 scheme by changing xresources file
-colorscheme base16-default-dark
+if filereadable(expand("~/.vimrc_background"))
+    let base16colorspace=256
+    source ~/.vimrc_background
+endif
 
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3

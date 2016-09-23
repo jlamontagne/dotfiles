@@ -23,6 +23,9 @@ export PATH="${HOME}/bin:${HOME}/go/bin:${HOME}/.cabal/bin:${HOME}/.gem/ruby/2.1
 export MANPATH="${HOME}/bin/share/man:${MANPATH}"
 export GOPATH=~/go
 
+export BASE16_SHELL=$HOME/.dotfiles/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
 # Disable Ctrl-S/Q flow control
 #stty -ixon
 

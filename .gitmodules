@@ -7,3 +7,6 @@
 [submodule "x11/.urxvt/urxvt-font-size"]
 	path = x11/.urxvt/urxvt-font-size
 	url = git://github.com/majutsushi/urxvt-font-size.git
+[submodule "base16-shell"]
+	path = base16-shell
+	url = git@github.com:chriskempson/base16-shell.git
