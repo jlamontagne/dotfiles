@@ -62,22 +62,13 @@ myConfig = ewmh $ withUrgencyHook NoUrgencyHook defaultConfig
     , logHook = fadeInactiveLogHook 0.5
     , handleEventHook    = docksEventHook <+> fullscreenEventHook
     , terminal           = "urxvt"
-    -- , normalBorderColor  = "#586e75"
     , normalBorderColor  = "#004400"
     , focusedBorderColor = "#00AA00"
     , borderWidth = 1
-    , focusFollowsMouse  = True
+    , focusFollowsMouse  = False
     , modMask            = mod4Mask
-    , startupHook        = return () >> checkKeymap myConfig myKeys -- as prescribed by docs
-    -- , startupHook        = composeAll
-        -- [ setWMName "LG3Dverify"
-        -- , return () >> checkKeymap myConfig myKeys -- as prescribed by docs
-        -- ]
+    , startupHook        = return () >> checkKeymap myConfig myKeys
     } `additionalKeysP` myKeys
-    -- } `additionalKeysP` myKeys `removeKeys` myRemoveKeys
-
--- myRemoveKeys = [ (mod1Mask, xK_Tab) ]
--- , (button8        , (\w -> focus w >> mouseResizeWindow w))
 
 myKeys =
     [ ("M-S-<Delete>" , spawnShell)
@@ -90,11 +81,6 @@ myKeys =
     , ("<Page_Down>"  , gotoNthLastFocused 1)
     , ("M-a"          , sendMessage MirrorShrink)
     , ("M-z"          , sendMessage MirrorExpand)
-
-    -- Used to switch between floating EVE clients
-    -- focus the next window (which should be floating), then swap it to master
-    -- to pop it to the top of the view
-    -- , ("C-t"          , (windows W.focusDown) >> (windows W.swapMaster))
     ]
     ++
     [ ("M-"++m++[k], a i)
@@ -113,10 +99,7 @@ myKeys =
 myLayout =
     onWorkspace "deploy" (simpleDeco shrinkText defaultTheme (Accordion)) $
     (HintedTile 1 (3/100) (1/2) TopLeft Tall |||
-    -- layoutHintsToCenter (Accordion) |||
     simpleDeco shrinkText defaultTheme (Accordion) |||
-    -- simpleDeco shrinkText defaultTheme (layoutHints $ Accordion) |||
-    -- noFrillsDeco shrinkText defaultTheme (layoutHints $ Accordion) |||
     -- (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
     -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
     -- ThreeColMid 1 (3/100) (1/3) |||
@@ -192,15 +175,10 @@ myManageHook = composeAll
     , (className =? "Gimp" <&&> fmap ("tool" `isSuffixOf`) role) --> doFloat
     , className =? "MPlayer"        --> doFloat
     , resource  =? "skype"          --> doFloat
-    -- , className =? "Chromium"       --> doShift "2:web"
-    -- , className =? "Google-chrome"  --> doShift "2:web"
-    -- , className =? "VirtualBox"     --> doShift "4:vm"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     , fmap not isDialog --> doF avoidMaster
-    -- , name =? "Kerbal Space Program" --> doFullFloat
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
-    -- where name = stringProperty "WM_NAME"
 
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
 avoidMaster = W.modify' $ \c -> case c of
