@@ -9,7 +9,7 @@ Config { font = "-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15"
                     , Run Network "enp0s20f0u2u4" ["-t","<rx> KB, <tx> KB","-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 50
-    		    , Run Date "%a %b %_d, %Y %I:%M %p" "date" 10
+                    , Run Date "%a %b %_d, %Y %I:%M:%S %p" "date" 10
                     , Run TopMem ["-t","<name1>:<mem1>"] 100
                     , Run StdinReader
                     -- battery monitor

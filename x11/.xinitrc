@@ -13,6 +13,7 @@
 # xmodmap xmodmap.colemak
 
 /usr/bin/start-pulseaudio-x11
+source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 # hsetroot -solid '#000000'
 
 # Add terminus/etc to X11:
