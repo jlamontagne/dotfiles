@@ -36,6 +36,9 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import XMonad.Actions.Search
+import qualified XMonad.Actions.Search as S
+import qualified XMonad.Actions.Submap as SM
 
 workspaces' = ["dev","review","chat","stack"] ++ map show [4..9]
 
@@ -67,7 +70,8 @@ additionalKeys' =
     , ("M-s"          , workspacePrompt defaultXPConfig (windows . W.view))
     , ("M-S-s"        , workspacePrompt defaultXPConfig (windows . W.shift))
     , ("M-b"          , sendMessage ToggleStruts)
-    , ("M-S-z"          , spawn "xscreensaver-command --lock")
+    , ("M-S-z"        , spawn "xscreensaver-command --lock")
+    , ("M-g"          , S.promptSearchBrowser myXPConfig "google-chrome-stable" S.google)
     ]
     ++
     -- mod-{w,f,r} %! Switch to physical/Xinerama screens 1, 2, or 3
