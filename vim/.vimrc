@@ -29,6 +29,7 @@ Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'tpope/vim-ragtag'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'dag/vim-fish'
+Plugin 'lambdatoast/elm.vim'
 
 " Text objects
 Plugin 'austintaylor/vim-indentobject'
@@ -251,7 +252,7 @@ aug file_settings
     " au BufNewFile,BufRead *.less setlocal filetype=less
     au BufNewFile,BufRead *.less setlocal filetype=css
     " au BufNewFile,BufRead *.handlebars,*.hbs setlocal filetype=html syntax=html
-    au BufNewFile,BufRead *.js.es6 setlocal filetype=javascript
+    au BufNewFile,BufRead *.js setlocal filetype=javascript
     au BufNewFile,BufRead *.m*down setlocal filetype=markdown
     au BufNewFile,BufRead Vagrantfile set filetype=ruby
     au BufNewFile,BufRead zshecl*,prompt_*_setup setlocal filetype=zsh
@@ -259,7 +260,7 @@ aug file_settings
     au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
     au FileType git* setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4 nofoldenable textwidth=72
     au FileType text,markdown,eruby setlocal wrap linebreak
-    au FileType html.handlebars,html,xhtml setlocal wrap linebreak et sw=2 sts=2 indentkeys-={,}
+    au FileType html.handlebars,html,xhtml setlocal wrap linebreak et tw=0 sw=2 sts=2 indentkeys-={,}
     au FileType vim setlocal foldmethod=marker
     au FileType help nnoremap <silent><buffer> q :q<CR>
     au FileType gitcommit setlocal spell
