@@ -1,5 +1,3 @@
-" References:
-"
 " https://github.com/skwp/dotfiles
 " http://statico.github.io/vim2.html
 " http://dougblack.io/words/a-good-vimrc.html
@@ -8,8 +6,6 @@
 " https://github.com/tpope/tpope/blob/master/.vimrc
 " https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 " http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-
-" TODO: Unite as a replacement for ctrlp/vim-vinegar/etc.
 " http://www.codeography.com/2013/06/17/replacing-all-the-things-with-unite-vim.html
 " http://bling.github.io/blog/2013/06/02/unite-dot-vim-the-plugin-you-didnt-know-you-need/
 
@@ -22,131 +18,137 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+
+" Language packs (syntax, index, ftplugin, ftdetect)
 Plugin 'sheerun/vim-polyglot'
-Plugin 'gregsexton/gitv'
-Plugin 'vim-scripts/matchit.zip'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'tpope/vim-ragtag'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'dag/vim-fish'
-Plugin 'lambdatoast/elm.vim'
 
-" Text objects
-Plugin 'austintaylor/vim-indentobject'
-Plugin 'coderifous/textobj-word-column.vim'
-Plugin 'kana/vim-textobj-datetime'
-Plugin 'kana/vim-textobj-entire'
-Plugin 'kana/vim-textobj-function'
-Plugin 'kana/vim-textobj-user'
-Plugin 'lucapette/vim-textobj-underscore'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'thinca/vim-textobj-function-javascript'
-Plugin 'vim-scripts/argtextobj.vim'
-
-Plugin 'godlygeek/tabular'
-Plugin 'sjl/gundo.vim'
-Plugin 'kien/ctrlp.vim'
-
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-" Easily search for, substitute, and abbreviate multiple variants of a word.
-" Also, coerce text: crs(nake)/crm(ixed)/cru(pper)/crc(amel)
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-git'
+" Git integrations
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-projectionist'
-" Plugin 'tpope/vim-vividchalk'
-" Plugin 'altercation/vim-colors-solarized'
-" Plugin 'w0ng/vim-hybrid'
+
+" File navigation
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-vinegar'
+
+" Match indent settings to what's in a file
+Plugin 'tpope/vim-sleuth'
+
+" Make plugin commands repeatable
+Plugin 'tpope/vim-repeat'
+
+" Useful mappings from the man himself
+Plugin 'tpope/vim-unimpaired'
+
+" :Abolish and :Subvert
+Plugin 'tpope/vim-abolish'
+
+" Manage surroundings of strings
+Plugin 'tpope/vim-surround'
+
+" Auto add block endings
+Plugin 'tpope/vim-endwise'
+
+" Project configuration
+" Plugin 'tpope/vim-projectionist'
+
+" Colours!
 Plugin 'chriskempson/base16-vim'
 
-" Context aware paste (indentation)
-Plugin 'sickill/vim-pasta'
+" Global search
 Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'tomtom/tcomment_vim'
+
+" Comment/uncomment
+Plugin 'tpope/vim-commentary'
+"Plugin 'tomtom/tcomment_vim'
 
 " Automatically closes functions, blocks, etc.
 Plugin 'Raimondi/delimitMate'
-Plugin 'michaeljsmith/vim-indent-object'
+
 Plugin 'jlamontagne/ultisnips'
 " Plugin 'honza/vim-snippets'
-Plugin 'int3/vim-extradite'
-" <c-y>,
-Plugin 'mattn/emmet-vim'
+
+" Medium distance text motion
 Plugin 'justinmk/vim-sneak'
 
 call vundle#end()
 filetype plugin indent on
 
-set ttimeoutlen=50
-set modelines=0
-set undolevels=1000
-set history=50
-set encoding=utf8
+syntax on
+set autoindent
+set autoread
+set autowrite
+set background=dark
 set backspace=indent,eol,start
 set backup
 set backupdir^=$HOME/.vim/backup//
+set cf
+set cinoptions+=(0,w1,m1
+set colorcolumn=+1
+set completeopt=menuone,preview
 set dir^=$HOME/.vim/swap//
-set undodir^=$HOME/.vim/undo//
-set viewdir^=$HOME/.vim/view//
-" Save undo tree.
-set undofile
-" Allow undoing a reload from disk.
-set undoreload=1000
-" Auto read externally modified files.
-set autoread
-" Auto write before certain commands.
-set autowrite
+set encoding=utf8
+set fillchars+=diff:⣿
+set foldenable
+set foldlevelstart=5
+set foldmethod=marker
+set foldnestmax=2
+set formatoptions=tcqrn1
+set hidden
+set history=50
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set lazyredraw
+set linebreak
+set list
+set listchars=tab:▸\ ,trail:·
+set matchtime=3
+set modelines=0
+set numberwidth=2
+set relativenumber
+set ruler
+set scrolloff=3
+set shortmess=aIoOtT
+set showcmd
+set showmatch
+set showmode
+set sidescroll=3
+set smartcase
 set spelllang=en_ca
-let mapleader = ','
-let maplocalleader = ';'
+set statusline=%<%f\
+set statusline+=%w%h%m%r
+set statusline+=\ %y
+set statusline+=\ [%{join(split(getcwd(),'/')[3:],'/')}]
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%
+set textwidth=80
+set titlestring=%f\ "%h%m%r%w\ -\ %{v:progname}\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+set ttimeoutlen=50
+set ttyfast
+set undodir^=$HOME/.vim/undo//
+set undofile
+set undolevels=1000
+set undoreload=1000
+set viewdir^=$HOME/.vim/view//
+set virtualedit+=block
+set visualbell
+set wildignore+=*.DS_Store
+set wildignore+=*.aux,*.out,*.toc
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+set wildignore+=*.luac
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
+set wildignore+=*.pyc
+set wildignore+=.hg,.git,.svn
+set wildignore+=node_modules
+set wildignore+=tags
+set wildmenu
+set wildmode=list:longest,full
 set winheight=5
 set winminheight=5
-set shortmess=aIoOtT
-set showmode
-set showcmd
-set scrolloff=3
-set sidescroll=3
-set visualbell
-set linebreak
-" Show ↪ at the beginning of wrapped lines.
-let &showbreak=nr2char(8618).' '
-set listchars=tab:▸\ ,trail:·
-set list
-set ttyfast
-" Insert mode completion.
-set completeopt=menuone,preview
-
-" Do not draw while executing macros.
-" Horrible lag when scrolling through ruby files with this disabled.
-" See: http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
-" http://stackoverflow.com/a/20519492
-set lazyredraw
-
-" Set keys move cursor to next/previous line.
+set wrap
+set wrapscan
 set ww+=<,>,[,]
-set ruler
-set relativenumber
-set numberwidth=2
-set hidden
-set showmatch
-" Match for 3 tenths of a second.
-set matchtime=3
-set cf
-" Set diff fill char.
-set fillchars+=diff:⣿
-set titlestring=%f\ "%h%m%r%w\ -\ %{v:progname}\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-
-" Line up args on additional lines, etc.
-set cinoptions+=(0,w1,m1
-
-syntax on
-set background=dark
+let mapleader = ','
+let maplocalleader = ';'
 
 if filereadable(expand("~/.vimrc_background"))
     let base16colorspace=256
@@ -156,85 +158,11 @@ endif
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3
 
-" let g:hybrid_use_Xresources = 1
-" colorscheme hybrid
-" colorscheme badwolf
-" colorscheme grb256
-" colorscheme vividchalk
-
-" Always show status.
-set laststatus=2                                         " always show status
-set statusline=%<%f\                                     " Filename
-set statusline+=%w%h%m%r                                 " Options
-set statusline+=\ %y                                     " filetype
-set statusline+=\ [%{join(split(getcwd(),'/')[3:],'/')}] " current dir
-set statusline+=%=%-14.(%l,%c%V%)\ %p%%        " Right aligned file nav info
-
-" Show partial matches as search is entered.
-set incsearch
-set hlsearch
-set ignorecase
-" Disable case insensitivity if mixed case.
-set smartcase
-" Wrap to top of buffer when searching.
-set wrapscan
-
-" Use sane regexes.
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-
-" set expandtab
-" set shiftwidth=4
-" set softtabstop=4
-" Do not select the end of line.
-" XXX: Using 'old' breaks UltiSnips by selecting one character past the
-" placeholder.
-"
-" set selection=old
-
-" Don't shift to the next round tab stop. This fucks with reindenting
-" manually indented code. e.g.:
-"
-" <div class="lined up"
-"      id="nicely">
-"
-" set shiftround
-
-" Copy indent from the current line.
-set autoindent
-set wrap
-set textwidth=80
-set colorcolumn=+1
-set formatoptions=tcqrn1
-set virtualedit+=block
-
-set foldenable
-set foldmethod=marker
-set foldnestmax=2
-set foldlevelstart=5
-
-" space open/closes fold
 nnoremap <space> za
-
-" Make zO recursively open the top level fold regardless of cursor placement.
-nnoremap zO zCzO
-
-highlight Folded cterm=NONE ctermfg=10 ctermbg=0
-
-" Show a list entries.
-set wildmenu
-set wildmode=list:longest,full
-set wildignore+=.hg,.git,.svn
-set wildignore+=node_modules
-set wildignore+=*.aux,*.out,*.toc
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
-set wildignore+=*.luac
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
-set wildignore+=*.pyc
-set wildignore+=*.DS_Store
-set wildignore+=tags
 
 " Resize splits when the window is resized.
 au VimResized * exe "normal! \<c-w>="
@@ -299,21 +227,13 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_user_command = {
     \ 'types': {
         \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
     \ },
     \ 'fallback': 'ag %s --nocolor -l -g ""'
 \ }
 
-let g:gundo_preview_bottom = 1
-
 let g:surround_40 = "(\r)"
 let g:surround_91 = "[\r]"
 let g:surround_60 = "<\r>"
-
-" Map 'gcp' comment the current paragraph (block).
-if exists('loaded_tcomment')
-    nmap <silent> gcp <c-_>p
-endif
 
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:UltiSnipsExpandTrigger = "<Nul>"
