@@ -63,9 +63,6 @@ Plugin 'tpope/vim-commentary'
 " Automatically closes functions, blocks, etc.
 Plugin 'Raimondi/delimitMate'
 
-Plugin 'jlamontagne/ultisnips'
-" Plugin 'honza/vim-snippets'
-
 " Medium distance text motion
 Plugin 'justinmk/vim-sneak'
 
@@ -235,31 +232,7 @@ let g:surround_40 = "(\r)"
 let g:surround_91 = "[\r]"
 let g:surround_60 = "<\r>"
 
-let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
-let g:UltiSnipsExpandTrigger = "<Nul>"
-let g:UltiSnipsJumpForwardTrigger = "<Nul>"
-
-let g:ulti_expand_res = 0
-function! MaybeExpandSnippet()
-    call UltiSnips#ExpandSnippet()
-    return g:ulti_expand_res
-endfunction
-
-let g:ulti_jump_forwards_res = 0
-function! UltiSnips_MaybeJumpForwards()
-    call UltiSnips#JumpForwards()
-    return g:ulti_jump_forwards_res
-endfunction
-
-let g:ulti_jump_backwards_res = 0
-function! UltiSnips_MaybeJumpBackwards()
-    call UltiSnips#JumpBackwards()
-    return g:ulti_jump_backwards_res
-endfunction
-
 function! g:InsertCRWrapper()
-    let snippet = MaybeExpandSnippet()
-
     if pumvisible()
         return "\<C-y>"
         " Close completion menu
@@ -268,34 +241,20 @@ function! g:InsertCRWrapper()
         " return ""
     elseif delimitMate#WithinEmptyPair()
         return delimitMate#ExpandReturn()
-    elseif !snippet
-        return "\<CR>"
     else
-        return ""
+        return "\<CR>"
     endif
 endfunction
 
 function! g:InsertTabWrapper()
     if pumvisible()
         return "\<C-y>"
-    elseif UltiSnips_MaybeJumpForwards()
-        return ""
     elseif delimitMate#ShouldJump()
         return delimitMate#JumpAny()
     else
         return "\<Tab>"
     endif
 endfunction
-
-" function! g:Wolfjourn_HandleShiftTab()
-"     if pumvisible()
-"         return "\<C-p>"
-"     elseif UltiSnips_MaybeJumpBackwards()
-"         return ""
-"     else
-"         return "\<S-Tab>"
-"     endif
-" endfunction
 
 function! g:InsertSpaceWrapper()
     if pumvisible()
@@ -311,12 +270,7 @@ endfunction
 
 inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
 inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
-" inoremap <S-Tab> <C-R>=g:Wolfjourn_HandleShiftTab()<CR>
-" let g:user_emmet_next_key = '<s-tab>'
 inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
-
-snoremap <Tab> <Esc>:call UltiSnips#JumpForwards()<CR>
-" snoremap <S-Tab> <Esc>:call UltiSnips#JumpBackwards()<CR>
 
 nnoremap <silent> <leader>ps :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
 nnoremap <silent> <leader>pe :exe ":profile pause"<cr>:noautocmd qall!<cr>
