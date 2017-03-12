@@ -47,9 +47,6 @@ Plugin 'tpope/vim-surround'
 " Auto add block endings
 Plugin 'tpope/vim-endwise'
 
-" Project configuration
-" Plugin 'tpope/vim-projectionist'
-
 " Colours!
 Plugin 'chriskempson/base16-vim'
 
@@ -58,7 +55,6 @@ Plugin 'mileszs/ack.vim'
 
 " Comment/uncomment
 Plugin 'tpope/vim-commentary'
-"Plugin 'tomtom/tcomment_vim'
 
 " Automatically closes functions, blocks, etc.
 Plugin 'Raimondi/delimitMate'
@@ -283,9 +279,6 @@ nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>s :w<CR>
 nnoremap <Leader>u :GundoToggle<CR>
 
-" Strip trailing whitespace.
-nnoremap <Leader>w :call StripTrailingWhitespace()<CR>
-
 " Disable search match highlight.
 nnoremap <Leader><space> :noh<CR>
 
@@ -299,21 +292,12 @@ vnoremap <Leader>k :m-2<CR>gv
 " nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>v :so ~/.vimrc<CR>
 
-" Tabs
-map <Leader>tt :tabnew<CR>
-map <Leader>tc :tabclose<CR>
-noremap <Leader>tm :tabmove<CR>
-noremap <Leader>tn :tabnext<CR>
-noremap <Leader>tp :tabprevious<CR>
-
 " Windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" Horizontal split then move to bottom window.
 nnoremap <Leader>- <C-w>s
-" Vertical split then move to right window.
 nnoremap <Leader>\| <C-w>v<C-w>l
 
 " Display-wise up/down movement instead of linewise.
@@ -323,9 +307,6 @@ noremap k gk
 inoremap jj <ESC>
 
 " Make Ctrl-C trigger InsertLeave autocmds
-"
-" This is very heavy-handed, but Ctrl-C is what I'm accustomed to using to
-" leave insert mode.
 inoremap <C-C> <Esc>`^
 
 " Yank to end of line
@@ -336,43 +317,3 @@ nnoremap Q gqip
 
 " Toggle paste.
 set pastetoggle=<F12>
-
-cabbr cdf cd %:p:h<CR>
-cabbr lcdf lcd %:p:h<CR>
-cabbr cwd lcd %:p:h
-
-command! ErrorsToggle call ErrorsToggle()
-function! ErrorsToggle()
-    if exists("w:is_error_window")
-        unlet w:is_error_window
-        exec "q"
-    else
-        exec "Errors"
-        lopen
-        let w:is_error_window = 1
-    endif
-endfunction
-
-command! -bang -nargs=? QFixToggle call QFixToggle(<bang>0)
-function! QFixToggle(forced)
-    if exists("g:qfix_win") && a:forced == 0
-        cclose
-        unlet g:qfix_win
-    else
-        copen 10
-        let g:qfix_win = bufnr("$")
-    endif
-endfunction
-
-nmap <silent> <F3> :ErrorsToggle<CR>
-nmap <silent> <F4> :QFixToggle<CR>
-
-" Strip Trailing Whitespace
-function! StripTrailingWhitespace()
-    if !&binary && &modifiable && &filetype != 'diff' && &ft != 'jade'
-        let l:winview = winsaveview()
-        %s/\s\+$//e
-        let @/=''
-        call winrestview(l:winview)
-    endif
-endfunction
