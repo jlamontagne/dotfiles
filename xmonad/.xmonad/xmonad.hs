@@ -85,7 +85,7 @@ main = do
     xmonad $ ewmh defaultConfig
         { manageHook = manageHook' <+> manageDocks <+> manageHook defaultConfig
         , layoutHook = layoutHook'
-        , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
+        , handleEventHook = handleEventHook defaultConfig <+> docksEventHook <+> fullscreenEventHook
         , logHook = dynamicLogWithPP $ xmobarPP
             { ppOutput = hPutStrLn xmproc
             , ppTitle = xmobarColor "green" "" . shorten 50

@@ -5,6 +5,7 @@ Config { font = "-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15"
        , fgColor = "grey"
        , position = Top
        , lowerOnStart = True
+       , overrideRedirect = True
        , commands = [ Run Weather "CYTZ" ["-t","<tempC>C, <skyCondition>","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Network "enp3s0" ["-t","<rx> KB, <tx> KB","-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
