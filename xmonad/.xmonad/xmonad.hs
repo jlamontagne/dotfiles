@@ -2,7 +2,8 @@ import Data.List
 import Data.Maybe
 import Data.Ord
 import System.IO
-import XMonad hiding (Tall)
+-- import XMonad hiding (Tall)
+import XMonad
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
@@ -40,16 +41,16 @@ import XMonad.Actions.Search
 import qualified XMonad.Actions.Search as S
 import qualified XMonad.Actions.Submap as SM
 
-workspaces' = ["dev","review","chat","stack"] ++ map show [4..9]
+-- workspaces' = ["dev","review","chat","stack"] ++ map show [4..9]
 
 layoutHook' = smartBorders $ avoidStruts $
-    onWorkspace "deploy" (simpleDeco shrinkText defaultTheme (Accordion)) $
-    (HintedTile 1 (3/100) (1/2) TopLeft Tall |||
-    simpleDeco shrinkText defaultTheme (Accordion) |||
-    -- (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
-    -- Mirror (ResizableTall 1 (3/100) (1/2) []) |||
-    -- ThreeColMid 1 (3/100) (1/3) |||
-    noBorders (fullscreenFull Full))
+    -- onWorkspace "deploy" (simpleDeco shrinkText defaultTheme (Accordion)) $
+    -- (HintedTile 1 (3/100) (1/2) TopLeft Tall |||
+    -- simpleDeco shrinkText defaultTheme (Accordion) |||
+    (reflectHoriz $ ResizableTall 1 (3/100) (1/2) []) |||
+    Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+    ThreeColMid 1 (3/100) (1/3) |||
+    noBorders (fullscreenFull Full)
 
 -- $ xprop | grep WM_CLASS
 -- doSideFloat SE, NW, NE, etc
@@ -95,7 +96,7 @@ main = do
         , modMask = mod4Mask
         , terminal = "urxvt"
         , borderWidth = 1
-        , workspaces = workspaces'
+        -- , workspaces = workspaces'
         , normalBorderColor  = "#004400"
         , focusedBorderColor = "#00AA00"
         }
