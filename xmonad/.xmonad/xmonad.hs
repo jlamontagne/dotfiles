@@ -72,6 +72,7 @@ additionalKeys' =
     , ("M-S-s"        , workspacePrompt defaultXPConfig (windows . W.shift))
     , ("M-b"          , sendMessage ToggleStruts)
     , ("M-S-z"        , spawn "xscreensaver-command --lock")
+    , ("M-y"          , spawn "maim -s ~/maim/$(date +%s).png")
     , ("M-g"          , S.promptSearchBrowser myXPConfig "google-chrome-stable" S.google)
     ]
     ++
