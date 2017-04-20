@@ -14,8 +14,8 @@ Xcursor.theme: Oxygen_Black
 
 xscreensaver.dpmsEnabled: True
 xscreensaver.dpmsQuickOff: True
-xscreensaver.dpmsOff: 0:05:00
+xscreensaver.dpmsOff: 0:15:00
 xscreensaver.lock: True
 xscreensaver.mode: blank
 xscreensaver.splash: False
-xscreensaver.timeout: 0:05:00
+xscreensaver.timeout: 0:15:00
