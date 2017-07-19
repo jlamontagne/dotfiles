@@ -59,6 +59,9 @@ Plugin 'Raimondi/delimitMate'
 " Medium distance text motion
 Plugin 'justinmk/vim-sneak'
 
+" Elixir alchemist
+Plugin 'slashmili/alchemist.vim'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -143,6 +146,7 @@ aug file_settings
     au FileType help nnoremap <silent><buffer> q :q<CR>
     au FileType gitcommit setlocal spell
     au FileType javascript setlocal tw=80
+    au FileType elixir setlocal tw=80
 aug end
 
 let g:ackprg = 'ag --nogroup --nocolor --column'

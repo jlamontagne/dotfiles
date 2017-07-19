@@ -49,7 +49,7 @@ eval `keychain --eval -q id_rsa`
 # Sync PRIMARY with clipboard
 # This has spiked cpu usage while running eve
 autocutsel -s PRIMARY -fork
-autocutsel -fork
+#autocutsel -fork
 
 mpd
 xscreensaver &
