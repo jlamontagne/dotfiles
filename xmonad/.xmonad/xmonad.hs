@@ -60,7 +60,7 @@ manageHook' = composeAll
     ]
 
 myXPConfig = greenXPConfig
-    { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
+    -- { font = "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" }
 
 additionalKeys' =
     [ ("M-<Delete>"   , windows W.swapMaster)

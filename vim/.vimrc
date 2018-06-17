@@ -18,6 +18,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Language packs (syntax, index, ftplugin, ftdetect)
 Plugin 'sheerun/vim-polyglot'
+Plugin 'lambdatoast/elm.vim'
 
 " Git integrations
 Plugin 'tpope/vim-fugitive'
@@ -61,6 +62,8 @@ Plugin 'justinmk/vim-sneak'
 
 " Elixir alchemist
 Plugin 'slashmili/alchemist.vim'
+
+Plugin 'sjl/gundo.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -173,6 +176,8 @@ let g:ctrlp_user_command = {
 let g:surround_40 = "(\r)"
 let g:surround_91 = "[\r]"
 let g:surround_60 = "<\r>"
+
+let g:polyglot_disabled = ['elm']
 
 function! g:InsertCRWrapper()
     if pumvisible()
