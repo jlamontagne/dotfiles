@@ -19,6 +19,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Language packs (syntax, index, ftplugin, ftdetect)
 Plugin 'sheerun/vim-polyglot'
 Plugin 'lambdatoast/elm.vim'
+Plugin 'elixir-editors/vim-elixir'
 
 " Git integrations
 Plugin 'tpope/vim-fugitive'
@@ -61,7 +62,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'justinmk/vim-sneak'
 
 " Elixir alchemist
-Plugin 'slashmili/alchemist.vim'
+" Plugin 'slashmili/alchemist.vim'
 
 Plugin 'sjl/gundo.vim'
 
@@ -85,7 +86,7 @@ set encoding=utf8
 set fillchars+=diff:⣿
 set foldenable
 set foldlevelstart=5
-set foldmethod=marker
+set foldmethod=indent
 set foldnestmax=2
 set formatoptions=tcqrn1
 set hidden
@@ -94,7 +95,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-set lazyredraw
+" set lazyredraw
 set linebreak
 set list
 set listchars=tab:▸\ ,trail:·
@@ -137,21 +138,6 @@ endif
 
 au VimResized * exe "normal! \<c-w>="
 
-aug file_settings
-    au!
-
-    " Jump to the last known position when reopening a file.
-    au BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
-
-    au FileType help nnoremap <silent><buffer> q :q<CR>
-    au FileType gitcommit setlocal spell
-    au FileType javascript setlocal tw=80
-    au FileType elixir setlocal tw=80
-aug end
-
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
@@ -177,7 +163,7 @@ let g:surround_40 = "(\r)"
 let g:surround_91 = "[\r]"
 let g:surround_60 = "<\r>"
 
-let g:polyglot_disabled = ['elm']
+let g:polyglot_disabled = ['elm', 'elixir']
 
 function! g:InsertCRWrapper()
     if pumvisible()
@@ -223,6 +209,7 @@ nnoremap <Leader>g :Gstatus<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>s :w<CR>
+nnoremap <Leader>u :GundoToggle<CR>
 nnoremap <Leader><space> :noh<CR>
  noremap <Leader>j :m+<CR>
  noremap <Leader>k :m-2<CR>
@@ -242,6 +229,27 @@ inoremap jj <ESC>
 inoremap <C-C> <Esc>`^
 nnoremap Y y$
 nnoremap Q gqip
+nnoremap <Leader>f gggqG
+
+aug file_settings
+    au!
+
+    " Jump to the last known position when reopening a file.
+    au BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
+
+    au FileType help nnoremap <silent><buffer> q :q<CR>
+    au FileType gitcommit setlocal spell
+    au FileType javascript setlocal tw=80
+    au FileType elixir setlocal tw=80
+
+    " au FileType elixir nnoremap <Leader>s mzgggqG'z:w<CR>
+
+    " Almost all indent code sucks.
+    au BufReadPost * set indentexpr=""
+aug end
 
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3
