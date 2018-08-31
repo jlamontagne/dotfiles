@@ -18,8 +18,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Language packs (syntax, index, ftplugin, ftdetect)
 Plugin 'sheerun/vim-polyglot'
-Plugin 'lambdatoast/elm.vim'
-Plugin 'elixir-editors/vim-elixir'
+" Plugin 'lambdatoast/elm.vim'
+" Plugin 'elixir-editors/vim-elixir'
 
 " Git integrations
 Plugin 'tpope/vim-fugitive'
@@ -163,7 +163,7 @@ let g:surround_40 = "(\r)"
 let g:surround_91 = "[\r]"
 let g:surround_60 = "<\r>"
 
-let g:polyglot_disabled = ['elm', 'elixir']
+" let g:polyglot_disabled = ['elm', 'elixir']
 
 function! g:InsertCRWrapper()
     if pumvisible()
@@ -248,7 +248,7 @@ aug file_settings
     " au FileType elixir nnoremap <Leader>s mzgggqG'z:w<CR>
 
     " Almost all indent code sucks.
-    au BufReadPost * set indentexpr=""
+    " au BufReadPost * set indentexpr=""
 aug end
 
 hi Search ctermfg=0 ctermbg=9
