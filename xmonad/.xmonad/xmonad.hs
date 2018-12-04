@@ -4,6 +4,7 @@ import Data.Ord
 import System.IO
 -- import XMonad hiding (Tall)
 import XMonad
+import XMonad.Config
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.FloatKeys
@@ -32,6 +33,7 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.HintedTile
 import XMonad.Prompt.Window
 import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Prompt.Workspace
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
@@ -65,11 +67,11 @@ myXPConfig = greenXPConfig
 additionalKeys' =
     [ ("M-<Delete>"   , windows W.swapMaster)
     , ("M-<Backspace>", sendMessage NextLayout)
-    , ("M-p"          , shellPromptHere myXPConfig)
+    , ("M-p"          , spawn "dmenu_run")
     , ("M-a"          , sendMessage MirrorShrink)
     , ("M-z"          , sendMessage MirrorExpand)
-    , ("M-s"          , workspacePrompt defaultXPConfig (windows . W.view))
-    , ("M-S-s"        , workspacePrompt defaultXPConfig (windows . W.shift))
+    , ("M-s"          , workspacePrompt def (windows . W.view))
+    , ("M-S-s"        , workspacePrompt def (windows . W.shift))
     , ("M-b"          , sendMessage ToggleStruts)
     , ("M-S-z"        , spawn "xscreensaver-command --lock")
     , ("M-y"          , spawn "maim -s ~/maim/$(date +%s).png")
@@ -84,10 +86,10 @@ additionalKeys' =
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
-    xmonad $ ewmh defaultConfig
-        { manageHook = manageHook' <+> manageDocks <+> manageHook defaultConfig
+    xmonad $ ewmh def
+        { manageHook = manageHook' <+> manageDocks <+> manageHook def
         , layoutHook = layoutHook'
-        , handleEventHook = handleEventHook defaultConfig <+> docksEventHook <+> fullscreenEventHook
+        , handleEventHook = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
         , logHook = dynamicLogWithPP $ xmobarPP
             { ppOutput = hPutStrLn xmproc
             , ppTitle = xmobarColor "green" "" . shorten 50

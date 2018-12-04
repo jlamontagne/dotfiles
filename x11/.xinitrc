@@ -12,7 +12,8 @@
 # setxbmap colemak
 # xmodmap xmodmap.colemak
 
-source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
+#source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
+
 # Handled by systemctl --user enable pulseaudio
 # /usr/bin/start-pulseaudio-x11
 # hsetroot -solid '#000000'
@@ -23,17 +24,17 @@ xset +fp /home/josh/.local/share/fonts
 xset fp rehash
 
 xrdb $HOME/.Xresources
-xsetroot -cursor_name left_ptr
-setxkbmap -option terminate:ctrl_alt_bksp
+#xsetroot -cursor_name left_ptr
+#setxkbmap -option terminate:ctrl_alt_bksp
 
 # Replace LON,LAT below with appropriate coordinates.
 #redshift -l LON,LAT -t 6500:4500 -m vidmode &
 
 # The Razer Naga Epic is way too fast by default. It also needs to be reset
 # every time you change from wired to wireless and vice-versa.
-xset m 1 1
+#xset m 1 1
 # xinput set-prop "pointer:Razer Razer Naga Epic" "Device Accel Constant Deceleration" 1.5
-xinput set-prop pointer:Razer\ Razer\ Naga\ Epic 'libinput Accel Speed' 0
+#xinput set-prop pointer:Razer\ Razer\ Naga\ Epic 'libinput Accel Speed' 0
 
 
 # No beep
@@ -51,6 +52,6 @@ eval `keychain --eval -q id_rsa`
 autocutsel -s PRIMARY -fork
 #autocutsel -fork
 
-mpd
+#mpd
 xscreensaver &
 exec xmonad
