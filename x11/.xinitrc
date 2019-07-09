@@ -54,4 +54,5 @@ autocutsel -s PRIMARY -fork
 
 #mpd
 xscreensaver &
+sudo mdadm --monitor --scan --daemonise --program=monitor-raid
 exec xmonad
