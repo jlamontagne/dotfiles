@@ -1,14 +1,3 @@
-" https://github.com/skwp/dotfiles
-" http://statico.github.io/vim2.html
-" http://dougblack.io/words/a-good-vimrc.html
-" http://stackoverflow.com/questions/19030463/how-do-you-work-with-large-projects-in-vim
-" https://github.com/spf13/spf13-vim
-" https://github.com/tpope/tpope/blob/master/.vimrc
-" https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
-" http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-" http://www.codeography.com/2013/06/17/replacing-all-the-things-with-unite-vim.html
-" http://bling.github.io/blog/2013/06/02/unite-dot-vim-the-plugin-you-didnt-know-you-need/
-
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -58,76 +47,29 @@ Plugin 'tpope/vim-commentary'
 " Automatically closes functions, blocks, etc.
 Plugin 'Raimondi/delimitMate'
 
-" Medium distance text motion
-Plugin 'justinmk/vim-sneak'
-
 " Elixir alchemist
-" Plugin 'slashmili/alchemist.vim'
+" K - ExDoc
+" <C-]>/<C-T> - Jump
+Plugin 'slashmili/alchemist.vim'
 
 Plugin 'sjl/gundo.vim'
+
+" <Leader>di, ds, b(ox), a(rrow), l(ine)
+" Plugin 'vim-scripts/DrawIt'
 
 call vundle#end()
 filetype plugin indent on
 
 syntax on
-set autoindent
 set autoread
 set autowrite
-set background=dark
-set backspace=indent,eol,start
-set backup
-set backupdir^=$HOME/.vim/backup//
-set cf
-set cinoptions+=(0,w1,m1
 set colorcolumn=+1
-set completeopt=menuone,preview
-set dir^=$HOME/.vim/swap//
-set encoding=utf8
-set fillchars+=diff:⣿
-set foldenable
-set foldlevelstart=5
-set foldmethod=indent
-set foldnestmax=2
-set formatoptions=tcqrn1
-set hidden
-set history=50
 set hlsearch
-set ignorecase
 set incsearch
-set laststatus=2
-" set lazyredraw
-set linebreak
-set list
-set listchars=tab:▸\ ,trail:·
-set matchtime=3
-set modelines=0
 set numberwidth=2
 set relativenumber
-set ruler
-set scrolloff=3
-set shortmess=aIoOtT
-set showcmd
 set showmatch
-set showmode
-set sidescroll=3
-set smartcase
-set spelllang=en_ca
-set titlestring=%f\ "%h%m%r%w\ -\ %{v:progname}\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-set ttimeoutlen=50
-set ttyfast
-set undodir^=$HOME/.vim/undo//
-set undofile
-set undolevels=1000
-set undoreload=1000
-set viewdir^=$HOME/.vim/view//
-set virtualedit+=block
-set visualbell
-set wildmenu
-set winheight=5
-set winminheight=5
-set wrap
-set wrapscan
-set ww+=<,>,[,]
+
 let mapleader = ','
 let maplocalleader = ';'
 
@@ -159,43 +101,9 @@ let g:ctrlp_user_command = {
     \ },
     \ 'fallback': 'ag %s --nocolor -l -g ""'
 \ }
-let g:surround_40 = "(\r)"
-let g:surround_91 = "[\r]"
-let g:surround_60 = "<\r>"
 
 " let g:polyglot_disabled = ['elm', 'elixir']
 
-function! g:InsertCRWrapper()
-    if pumvisible()
-        return "\<C-y>"
-    elseif delimitMate#WithinEmptyPair()
-        return delimitMate#ExpandReturn()
-    else
-        return "\<CR>"
-    endif
-endfunction
-
-function! g:InsertTabWrapper()
-    if pumvisible()
-        return "\<C-y>"
-    elseif delimitMate#ShouldJump()
-        return delimitMate#JumpAny()
-    else
-        return "\<Tab>"
-    endif
-endfunction
-
-function! g:InsertSpaceWrapper()
-    if pumvisible()
-        return "\<C-y>"
-    else
-        return "\<Space>"
-    endif
-endfunction
-
-inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
-inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
-inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
@@ -206,7 +114,7 @@ nnoremap <silent> <leader>pe :exe ":profile pause"<cr>:noautocmd qall!<cr>
 nnoremap <Leader>a :Ack!
 nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader>g :Gstatus<CR>
-nnoremap <Leader>m :CtrlPMRU<CR>
+nnoremap <Leader>r :CtrlPMRU<CR>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>s :w<CR>
 nnoremap <Leader>u :GundoToggle<CR>
@@ -216,7 +124,7 @@ nnoremap <Leader><space> :noh<CR>
 vnoremap <Leader>j :m'>+<CR>gv
 vnoremap <Leader>k :m-2<CR>gv
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>v :so ~/.vimrc<CR>
+nnoremap <leader>v :so $MYVIMRC<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -243,13 +151,54 @@ aug file_settings
     au FileType help nnoremap <silent><buffer> q :q<CR>
     au FileType gitcommit setlocal spell
     au FileType javascript setlocal tw=80
+aug end
+
+aug elixir
+    au!
+
     au FileType elixir setlocal tw=80
 
-    " au FileType elixir nnoremap <Leader>s mzgggqG'z:w<CR>
+    " ,m(ake) - Saves and compiles the code
+    au FileType elixir nnoremap <Leader>m :compiler mix<CR>:make<CR>
 
-    " Almost all indent code sucks.
-    " au BufReadPost * set indentexpr=""
+    " ,test - Saves and tests the code
+    au FileType elixir nnoremap <Leader>test :compiler exunit<CR>:make<CR>
+
+    " Format Elixir files on save
+    autocmd BufWritePost *.exs,*.ex silent! execute "!mix format %" | redraw!
 aug end
 
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3
+
+" function! g:InsertCRWrapper()
+"     if pumvisible()
+"         return "\<C-y>"
+"     elseif delimitMate#WithinEmptyPair()
+"         return delimitMate#ExpandReturn()
+"     else
+"         return "\<CR>"
+"     endif
+" endfunction
+
+" function! g:InsertTabWrapper()
+"     if pumvisible()
+"         return "\<C-y>"
+"     elseif delimitMate#ShouldJump()
+"         return delimitMate#JumpAny()
+"     else
+"         return "\<Tab>"
+"     endif
+" endfunction
+
+" function! g:InsertSpaceWrapper()
+"     if pumvisible()
+"         return "\<C-y>"
+"     else
+"         return "\<Space>"
+"     endif
+" endfunction
+
+" inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
+" inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
+" inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
