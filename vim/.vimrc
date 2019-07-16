@@ -104,6 +104,25 @@ let g:ctrlp_user_command = {
 
 " let g:polyglot_disabled = ['elm', 'elixir']
 
+function! g:InsertCRWrapper()
+    if delimitMate#WithinEmptyPair()
+        return delimitMate#ExpandReturn()
+    else
+        return "\<CR>"
+    endif
+endfunction
+
+function! g:InsertTabWrapper()
+    if delimitMate#ShouldJump()
+        return delimitMate#JumpAny()
+    else
+        return "\<Tab>"
+    endif
+endfunction
+
+inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
+inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
+
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
@@ -170,35 +189,3 @@ aug end
 
 hi Search ctermfg=0 ctermbg=9
 hi IncSearch ctermfg=0 ctermbg=3
-
-" function! g:InsertCRWrapper()
-"     if pumvisible()
-"         return "\<C-y>"
-"     elseif delimitMate#WithinEmptyPair()
-"         return delimitMate#ExpandReturn()
-"     else
-"         return "\<CR>"
-"     endif
-" endfunction
-
-" function! g:InsertTabWrapper()
-"     if pumvisible()
-"         return "\<C-y>"
-"     elseif delimitMate#ShouldJump()
-"         return delimitMate#JumpAny()
-"     else
-"         return "\<Tab>"
-"     endif
-" endfunction
-
-" function! g:InsertSpaceWrapper()
-"     if pumvisible()
-"         return "\<C-y>"
-"     else
-"         return "\<Space>"
-"     endif
-" endfunction
-
-" inoremap <CR> <C-R>=g:InsertCRWrapper()<CR>
-" inoremap <Tab> <C-R>=g:InsertTabWrapper()<CR>
-" inoremap <Space> <C-R>=g:InsertSpaceWrapper()<CR>
