@@ -69,6 +69,7 @@ set incsearch
 set numberwidth=2
 set relativenumber
 set showmatch
+set laststatus=2
 
 let mapleader = ','
 let maplocalleader = ';'

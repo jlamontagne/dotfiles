@@ -2,7 +2,6 @@ import Data.List
 import Data.Maybe
 import Data.Ord
 import System.IO
--- import XMonad hiding (Tall)
 import XMonad
 import XMonad.Config
 import XMonad.Actions.SpawnOn
@@ -16,7 +15,6 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
--- import XMonad.Hooks.Place
 import XMonad.Layout.Accordion
 import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.NoBorders
@@ -67,15 +65,11 @@ myXPConfig = greenXPConfig
 additionalKeys' =
     [ ("M-<Delete>"   , windows W.swapMaster)
     , ("M-<Backspace>", sendMessage NextLayout)
-    , ("M-p"          , spawn "dmenu_run")
     , ("M-a"          , sendMessage MirrorShrink)
     , ("M-z"          , sendMessage MirrorExpand)
-    , ("M-s"          , workspacePrompt def (windows . W.view))
-    , ("M-S-s"        , workspacePrompt def (windows . W.shift))
     , ("M-b"          , sendMessage ToggleStruts)
     , ("M-S-z"        , spawn "xscreensaver-command --lock")
     , ("M-y"          , spawn "maim -s ~/maim/$(date +%s).png")
-    , ("M-g"          , S.promptSearchBrowser myXPConfig "google-chrome-stable" S.google)
     ]
     ++
     -- mod-{w,f,r} %! Switch to physical/Xinerama screens 1, 2, or 3

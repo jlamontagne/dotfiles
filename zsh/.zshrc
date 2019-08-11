@@ -21,7 +21,8 @@ export EDITOR="vim"
 # Enable keychain/ssh-agent to ask for passwords in X
 export SSH_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
 
-export PATH="${HOME}/bin:${HOME}/.mix:${HOME}/go/bin:${HOME}/.cabal/bin:${HOME}/.gem/ruby/2.1.0/bin:${HOME}/bin/phantomjs/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}:${HOME}/.gem/ruby/2.2.0/bin"
+export GOPATH="${HOME}/src/ocean/backend"
+export PATH="${HOME}/bin:${HOME}/.mix:${GOPATH}/bin:${HOME}/go/bin:${HOME}/.cabal/bin:${HOME}/.gem/ruby/2.1.0/bin:${HOME}/bin/phantomjs/bin:${HOME}/bin/heroku-client:${HOME}/bin/libexec/git-core:${PATH}:${HOME}/.gem/ruby/2.2.0/bin"
 export MANPATH="${HOME}/bin/share/man:${MANPATH}"
 export GOPATH=~/go
 
